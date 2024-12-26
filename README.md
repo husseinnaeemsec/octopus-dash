@@ -1,6 +1,30 @@
+
 # OctopusDash
 
+⚠️ **IMPORTANT WARNING** ⚠️
+
+**THIS PROJECT IS CURRENTLY IN DEVELOPMENT AND NOT READY FOR PRODUCTION USE**
+
+This version of OctopusDash contains incomplete features and may cause serious bugs or errors in your Django application. Please DO NOT install it in production environments or critical projects at this time.
+
+**Current Status:**
+- Several core features are still under development
+- API may change significantly
+- Potential stability issues
+- Not thoroughly tested in production environments
+
+We recommend:
+- Waiting for the official stable release
+- Following our GitHub repository for updates
+- Testing only in isolated development environments if you wish to explore the features
+
+---
+
+
+
 A lightweight, modern Django admin panel alternative that provides an enhanced UI/UX experience using TailwindCSS. OctopusDash offers seamless model management with drag-and-drop capabilities, advanced filtering, and built-in analytics while maintaining simplicity in setup and usage.
+
+
 
 ## Features
 
