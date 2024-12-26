@@ -1,0 +1,8 @@
+db.sqlite3
+.env
+node_modules
+venv
+package.json
+package-lock.json
+tailwindcss.config.js
+*/__pycache__

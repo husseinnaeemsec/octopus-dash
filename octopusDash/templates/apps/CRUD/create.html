@@ -1,0 +1,29 @@
+{% extends 'octopus.html' %}
+
+{% block content %}
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{form}}
+
+    <button class="p-2 px-5 rounded bg-blue-500 text-white"> Add </button>
+</form>
+
+
+<script>
+    var quill = new Quill('.textarea-widget', {
+        theme: 'snow',
+        modules: {
+            toolbar: [
+                [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                ['bold', 'italic', 'underline'],
+                [{ 'align': [] }],
+                ['link']
+            ]
+        }
+    });
+</script>
+
+
+{% endblock %}

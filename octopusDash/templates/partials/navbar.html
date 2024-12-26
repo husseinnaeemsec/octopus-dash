@@ -1,0 +1,106 @@
+<nav class="h-16 w-full bg-gray-50 flex items-center text-white px-5 justify-between">
+    <div class="flex gap-x-3">
+        <button
+                id="sidebar-btn" class="text-xl text-gray-400 hover:text-neutral-200 hover:transition-all bg-gray-100 rounded fa-solid fa-bars"></button>
+        <input type="search" name="search" placeholder="Search"
+            class="p-1.5 px-3 bg-gray-200 w-72 rounded" id="" />
+    </div>
+
+    <div class="flex items-center gap-x-5">
+        <!-- Notifications -->
+        <div class="realtive z-0 min-h-full p-2">
+            <button class="fa-solid text-xl fa-bell text-gray-600"></button>
+            
+        </div>
+        <!-- User Profile  -->
+        <div class="relative z-0 min-h-full  p-2 bg-gray-200 px-5 flex gap-3">
+            <img src="" alt="U"
+                class="w-10 h-10 flex items-center justify-center text-gray-500 rounded-full bg-gray-50" />
+            <button id="profile-btn" class="text-left">
+                <h1 class="text-sm text-gray-700">
+                    {{request.user.first_name}} {{request.user.last_name}}
+                </h1>
+                <small class="text-xs text-gray-500"> {{request.user.username}} </small>
+            </button>
+            <div id="profile-menu"
+                class="absolute left-0 w-full py-3 hidden text-teal-50 px-5 bg-teal-500 border-t border-gray-200 h-72 top-[100%]">
+                <div class="w-full h-full flex flex-col gap-y-2">
+                    <a href="" class="items-center profile-menu-item flex gap-2"><i
+                            class="fa-solid fa-user text-xs"></i> profile
+                    </a>
+                    <a href="" class="items-center profile-menu-item flex gap-2"><i
+                            class="fa-solid fa-message text-xs"></i> messages
+                    </a>
+                    <a href="" class="items-center profile-menu-item flex gap-2"><i
+                            class="fa-solid fa-envelope text-xs"></i> email
+                    </a>
+                    <div class="w-full h-[1px] bg-gray-200"></div>
+                    <a href="" class="items-center profile-menu-item flex gap-2"><i
+                            class="fa-solid fa-lock text-xs"></i> lock screen
+                    </a>
+                    <a href="" class="items-center profile-menu-item flex gap-2"><i
+                            class="fa-solid fa-gear text-xs"></i> settings
+                    </a>
+                    <a href="" class="items-center profile-menu-item flex gap-2"><i
+                            class="fa-solid fa-arrow-right-from-bracket text-xs"></i> logout
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</nav>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const profileBtn = document.getElementById("profile-btn");
+        const profileMenu = document.getElementById("profile-menu");
+        const sidebarBtn = document.getElementById("sidebar-btn");
+
+        // Add an event listener to toggle the profile menu
+        profileBtn.addEventListener("click", () => {
+            const isMenuVisible = profileMenu.style.display === "block";
+
+            // Slide up (hide menu)
+            if (isMenuVisible) {
+                gsap.to(profileMenu, {
+                    duration: 0.3,
+                    opacity: 0, // Fade out
+                    height: 0,
+                    ease: "power1.out",
+                    onComplete: () => {
+                        profileMenu.style.display = "none"; // Hide after animation
+                    },
+                });
+
+            }
+            // Slide down (show menu)
+            else {
+                // 
+                profileMenu.style.display = "block"; // Ensure it's visible before animating
+                console.log(profileMenu.style.display);
+                gsap.from(profileMenu, {
+                    duration: 0.3,
+                    height: "0px",
+                    opacity: 0, // Start as invisible
+                    ease: "power1.out",
+                    onStart: () => {
+                        profileMenu.style.height = "288px";
+                    },
+                });
+                // 
+                gsap.to(profileMenu, {
+                    duration: 0.3,
+                    height: "288px",
+                    opacity: 1, // Start as invisible
+                    ease: "power1.out",
+                    onStart: () => {
+                        profileMenu.style.height = "288px";
+                    },
+                });
+
+            }
+        });
+    });
+</script>

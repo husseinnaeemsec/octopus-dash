@@ -1,0 +1,167 @@
+{% load static %}
+{% load urltags %}
+<!-- octopusDash/templates/octopusDash/partials/sidebar.html -->
+<div class="h-screen bg-teal-600 border-r w-64 p-4 sidebar">
+    <div class="text-2xl  text-white mb-8 flex items-center gap-x-3">
+
+        <a target="_blank" href="https://www.flaticon.com/free-icons/octopus" title="octopus icons"> <img
+                src="{% static 'octopusDash/images/octopus.png' %}" title="" width="40" alt=""> </a>
+        octopusDash
+    </div>
+
+    <!-- Sidebar Navigation Links -->
+    <small class="text-teal-300 my-2">MENU</small>
+    <ul class="space-y-4 text-sm  mt-5 font-light text-teal-200">
+
+        <button id="dashboard-dropdown-btn" class="flex items-center gap-2 text-teal-50 justify-between px-3 w-full ">
+            <div class="flex items-center gap-x-2">
+                <i class="fa-solid fa-gauge"></i>
+                <p  class=" flex items-center gap-x-3"> Dashboard </p>
+            </div>
+
+            <i class="fa-solid fa-angle-down"></i>
+        </button>
+
+        <div class="px-5">
+            <div data-visable="true" id="dashboard-dropdown" class="h-auto w-full space-y-3  dashboard-dropdown my-5 ml-4">
+                <li class="flex items-center gap-x-3">
+                    <span class="block w-[6px] h-[1px] bg-teal-200"></span>
+                    <a href=""> Analysis </a>
+                </li>
+                <li class="flex items-center gap-x-3">
+                    <span class="block w-[6px] h-[1px] bg-teal-200"></span>
+                    <a href=""> Manage Access </a>
+                </li>
+                <li class="flex items-center gap-x-3">
+                    <span class="block w-[6px] h-[1px] bg-teal-200"></span>
+                    <a href=""> Notifications </a>
+                </li>
+                <li class="flex items-center gap-x-3">
+                    <span class="block w-[6px] h-[1px] bg-teal-200"></span>
+                    <a href=""> Settings </a>
+                </li>
+
+                
+            </div>
+        </div>
+
+        <button id="dashboard-dropdown-btn" class="flex items-center gap-2  justify-between px-3 w-full ">
+            <div class="flex items-center gap-x-2">
+                <i class="fa-solid fa-users "></i>
+                <p  class=" flex items-center gap-x-3"> Users </p>
+            </div>
+
+            <i class="fa-solid fa-angle-down"></i>
+        </button>
+
+        <div class="px-5">
+            <div data-visable="true" id="users-dropdown" class="h-auto w-full space-y-3 hidden  users-dropdown my-5 ml-4">
+                <li class="flex items-center gap-x-3">
+                    <span class="block w-[6px] h-[1px] bg-teal-200"></span>
+                    <a href=""> Analysis </a>
+                </li>
+                <li class="flex items-center gap-x-3">
+                    <span class="block w-[6px] h-[1px] bg-teal-200"></span>
+                    <a href=""> Manage Access </a>
+                </li>
+                <li class="flex items-center gap-x-3">
+                    <span class="block w-[6px] h-[1px] bg-teal-200"></span>
+                    <a href=""> Notifications </a>
+                </li>
+                <li class="flex items-center gap-x-3">
+                    <span class="block w-[6px] h-[1px] bg-teal-200"></span>
+                    <a href=""> Settings </a>
+                </li>
+
+                
+            </div>
+        </div>
+
+        <button id="dashboard-dropdown-btn" class="flex items-center gap-2  justify-between px-3 w-full ">
+            <div class="flex items-center gap-x-2">
+                <i class="fa-solid fa-users-rectangle"></i>
+                <p  class=" flex items-center gap-x-3"> Groups </p>
+            </div>
+
+            <i class="fa-solid fa-angle-down"></i>
+        </button>
+
+        <div class="px-5">
+            <div data-visable="true" id="users-dropdown" class="h-auto w-full space-y-3 hidden  users-dropdown my-5 ml-4">
+                <li class="flex items-center gap-x-3">
+                    <span class="block w-[6px] h-[1px] bg-teal-200"></span>
+                    <a href=""> Analysis </a>
+                </li>
+                <li class="flex items-center gap-x-3">
+                    <span class="block w-[6px] h-[1px] bg-teal-200"></span>
+                    <a href=""> Manage Access </a>
+                </li>
+                <li class="flex items-center gap-x-3">
+                    <span class="block w-[6px] h-[1px] bg-teal-200"></span>
+                    <a href=""> Notifications </a>
+                </li>
+                <li class="flex items-center gap-x-3">
+                    <span class="block w-[6px] h-[1px] bg-teal-200"></span>
+                    <a href=""> Settings </a>
+                </li>
+
+                
+            </div>
+        </div>
+
+        <button id="dashboard-dropdown-btn" class="flex items-center gap-2  justify-between px-3 w-full ">
+            <div class="flex items-center gap-x-2">
+                <i class="fa-solid fa-shield"></i>
+                <p  class=" flex items-center gap-x-3"> Dashboard Access </p>
+            </div>
+
+            <i class="fa-solid fa-angle-down"></i>
+        </button>
+
+        <div class="px-5">
+            <div data-visable="true" id="users-dropdown" class="h-auto w-full space-y-3 hidden  users-dropdown my-5 ml-4">
+                <li class="flex items-center gap-x-3">
+                    <span class="block w-[6px] h-[1px] bg-teal-200"></span>
+                    <a href=""> Analysis </a>
+                </li>
+                <li class="flex items-center gap-x-3">
+                    <span class="block w-[6px] h-[1px] bg-teal-200"></span>
+                    <a href=""> Manage Access </a>
+                </li>
+                <li class="flex items-center gap-x-3">
+                    <span class="block w-[6px] h-[1px] bg-teal-200"></span>
+                    <a href=""> Notifications </a>
+                </li>
+                <li class="flex items-center gap-x-3">
+                    <span class="block w-[6px] h-[1px] bg-teal-200"></span>
+                    <a href=""> Settings </a>
+                </li>
+
+                
+            </div>
+        </div>
+
+    </ul>
+</div>
+
+<script>
+
+    const dashboardDropdownBtn = document.getElementById("dashboard-dropdown-btn");
+    const dashboardDropdownBtnEl = document.getElementById("dashboard-dropdown");
+
+
+
+    dashboardDropdownBtn.addEventListener("click", () => {
+        let visable = dashboardDropdownBtnEl.dataset.visable === 'true';
+        if (visable) {
+            $(dashboardDropdownBtnEl).slideUp();
+            dashboardDropdownBtnEl.dataset.visable = 'false';
+        }else{
+            $(dashboardDropdownBtnEl).slideDown();
+            dashboardDropdownBtnEl.dataset.visable = 'true';
+            
+        }
+
+    })
+
+</script>

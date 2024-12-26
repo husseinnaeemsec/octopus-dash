@@ -1,0 +1,60 @@
+<!-- templates/registration/login.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - OctopusDash</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 h-screen flex items-center justify-center">
+
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
+        <!-- App Name -->
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-semibold text-indigo-600">OctopusDash</h1>
+        </div>
+
+        <!-- Login Form -->
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- Display messages -->
+            {% if messages %}
+                <div class="mb-4">
+                    {% for message in messages %}
+                        <div class="text-red-500 text-sm">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Username Field -->
+            <div class="mb-4">
+                <label for="id_username" class="block text-sm font-medium text-gray-700">Username</label>
+                {{ form.username }}
+            </div>
+
+            <!-- Password Field -->
+            <div class="mb-4">
+                <label for="id_password" class="block text-sm font-medium text-gray-700">Password</label>
+                {{ form.password }}
+            </div>
+
+            <!-- Submit Button -->
+            <div>
+                <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
+                    Login
+                </button>
+            </div>
+        </form>
+
+        <div class="mt-4 text-center text-sm">
+            <a href="#" class="text-indigo-600 hover:text-indigo-800">Forgot your password?</a>
+        </div>
+    </div>
+
+</body>
+
+</html>

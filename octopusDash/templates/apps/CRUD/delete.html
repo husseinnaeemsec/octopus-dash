@@ -1,0 +1,37 @@
+{% extends 'octopus.html' %}
+
+{% block content %}
+
+
+
+
+<div class="flex items-center justify-center max-w-5xl border rounded  p-5">
+    <div class="text-left w-full h-full">
+        <h1 class="text-xl font-semibold"> Deleting object <span class="text-yellow-600"> {{model_name}}  </span>   (<span class="text-red-500"> {{object}}  </span> )</h1>
+
+        <div class="w-full flex gap-x-3 p-3 my-5 rounded bg-red-50 text-red-600">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span> The following objects rely on <span class="text-gray-800"> {{model_name}}({{object}}) </span>  and they will be deleted  </span>
+        </div>
+
+        <ul class="list-disc space-y-3 px-5 text-gray-700">
+            <li>Object 1</li>
+            <li>Object 2</li>
+            <li>Object 3</li>
+            <li>Object 4</li>
+            <li>Object 5</li>
+        </ul>
+
+        <div class="my-5 flex items-center space-x-3">
+            <button class="bg-red-500 text-white p-2 px-5 rounded"> Delete </button>
+            <button class="border text-gray-700 p-2 px-5 rounded"> Cancle </button>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}
