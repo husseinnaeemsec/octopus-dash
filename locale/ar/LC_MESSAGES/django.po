@@ -1,0 +1,102 @@
+msgid "dashboard"
+msgstr "لوحة التحكم"
+
+msgid "login"
+msgstr "تسجيل الدخول"
+
+msgid "logout"
+msgstr "تسجيل الخروج"
+
+msgid "profile"
+msgstr "الملف الشخصي"
+
+msgid "users"
+msgstr "المستخدمين"
+
+msgid "edit user"
+msgstr "تعديل المستخدم"
+
+msgid "add user"
+msgstr "إضافة مستخدم"
+
+msgid "delete user"
+msgstr "حذف المستخدم"
+
+msgid "name"
+msgstr "الاسم"
+
+msgid "email"
+msgstr "البريد الإلكتروني"
+
+msgid "password"
+msgstr "كلمة المرور"
+
+msgid "confirm password"
+msgstr "تأكيد كلمة المرور"
+
+msgid "submit"
+msgstr "إرسال"
+
+msgid "cancel"
+msgstr "الغاء"
+
+msgid "update"
+msgstr "تحديث"
+
+msgid "create"
+msgstr "إنشاء"
+
+msgid "delete"
+msgstr "حذف"
+
+msgid "save"
+msgstr "حفظ"
+
+msgid "reset"
+msgstr "إعادة تعيين"
+
+msgid "id"
+msgstr "الرقم التعريفي"
+
+msgid "created at"
+msgstr "أنشئ في"
+
+msgid "actions"
+msgstr "الإجراءات"
+
+msgid "user created successfully"
+msgstr "تم إنشاء المستخدم بنجاح"
+
+msgid "user updated successfully"
+msgstr "تم تحديث المستخدم بنجاح"
+
+msgid "user deleted successfully"
+msgstr "تم حذف المستخدم بنجاح"
+
+msgid "user not found"
+msgstr "المستخدم غير موجود"
+
+msgid "email already exists"
+msgstr "البريد الإلكتروني موجود مسبقا"
+
+msgid "passwords do not match"
+msgstr "كلمات المرور غير متطابقتان"
+
+msgid "invalid email or password"
+msgstr "البريد الإلكتروني أو كلمة المرور غير صحيحة"
+
+msgid "user created"
+msgstr "تم إنشاء المستخدم"
+
+msgid "user updated"
+msgstr "تم تحديث المستخدم"
+
+msgid "user deleted"
+msgstr "تم حذف المستخدم"
+
+msgid "user not found"
+msgstr "المستخدم غير موجود"
+
+msgid "email already exists"
+msgstr "البريد الإلكتروني موجود مسبقا"
+

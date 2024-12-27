@@ -5,11 +5,11 @@ class DynamicViews:
     
     
     @classmethod
-    def create_app_view(self,app,**kwargs):
+    def create_app_view(self,app,template=None,**kwargs):
         
         class AppView(TemplateView):
             
-            template_name = 'apps/app.html'
+            template_name = template or 'apps/app.html'
             
             def get_context_data(self,**kwargs):
                 
@@ -30,6 +30,9 @@ class DynamicViews:
             form_class = registry_object.form_class
             success_url = registry_object.success_url            
             
+            def post(self, request, *args, **kwargs):
+                return super().post(request, *args, **kwargs)
+            
             def get_context_data(self, **kwargs):
                 
                 context = super().get_context_data(**kwargs)
@@ -47,8 +50,17 @@ class DynamicViews:
             model = registry_object.model
             template_name = 'apps/CRUD/list.html'
             context_object_name = 'objects'
-        
-        
+
+            def get_context_data(self, **kwargs):
+                print(registry_object)
+                context = super().get_context_data(**kwargs)
+                context['object_headers'] = registry_object.object_headers
+                context['app_name'] = registry_object.model._meta.app_label.lower()
+                context['model_name'] = registry_object.model.__name__.lower()
+                
+                
+                return context     
+
         return ModelListView
     
     def update_view(registry_object, **kwargs):
@@ -76,7 +88,7 @@ class DynamicViews:
         class ModelDetailView(DetailView):
             
             model = registry_object.model
-            template_name = 'apps/detail.html'
+            template_name = 'apps/CRUD/detail.html'
             context_object_name = 'object'
 
 

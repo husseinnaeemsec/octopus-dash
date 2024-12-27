@@ -1,5 +1,5 @@
 {% load static %}
-{% load urltags %}
+{% load octopus_tags %}
 <!-- octopusDash/templates/octopusDash/partials/sidebar.html -->
 <div class="h-screen sticky overflow-y-auto top-0 bg-teal-600 border-r w-64 p-4 py-0 px-0 sidebar">
     <div class="text-2xl  text-white mb-8 flex items-center gap-x-3 px-2 h-14 sticky top-0">
@@ -10,6 +10,7 @@
     </div>
 
     <!-- Sidebar Navigation Links -->
+    
     <small class="text-teal-300 my-2 px-2">MENU</small>
     <ul class="space-y-6 text-sm  mt-5 font-light text-teal-200">
 
@@ -175,7 +176,7 @@
                             </div>
                             <div class="flex items-center gap-x-3 p-1  pl-4">
                                 <i class=" fa-solid fa-list  "></i>
-                                <a href="{% url model_registry_object.routes_view_name.list %}" class="capitalize"> List {{model_registry_object.model_name}} </a>
+                                <a href="{% url model_registry_object.routes_view_name.list %}" class="capitalize"> List {{model_registry_object.model_name}}s </a>
                             </div>
                             <div class="flex items-center gap-x-3 p-1  pl-4">
                                 <i class=" fa-solid fa-plus  "></i>
@@ -188,7 +189,7 @@
 
                         <li class="flex items-center gap-x-3 pl-5">
                             <i class="fa-solid fa-gear"></i>
-                            <a href="{{data.app_registry_object.url_patterns.settings}}"> Settings </a>
+                            <a href="{% get_app_view app 'settings' %}"> Settings </a>
                         </li>
                     </div>
                 </div>

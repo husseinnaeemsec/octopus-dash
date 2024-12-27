@@ -1,1 +1,44 @@
 {% extends 'octopus.html' %}
+{% load octopus_tags %}
+
+{% block content %}
+
+
+<div class="overflow-x-auto">
+    <table class="min-w-full bg-white border border-gray-300">
+        <thead>
+            <tr class="bg-gray-200 border-b">
+                {% for field in object_headers %}
+                <th class="px-4 py-2 text-left text-gray-600 font-medium uppercase">
+                    {{ field|capfirst }}
+                </th>
+                {% endfor %}
+                <th title="Edit" class="px-4 py-2 text-left text-gray-600 font-medium uppercase">
+                    <a href=""> <i class="fa-solid fa-pen"></i> </a>
+                </th>
+                <th title="Detail" class="px-4 py-2 text-left text-gray-600 font-medium uppercase">
+                    <a href=""> <i class="fa-solid fa-eye"></i> </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+            {% for obj in objects %}
+            <tr class="hover:bg-gray-100">
+                {% for field in object_headers %}
+                <td class="px-4 py-2 text-gray-700">
+                    {{ obj|attr:field }}
+                </td>
+                {% endfor %}
+                <th title="Edit" class="px-4 py-2 text-left text-gray-600 font-medium uppercase">
+                    <a href="{% get_model_view app_name model_name 'update' pk=obj.pk %}"> Edit </a>
+                </th>
+                <th title="Detail" class="px-4 py-2 text-left text-gray-600 font-medium uppercase">
+                    <a href="{% get_model_view app_name model_name 'detail' pk=obj.pk %}">Detail</a>
+                </th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
