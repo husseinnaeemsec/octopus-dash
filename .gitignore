@@ -6,3 +6,9 @@ package.json
 package-lock.json
 tailwindcss.config.js
 */__pycache__
+octopusDash/README.md
+octopusDash/setup.py
+octopusDash/setup.cfg
+octopusDash/MANIFEST.in
+octopusDash/dist
+octopusDash/octopus_dash.egg-info

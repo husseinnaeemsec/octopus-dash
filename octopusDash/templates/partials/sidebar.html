@@ -1,8 +1,8 @@
 {% load static %}
 {% load urltags %}
 <!-- octopusDash/templates/octopusDash/partials/sidebar.html -->
-<div class="h-screen bg-teal-600 border-r w-64 p-4 sidebar">
-    <div class="text-2xl  text-white mb-8 flex items-center gap-x-3">
+<div class="h-screen sticky overflow-y-auto top-0 bg-teal-600 border-r w-64 p-4 py-0 px-0 sidebar">
+    <div class="text-2xl  text-white mb-8 flex items-center gap-x-3 px-2 h-14 sticky top-0">
 
         <a target="_blank" href="https://www.flaticon.com/free-icons/octopus" title="octopus icons"> <img
                 src="{% static 'octopusDash/images/octopus.png' %}" title="" width="40" alt=""> </a>
@@ -10,20 +10,21 @@
     </div>
 
     <!-- Sidebar Navigation Links -->
-    <small class="text-teal-300 my-2">MENU</small>
-    <ul class="space-y-4 text-sm  mt-5 font-light text-teal-200">
+    <small class="text-teal-300 my-2 px-2">MENU</small>
+    <ul class="space-y-6 text-sm  mt-5 font-light text-teal-200">
 
-        <button id="dashboard-dropdown-btn" class="flex items-center gap-2 text-teal-50 justify-between px-3 w-full ">
-            <div class="flex items-center gap-x-2">
+        <button id="dashboard-dropdown-btn" class="flex items-center gap-2 text-teal-50 justify-between px-2 w-full ">
+            <div class="flex items-center gap-x-2 ">
                 <i class="fa-solid fa-gauge"></i>
-                <p  class=" flex items-center gap-x-3"> Dashboard </p>
+                <p class=" flex items-center gap-x-3"> Dashboard </p>
             </div>
 
             <i class="fa-solid fa-angle-down"></i>
         </button>
 
         <div class="px-5">
-            <div data-visable="true" id="dashboard-dropdown" class="h-auto w-full space-y-3  dashboard-dropdown my-5 ml-4">
+            <div data-visable="true" id="dashboard-dropdown"
+                class="h-auto w-full space-y-3 hidden dashboard-dropdown my-5 ">
                 <li class="flex items-center gap-x-3">
                     <span class="block w-[6px] h-[1px] bg-teal-200"></span>
                     <a href=""> Analysis </a>
@@ -41,21 +42,21 @@
                     <a href=""> Settings </a>
                 </li>
 
-                
+
             </div>
         </div>
 
-        <button id="dashboard-dropdown-btn" class="flex items-center gap-2  justify-between px-3 w-full ">
+        <button id="dashboard-dropdown-btn" class="flex items-center gap-2  justify-between  w-full px-2">
             <div class="flex items-center gap-x-2">
                 <i class="fa-solid fa-users "></i>
-                <p  class=" flex items-center gap-x-3"> Users </p>
+                <p class=" flex items-center gap-x-3"> Users </p>
             </div>
 
             <i class="fa-solid fa-angle-down"></i>
         </button>
 
         <div class="px-5">
-            <div data-visable="true" id="users-dropdown" class="h-auto w-full space-y-3 hidden  users-dropdown my-5 ml-4">
+            <div data-visable="true" id="users-dropdown" class="h-auto w-full space-y-3 hidden  users-dropdown my-5 ">
                 <li class="flex items-center gap-x-3">
                     <span class="block w-[6px] h-[1px] bg-teal-200"></span>
                     <a href=""> Analysis </a>
@@ -73,21 +74,21 @@
                     <a href=""> Settings </a>
                 </li>
 
-                
+
             </div>
         </div>
 
-        <button id="dashboard-dropdown-btn" class="flex items-center gap-2  justify-between px-3 w-full ">
+        <button id="dashboard-dropdown-btn" class="flex items-center gap-2  justify-between  w-full px-2">
             <div class="flex items-center gap-x-2">
                 <i class="fa-solid fa-users-rectangle"></i>
-                <p  class=" flex items-center gap-x-3"> Groups </p>
+                <p class=" flex items-center gap-x-3"> Groups </p>
             </div>
 
             <i class="fa-solid fa-angle-down"></i>
         </button>
 
         <div class="px-5">
-            <div data-visable="true" id="users-dropdown" class="h-auto w-full space-y-3 hidden  users-dropdown my-5 ml-4">
+            <div data-visable="true" id="users-dropdown" class="h-auto w-full space-y-3 hidden  users-dropdown my-5 ">
                 <li class="flex items-center gap-x-3">
                     <span class="block w-[6px] h-[1px] bg-teal-200"></span>
                     <a href=""> Analysis </a>
@@ -105,21 +106,21 @@
                     <a href=""> Settings </a>
                 </li>
 
-                
+
             </div>
         </div>
 
-        <button id="dashboard-dropdown-btn" class="flex items-center gap-2  justify-between px-3 w-full ">
+        <button id="dashboard-dropdown-btn" class="flex items-center gap-2  justify-between  w-full px-2">
             <div class="flex items-center gap-x-2">
                 <i class="fa-solid fa-shield"></i>
-                <p  class=" flex items-center gap-x-3"> Dashboard Access </p>
+                <p class=" flex items-center gap-x-3"> Dashboard Access </p>
             </div>
 
             <i class="fa-solid fa-angle-down"></i>
         </button>
 
-        <div class="px-5">
-            <div data-visable="true" id="users-dropdown" class="h-auto w-full space-y-3 hidden  users-dropdown my-5 ml-4">
+        <div class="">
+            <div data-visable="true" id="users-dropdown" class="h-auto w-full space-y-3 hidden  users-dropdown my-5 ">
                 <li class="flex items-center gap-x-3">
                     <span class="block w-[6px] h-[1px] bg-teal-200"></span>
                     <a href=""> Analysis </a>
@@ -137,29 +138,88 @@
                     <a href=""> Settings </a>
                 </li>
 
-                
+
             </div>
         </div>
+        <!-- Applictions -->
+
+        <button id="apps-dropdown-btn" class="flex items-center gap-2  justify-between  w-full px-2">
+            <div class="flex items-center gap-x-2">
+                <i class="fa-solid fa-layer-group"></i>
+                <p class=" flex items-center gap-x-3"> Applications </p>
+            </div>
+
+            <i class="fa-solid fa-angle-down"></i>
+        </button>
+
+        <div class="">
+            <div data-visable="true" id="apps-dropdown" class="h-auto w-full  apps-dropdown  ">
+                {% for app,data in urls %}
+                <div class="">
+                    <button
+                    data-target="#{{app}}-models" class=" w-full toggle-models flex items-center justify-between  p-2  bg-gradient-to-r from-teal-900 to-teal-950   pl-4">
+                        <div  class="flex  items-center gap-x-3">
+                            <i class=" fa-solid fa-hashtag  "></i>
+                            <span class="capitalize"> {{app}} </span>
+                        </div>
+
+                        <i class="fa-solid fa-angle-down"></i>
+                    </button>
+                    <div id="{{app}}-models" class="space-y-3 hidden py-2">
+                        <small class="text-[10px]  px-2 inline-block mt-1"> MODELS </small>
+                        {% for model_registry_object in data.models %}
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-x-3 p-1 bg-teal-700 pl-4">
+                                <i class=" fa-solid fa-hashtag  "></i>
+                                <span class="capitalize"> {{model_registry_object.model_name}} Model </span>
+                            </div>
+                            <div class="flex items-center gap-x-3 p-1  pl-4">
+                                <i class=" fa-solid fa-list  "></i>
+                                <a href="{% url model_registry_object.routes_view_name.list %}" class="capitalize"> List {{model_registry_object.model_name}} </a>
+                            </div>
+                            <div class="flex items-center gap-x-3 p-1  pl-4">
+                                <i class=" fa-solid fa-plus  "></i>
+                                <a href="{% url model_registry_object.routes_view_name.create %}" class="capitalize"> Create {{model_registry_object.model_name}} </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <div class="w-full h-[1px] bg-teal-700"></div>
+                        <small class="text-[10px]  px-2 inline-block"> App urls </small>
+
+                        <li class="flex items-center gap-x-3 pl-5">
+                            <i class="fa-solid fa-gear"></i>
+                            <a href="{{data.app_registry_object.url_patterns.settings}}"> Settings </a>
+                        </li>
+                    </div>
+                </div>
+
+                {% endfor %}
+
+            </div>
+        </div>
+
 
     </ul>
 </div>
 
 <script>
 
-    const dashboardDropdownBtn = document.getElementById("dashboard-dropdown-btn");
-    const dashboardDropdownBtnEl = document.getElementById("dashboard-dropdown");
+    const dashboardDropdownBtn = document.getElementById("apps-dropdown-btn");
+    const dashboardDropdownBtnEl = document.getElementById("apps-dropdown");
 
-
+    $(".toggle-models").click(function(){
+        $($(this).data("target")).slideToggle();
+    })
 
     dashboardDropdownBtn.addEventListener("click", () => {
         let visable = dashboardDropdownBtnEl.dataset.visable === 'true';
         if (visable) {
             $(dashboardDropdownBtnEl).slideUp();
             dashboardDropdownBtnEl.dataset.visable = 'false';
-        }else{
+        } else {
             $(dashboardDropdownBtnEl).slideDown();
             dashboardDropdownBtnEl.dataset.visable = 'true';
-            
+
         }
 
     })

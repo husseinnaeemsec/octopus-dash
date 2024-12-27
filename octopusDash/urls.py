@@ -1,13 +1,19 @@
 from django.apps import apps
+from octopusDash.core.model_registry import octopus_registry
+from .views import DashboardView
+from django.urls import path
 
-urlpatterns =[] 
+urlpatterns =[
+    path('',DashboardView.as_view(),name='dashboard')
+]
 
 if apps.ready:
     
-    from octopusDash.core.url_registry import url_registry,generate_urls_from_registry
+    for key,value in octopus_registry.registry.items():
+        
+        app_registry_object = value.get("app_registry_object")
+        urlpatterns.extend(app_registry_object.get_urlpatterns())
 
-    urlpatterns = generate_urls_from_registry(url_registry)
-
-
-
- 
+        for model in value.get("models"):
+            
+            urlpatterns.extend(model.get_urlpatterns())

@@ -1,41 +1,134 @@
 from django.apps import apps
+from django.db.models import Model
+from django.urls import reverse
+from octopusDash.core.forms import generate_form
+from django.apps import AppConfig
+from octopusDash.core.views import DynamicViews
+from octopusDash.core import DictToObject
+from django.urls import path
+class RegistryObject:
+    
+    def __init__(self,model:Model,**kwargs):
+        self.model = model
+        self.kwargs = kwargs
+        self.model_name = self.model.__name__.lower()
+        self.app_label = self.model._meta.app_label.lower()
+        self.form_class = generate_form(model,**kwargs)
+        self.model_view_url = f"{self.app_label}/{self.model.__name__.lower()}/"
+        self.app_view = f"{self.app_label}/"
+        self.model_base_view_name = f"{self.app_label}-{self.model.__name__.lower()}"
+        self.search_fields = self.kwargs.get('search_fields', [])
+        self.model_permssions = self.kwargs.get("permssions",[])
+        self.model_icon = self.kwargs.get('icon',None)
+        self.success_url = self.kwargs.get('success_url','/dashboard')
+    
+        self.url_patterns = DictToObject({
+            'create':self.model_view_url+'create/',
+            'list':self.model_view_url+'list/',
+            'update':self.model_view_url+'update/<int:pk>/',
+            'detail':self.model_view_url+'detail/<int:pk>/',
+            'delete':self.model_view_url+'delete/<int:pk>/',
+            'search':self.model_view_url+'search/'
+        })
+        
+        self.routes_view_name = DictToObject({
+            'create':f"{self.app_label}-{self.model.__name__.lower()}-create",
+            'list':f"{self.app_label}-{self.model.__name__.lower()}-list",
+            'update':f"{self.app_label}-{self.model.__name__.lower()}-update",
+            'detail':f"{self.app_label}-{self.model.__name__.lower()}-detail",
+            'delete':f"{self.app_label}-{self.model.__name__.lower()}-delete",
+            'search':f"{self.app_label}-{self.model.__name__.lower()}-search"
+        })
+    
+    
+    def get_model_routes(self):
+        
 
-class ModelRegistry:
+        
+        class ModelRoutes:
+            
+            create = path(self.url_patterns.create,DynamicViews.create_view(self).as_view(),name=self.routes_view_name.create)
+            list = path(self.url_patterns.list, DynamicViews.list_view(self).as_view(),name=self.routes_view_name.list)
+            update = path(self.url_patterns.update, DynamicViews.update_view(self).as_view(),name=self.routes_view_name.update)
+            detail = path(self.url_patterns.detail, DynamicViews.delete_view(self).as_view(),name=self.routes_view_name.detail)
+            delete = path(self.url_patterns.delete, DynamicViews.delete_view(self).as_view(),name=self.routes_view_name.delete)
+            search = path(self.url_patterns.search, DynamicViews.list_view(self).as_view(),name=self.routes_view_name.search)
+        
+        return ModelRoutes()
+
+    def get_urlpatterns(self):
+        
+        routes = self.get_model_routes()
+        
+        patterns = [routes.create, routes.list,routes.update, routes.delete,routes.detail,routes.search]
+        
+        return patterns
+    
+
+
+class AppRegistryObject:
+    
+    def __init__(self,app_config:AppConfig,**app_kwargs):
+        self.app_name = app_config.name.lower()
+        self.view_path = f"apps/{self.app_name}"
+        self.url_patterns = DictToObject({
+            'settings':f"{self.view_path}/settings/",
+            'app':f"{self.view_path}/",
+            "access":f"{self.view_path}/access/",
+        })
+        
+        self.routes_view_name = DictToObject({
+            'settings':f"{self.app_name}-settings",
+            'app':f"{self.app_name}",
+            'access':f"{self.app_name}-access",
+        })
+        
+    
+    def get_app_routes(self):
+
+                
+        class AppRoutes:
+
+            settings = path(self.url_patterns.settings,DynamicViews.create_app_view(self.app_name).as_view(),name=self.routes_view_name.settings)
+            app = path(self.url_patterns.app, DynamicViews.create_app_view(self.app_name).as_view(),name=self.routes_view_name.app)
+            access = path(self.url_patterns.access, DynamicViews.create_app_view(self.app_name).as_view(),name=self.routes_view_name.access)
+            
+
+        return AppRoutes()
+    
+    def get_urlpatterns(self):
+        
+        routes = self.get_app_routes()
+        
+        patterns = [routes.app,routes.settings,routes.access]
+        
+        return patterns
+
+class Registry:
     def __init__(self):
         # Initialize an empty dictionary to store models grouped by app name
         self.registry = {}
-
-    def register_model(self, model,**kwargs):
-        """
-        Register a single model to the registry. 
-        The model will be grouped by its app name.
-        """
-        app_name = model._meta.app_label 
-        if app_name not in self.registry:
-            self.registry[app_name] = []
-        self.registry[app_name].append(model)
-
-    def register_models(self, models):
-        """
-        Register multiple models at once. 
-        This will group them by their app name.
-        """
-        for model in models:
-            self.register_model(model)
-
-    def get_models_by_app(self):
-        """Return the registry of models grouped by app name."""
-        return self.registry
-
-    def get_models(self):
-        """Return a flattened list of all registered models."""
-        all_models = []
-        for models in self.registry.values():
-            all_models.extend(models)
-        return all_models
+        
+    
+    def register_model(self,model,**kwargs):
+        
+        app_label = model._meta.app_label.lower()
+        if not self.registry.get(app_label):
+            self.registry[app_label] = {
+                'app': app_label,
+                'app_registry_object':AppRegistryObject(model._meta.app_config) ,
+                'models':[RegistryObject(model,**kwargs)]
+            }
+            
+            
+        
+        else:
+            object = RegistryObject(model,**kwargs)
+            if object not in self.registry[app_label]['models']:
+                self.registry[app_label]['models'].append(object)
+            
+            else:
+                raise ValueError(f"Model {model.__name__} already registered in app {app_label}")
 
 
-octopus_registry = ModelRegistry()
-
-
-
+octopus_registry = Registry()

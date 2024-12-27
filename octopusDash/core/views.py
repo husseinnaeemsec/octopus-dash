@@ -1,134 +1,98 @@
-from octopusDash.core.model_registry import octopus_registry
-from octopusDash.core.url_registry import url_registry
-from django.views.generic import TemplateView
-from django.urls import path
-from django.views.generic import ListView, CreateView, UpdateView, DetailView, DeleteView
-from django.urls import reverse_lazy
-from .forms import generate_form
+from django.views.generic import CreateView,UpdateView,DetailView,DeleteView,ListView,TemplateView
 
 
-
-def generate_apps_views():
-    app_views = []
+class DynamicViews:
     
-    for app,models in octopus_registry.get_models_by_app().items():
+    
+    @classmethod
+    def create_app_view(self,app,**kwargs):
         
         class AppView(TemplateView):
             
-            template_name = 'apps/app.hmtl'
+            template_name = 'apps/app.html'
+            
+            def get_context_data(self,**kwargs):
+                
+                context = super().get_context_data(**kwargs)
+                context['app_name'] = app
+
+                
+                return context
+        
+        return AppView
+        
+    
+    def create_view(registry_object):
+        
+        class ModelCreateView(CreateView):
+            
+            template_name = 'apps/CRUD/create.html'
+            form_class = registry_object.form_class
+            success_url = registry_object.success_url            
             
             def get_context_data(self, **kwargs):
                 
                 context = super().get_context_data(**kwargs)
                 
-                context['app'] = app
-                context['models'] = models
                 
                 return context
-            
         
-        url_registry.register_app_url(app,f"{app.lower()}/",AppView)
-
-
-def generate_app_view(app):
-    
-    class AppView(TemplateView):
         
-        template_name = 'apps/app.html'
-
-        def get_context_data(self,**kwargs):
-            
-            context = super().get_context_data(**kwargs)
-            context['app_name'] = app
-            return context
-            
+        return ModelCreateView
     
-    url_registry.register_app_url(app,f"{app.lower()}",AppView)
+    def list_view(registry_object, **kwargs):
+        
+        class ModelListView(ListView):
+            
+            model = registry_object.model
+            template_name = 'apps/CRUD/list.html'
+            context_object_name = 'objects'
+        
+        
+        return ModelListView
     
-    return AppView
-
-
-def generate_generic_views():
-    for app, models in octopus_registry.get_models_by_app().items():
-        for model_class in models:
-            app_name = model_class._meta.app_label.lower()
-            model_name = model_class.__name__.lower()
-
-            # List View
-            class ModelListView(ListView):
-                model = model_class
-                template_name = f'apps/CRUD/list.html'
-                context_object_name = 'objects'
+    def update_view(registry_object, **kwargs):
+        
+        class ModelUpdateView(UpdateView):
+            
+            model = registry_object.model
+            template_name = 'apps/CRUD/update.html'
+            form_class = registry_object.form_class
+            success_url = registry_object.success_url
+            
+            
+            def get_context_data(self, **kwargs):
                 
-
-            # Register List View
-            url_registry.register_model_url(
-                model_class,
-                f"{app_name}/{model_name}/list/",
-                ModelListView,
-                name=f"{app_name}-{model_name}-list"
-            )
-
-            # Create View
-            class ModelCreateView(CreateView):
-                model = model_class
-                template_name = f'apps/CRUD/create.html'
-                success_url = reverse_lazy(f'{app_name}-{model_name}-create')
-                form_class  = generate_form(model_class)
-
-            # Register Create View
-            url_registry.register_model_url(
-                model_class,
-                f"{app_name}/{model_name}/create/",
-                ModelCreateView,
-                name=f"{app_name}-{model_name}-create",
-            )
-
-            # Update View
-            class ModelUpdateView(UpdateView):
-                model = model_class
-                fields = '__all__'
-                template_name = f'apps/CRUD/form.html'
-                success_url = reverse_lazy(f'{app_name}-{model_name}-list')
-
-            # Register Update View
-            url_registry.register_model_url(
-                model_class,
-                f"{app_name}/{model_name}/update/<int:pk>/",
-                ModelUpdateView,
-                name=f"{app_name}-{model_name}-update"
-            )
-
-            # Detail View
-            class ModelDetailView(DetailView):
-                model = model_class
-                template_name = f'apps/detail.html'
-                context_object_name = 'object'
-
-            # Register Detail View
-            url_registry.register_model_url(
-                model_class,
-                f"{app_name}/{model_name}/detail/<int:pk>/",
-                ModelDetailView,
-                name=f"{app_name}-{model_name}-detail"
-            )
-
-            # Delete View
-            class ModelDeleteView(DeleteView):
-                model = model_class
-                template_name = f'apps/confirm_delete.html'
-                success_url = reverse_lazy(f'{app_name}-{model_name}-list')
-
-            # Register Delete View
-            url_registry.register_model_url(
-                model_class,
-                f"{app_name}/{model_name}/delete/<int:pk>/",
-                ModelDeleteView,
-                name=f"{app_name}-{model_name}-delete"
-            )
+                context = super().get_context_data(**kwargs)
+                
+                
+                return context
+        
+        
+        return ModelUpdateView
+    
+    def detail_view(registry_object, **kwargs):
+        
+        class ModelDetailView(DetailView):
+            
+            model = registry_object.model
+            template_name = 'apps/detail.html'
+            context_object_name = 'object'
 
 
-# Call this function after registering all models
-generate_generic_views()
+        
+        return ModelDetailView
+    
+    def delete_view(registry_object, **kwargs):
+        
+        class ModelDeleteView(DeleteView):
+            
+            model = registry_object.model
+            template_name = 'apps/CRUD/delete.html'
+            success_url = registry_object.success_url
 
 
+        
+        return ModelDeleteView
+    
+    
