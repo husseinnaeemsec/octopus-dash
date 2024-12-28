@@ -1,0 +1,135 @@
+{% extends 'octopus.html' %}
+
+{% block content %}
+<div class="p-6 bg-gradient-to-r from-neutral-800 via-neutral-900 to-neutral-950 text-gray-100 flex justify-between items-center rounded-lg shadow-lg">
+    <h1 class="text-3xl font-extrabold">Dashboard Overview</h1>
+    <p class="text-sm text-gray-200">Your platform insights at a glance</p>
+</div>
+
+<div class="p-6 grid grid-cols-4 gap-6 mt-6 bg-gradient-to-r  text-gray-100 rounded-lg">
+    <!-- Total Users -->
+    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
+        <h2 class="text-lg font-bold">Total Users</h2>
+        <p class="text-3xl mt-2 font-extrabold">3,403</p>
+    </div>
+
+    <!-- Active Sessions -->
+    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
+        <h2 class="text-lg font-bold">Active Sessions</h2>
+        <p class="text-3xl mt-2 font-extrabold">245</p>
+    </div>
+
+    <!-- Security Alerts -->
+    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
+        <h2 class="text-lg font-bold">Security Alerts</h2>
+        <p class="text-3xl mt-2 font-extrabold text-red-500">12</p>
+    </div>
+
+    <!-- System Uptime -->
+    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
+        <h2 class="text-lg font-bold">System Uptime</h2>
+        <p class="text-3xl mt-2 font-extrabold text-green-400">99.99%</p>
+    </div>
+</div>
+
+<div class="p-6 grid grid-cols-2 gap-6 mt-6 bg-gradient-to-r  text-gray-100 rounded-lg">
+    <!-- Weekly User Growth -->
+    <div class="bg-gradient-to-r from-neutral-800 via-neutral-900 to-neutral-950 p-4 rounded-lg shadow-md">
+        <h2 class="text-lg font-bold mb-2">Weekly User Growth</h2>
+        <canvas id="userGrowthChart" class="w-full h-48"></canvas>
+    </div>
+
+    <!-- Security Alerts by Type -->
+    <div class="bg-gradient-to-r from-neutral-800 via-neutral-900 to-neutral-950 p-4 rounded-lg shadow-md">
+        <h2 class="text-lg font-bold mb-2">Security Alerts by Type</h2>
+        <canvas id="securityAlertsChart" class="w-full h-48"></canvas>
+    </div>
+</div>
+
+<div class="p-6 grid grid-cols-3 gap-6 mt-6 bg-gradient-to-r  text-gray-100 rounded-lg">
+    <!-- Revenue Overview -->
+    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
+        <h2 class="text-lg font-bold">Monthly Revenue</h2>
+        <p class="text-3xl mt-2 font-extrabold text-blue-400">$45,320</p>
+    </div>
+
+    <!-- Tickets Resolved -->
+    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
+        <h2 class="text-lg font-bold">Tickets Resolved</h2>
+        <p class="text-3xl mt-2 font-extrabold text-yellow-400">85%</p>
+    </div>
+
+    <!-- Pending Approvals -->
+    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
+        <h2 class="text-lg font-bold">Pending Approvals</h2>
+        <p class="text-3xl mt-2 font-extrabold text-orange-400">18</p>
+    </div>
+</div>
+
+<div class="p-6 mt-6 bg-gradient-to-r  text-gray-100 rounded-lg">
+    <h2 class="text-lg font-bold mb-4">Quick Links</h2>
+    <div class="grid grid-cols-4 gap-4">
+        <a href="/users" class="bg-neutral-700 p-4 rounded-lg text-center hover:bg-neutral-600 transition transform shadow-md font-bold">
+            Users
+        </a>
+        <a href="/sessions" class="bg-neutral-700 p-4 rounded-lg text-center hover:bg-neutral-600 transition transform shadow-md font-bold">
+            Sessions
+        </a>
+        <a href="/security" class="bg-neutral-700 p-4 rounded-lg text-center hover:bg-neutral-600 transition transform shadow-md font-bold">
+            Security
+        </a>
+        <a href="/reports" class="bg-neutral-700 p-4 rounded-lg text-center hover:bg-neutral-600 transition transform shadow-md font-bold">
+            Reports
+        </a>
+    </div>
+</div>
+
+<script>
+    // Example: Weekly User Growth Chart
+    const userGrowthCtx = document.getElementById('userGrowthChart').getContext('2d');
+    new Chart(userGrowthCtx, {
+        type: 'line',
+        data: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            datasets: [{
+                label: 'Users',
+                data: [200, 220, 250, 300, 320, 350, 370],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+        }
+    });
+
+    // Example: Security Alerts by Type
+    const securityAlertsCtx = document.getElementById('securityAlertsChart').getContext('2d');
+    new Chart(securityAlertsCtx, {
+        type: 'pie',
+        data: {
+            labels: ['SQL Injection', 'XSS', 'Broken Auth', 'CSRF'],
+            datasets: [{
+                data: [5, 3, 2, 2],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(75, 192, 192, 0.6)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+        }
+    });
+</script>
+{% endblock content %}

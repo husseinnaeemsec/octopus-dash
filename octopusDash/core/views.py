@@ -22,6 +22,24 @@ class DynamicViews:
         return AppView
         
     
+    def create_model_view(registry_object):
+        
+        class ModelView(TemplateView):
+            
+            model = registry_object.model
+            template_name = 'apps/model.html'
+
+            def get_context_data(self, **kwargs):
+                
+                context = super().get_context_data(**kwargs)
+                context['app_name'] = registry_object.model._meta.app_label.lower()
+                context['model_name'] = registry_object.model.__name__.lower()
+                
+                
+                return context
+        
+        return ModelView
+    
     def create_view(registry_object):
         
         class ModelCreateView(CreateView):
@@ -44,12 +62,11 @@ class DynamicViews:
         return ModelCreateView
     
     def list_view(registry_object, **kwargs):
-        
         class ModelListView(ListView):
-            
             model = registry_object.model
             template_name = 'apps/CRUD/list.html'
             context_object_name = 'objects'
+            paginate_by = kwargs.get('paginate_by', 10) if kwargs.get('paginate_by',10) <= 50 else 10 
 
             def get_context_data(self, **kwargs):
                 print(registry_object)

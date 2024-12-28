@@ -30,7 +30,8 @@ class RegistryObject:
             'update':self.model_view_url+'update/<int:pk>/',
             'detail':self.model_view_url+'detail/<int:pk>/',
             'delete':self.model_view_url+'delete/<int:pk>/',
-            'search':self.model_view_url+'search/'
+            'search':self.model_view_url+'search/',
+            'model':self.model_view_url
         })
         self.routes_view_name = DictToObject({
             'create':f"{self.app_label}-{self.model.__name__.lower()}-create",
@@ -38,7 +39,8 @@ class RegistryObject:
             'update':f"{self.app_label}-{self.model.__name__.lower()}-update",
             'detail':f"{self.app_label}-{self.model.__name__.lower()}-detail",
             'delete':f"{self.app_label}-{self.model.__name__.lower()}-delete",
-            'search':f"{self.app_label}-{self.model.__name__.lower()}-search"
+            'search':f"{self.app_label}-{self.model.__name__.lower()}-search",
+            'model':f"{self.app_label}-{self.model.__name__.lower()}-model"
         })
 
     @classmethod
@@ -59,16 +61,17 @@ class RegistryObject:
     
     def get_model_routes(self):
         
-
+        view_kwargs = self.kwargs.get("view",{})
         
         class ModelRoutes:
             
             create = path(self.url_patterns.create,DynamicViews.create_view(self).as_view(),name=self.routes_view_name.create)
-            list = path(self.url_patterns.list, DynamicViews.list_view(self).as_view(),name=self.routes_view_name.list)
+            list = path(self.url_patterns.list, DynamicViews.list_view(self,**view_kwargs).as_view(),name=self.routes_view_name.list)
             update = path(self.url_patterns.update, DynamicViews.update_view(self).as_view(),name=self.routes_view_name.update)
             detail = path(self.url_patterns.detail, DynamicViews.detail_view(self).as_view(),name=self.routes_view_name.detail)
             delete = path(self.url_patterns.delete, DynamicViews.delete_view(self).as_view(),name=self.routes_view_name.delete)
             search = path(self.url_patterns.search, DynamicViews.list_view(self).as_view(),name=self.routes_view_name.search)
+            model  = path(self.url_patterns.model, DynamicViews.create_model_view(self).as_view(),name=self.routes_view_name.model)
         
         return ModelRoutes()
 
@@ -76,7 +79,7 @@ class RegistryObject:
         
         routes = self.get_model_routes()
         
-        patterns = [routes.create, routes.list,routes.update, routes.delete,routes.detail,routes.search]
+        patterns = [routes.create, routes.list,routes.update, routes.delete,routes.detail,routes.search,routes.model]
         
         return patterns
     
@@ -86,7 +89,7 @@ class AppRegistryObject:
     
     def __init__(self,app_config:AppConfig,**app_kwargs):
         self.app_name = app_config.name.split('.')[-1].lower()
-        self.view_path = f"apps/{self.app_name}"
+        self.view_path = f"{self.app_name}"
         self.url_patterns = DictToObject({
             'settings':f"{self.view_path}/settings/",
             'app':f"{self.view_path}/",
@@ -146,5 +149,6 @@ class Registry:
             else:
                 raise ValueError(f"Model {model.__name__} already registered in app {app_label}")
 
+        self.registry = {key:self.registry[key] for key in sorted(self.registry)}
 
 octopus_registry = Registry()

@@ -6,7 +6,7 @@ class DynamicForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         
         for field in self.fields.values():
-            field.widget.attrs['class'] = 'w-full p-2 rounded bg-gray-100 my-2'
+            field.widget.attrs['class'] = 'w-full p-2 rounded bg-neutral-800 text-neutral-100 my-2'
         
 def generate_form(model, **kwargs):
     # Dynamically create Meta class for the form

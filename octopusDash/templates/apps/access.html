@@ -2,5 +2,91 @@
 
 
 {% block content %}
-    
+
+
+
+
+<div class="p-6 bg-gradient-to-r from-neutral-600 to-neutral-800 text-gray-100 rounded-lg shadow-lg">
+    <h1 class="text-3xl font-extrabold capitalize">{{ app_name }} Access Management</h1>
+    <p class="text-sm text-gray-200 mt-2">Control user access and permissions for {{ app_name }}.</p>
+</div>
+
+<div class="p-6 grid grid-cols-3 gap-6 mt-6 bg-neutral-900 text-gray-100 rounded-lg">
+    <!-- Permissions Overview -->
+    <div class="bg-neutral-800 p-4 rounded-lg shadow-md col-span-2">
+        <h2 class="text-lg font-bold mb-4">Permissions Overview</h2>
+        <table class="table-auto w-full text-left text-sm border-collapse border border-neutral-700">
+            <thead class="bg-neutral-700 text-gray-300">
+                <tr>
+                    <th class="p-2 border border-neutral-600">Action</th>
+                    <th class="p-2 border border-neutral-600">Permission Code</th>
+                    <th class="p-2 border border-neutral-600">Granted</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-neutral-700">
+                    <td class="p-2">View</td>
+                    <td class="p-2">user_can_view_in_{{ app_name }}</td>
+                    <td class="p-2 text-center">
+                        <span class="text-green-400 font-bold">Yes</span>
+                    </td>
+                </tr>
+                <tr class="border-t border-neutral-700">
+                    <td class="p-2">Edit</td>
+                    <td class="p-2">user_can_edit_in_{{ app_name }}</td>
+                    <td class="p-2 text-center">
+                        <span class="text-green-400 font-bold">Yes</span>
+                    </td>
+                </tr>
+                <tr class="border-t border-neutral-700">
+                    <td class="p-2">Delete</td>
+                    <td class="p-2">user_can_delete_in_{{ app_name }}</td>
+                    <td class="p-2 text-center">
+                        <span class="text-green-400 font-bold">Yes</span>
+                    </td>
+                </tr>
+                <tr class="border-t border-neutral-700">
+                    <td class="p-2">Create</td>
+                    <td class="p-2">user_can_create_in_{{ app_name }}</td>
+                    <td class="p-2 text-center">
+                        <span class="text-green-400 font-bold">Yes</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Manage Permissions -->
+    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
+        <h2 class="text-lg font-bold mb-4">Manage Permissions</h2>
+        <p class="text-sm mb-4">Use the form below to assign or revoke permissions for {{ app_name }}.</p>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <label for="user" class="block mb-2">Select User:</label>
+            <select id="user" name="user" class="bg-neutral-700 p-2 w-full rounded-lg">
+                {% for user in users %}
+                <option value="{{ user.id }}">{{ user.username }}</option>
+                {% endfor %}
+            </select>
+            <label for="permission" class="block mt-4 mb-2">Select Permission:</label>
+            <select id="permission" name="permission" class="bg-neutral-700 p-2 w-full rounded-lg">
+                <option value="user_can_view_in_{{ app_name }}">View</option>
+                <option value="user_can_edit_in_{{ app_name }}">Edit</option>
+                <option value="user_can_delete_in_{{ app_name }}">Delete</option>
+                <option value="user_can_create_in_{{ app_name }}">Create</option>
+            </select>
+            <div class="mt-4 flex gap-4">
+                <button type="submit" name="action" value="grant"
+                    class="bg-blue-600 hover:bg-blue-500 transition transform text-white p-2 w-1/2 rounded-lg shadow-md font-bold">
+                    Grant Permission
+                </button>
+                <button type="submit" name="action" value="revoke"
+                    class="bg-red-600 hover:bg-red-500 transition transform text-white p-2 w-1/2 rounded-lg shadow-md font-bold">
+                    Revoke Permission
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
 {% endblock %}

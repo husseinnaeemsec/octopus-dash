@@ -1,10 +1,8 @@
-<nav class="h-16 w-full bg-gray-50 flex items-center text-white px-5 justify-between">
-    <div class="flex gap-x-3 relative z-0">
-        <button
-                id="sidebar-btn" class="text-xl text-gray-400 hover:text-neutral-200 hover:transition-all  rounded fa-solid fa-bars"></button>
+<nav class="h-16 w-full bg-neutral-900 sticky top-0 shadow shadow-neutral-950 flex items-center text-white px-5 justify-between">
+    <div class="  flex gap-x-3 items-center   rounded relative z-0">
+        <i class=" absolute right-3 fa-solid fa-search text-neutral-600  p-2 px-3 "></i>
         <input type="search" name="search" placeholder="Search"
-            class="p-2 px-3 text-xs bg-white border w-72 rounded" id="" />
-        
+            class="p-2 px-3 text-xs bg-neutral-800  w-96 rounded" id="" />
             <div class="absolute w-72 h-72 right-0 rounded-b bg-white border border-t-0 hidden top-[100%]"></div>
     </div>
 
@@ -15,17 +13,17 @@
             
         </div>
         <!-- User Profile  -->
-        <div class="relative z-0 min-h-full  p-2 bg-gray-200 px-5 flex gap-3">
+        <div class="relative z-0 min-h-full  p-2 bg-neutral-800  px-5 flex gap-3">
             <img src="" alt="U"
-                class="w-10 h-10 flex items-center justify-center text-gray-500 rounded-full bg-gray-50" />
+                class="w-10 h-10 flex items-center justify-center text-neutral-50 rounded-full bg-neutral-700" />
             <button id="profile-btn" class="text-left">
-                <h1 class="text-sm text-gray-700">
+                <h1 class="text-sm text-teal-50">
                     {{request.user.first_name}} {{request.user.last_name}}
                 </h1>
-                <small class="text-xs text-gray-500"> {{request.user.username}} </small>
+                <small class="text-xs text-neutral-200"> {{request.user.username}} </small>
             </button>
             <div id="profile-menu"
-                class="absolute left-0 w-full py-3 hidden text-teal-50 px-5 bg-teal-500 border-t border-gray-200 h-72 top-[100%]">
+                class="absolute left-0 w-full py-3  text-teal-300 px-5 rounded-b-md bg-teal-900 text-sm  h-72 top-[100%]">
                 <div class="w-full h-full flex flex-col gap-y-2">
                     <a href="" class="items-center profile-menu-item flex gap-2"><i
                             class="fa-solid fa-user text-xs"></i> profile
@@ -36,7 +34,7 @@
                     <a href="" class="items-center profile-menu-item flex gap-2"><i
                             class="fa-solid fa-envelope text-xs"></i> email
                     </a>
-                    <div class="w-full h-[1px] bg-gray-200"></div>
+                    <div class="w-full h-[1px] bg-teal-700"></div>
                     <a href="" class="items-center profile-menu-item flex gap-2"><i
                             class="fa-solid fa-lock text-xs"></i> lock screen
                     </a>

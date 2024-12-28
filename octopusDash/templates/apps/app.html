@@ -4,9 +4,89 @@
 {% block title %} {{app_name}} -Home  {% endblock %}
 
 {% block content %}
+<div class="p-6 bg-gradient-to-r from-neutral-600 to-neutral-800 text-gray-100 rounded-lg shadow-lg">
+    <h1 class="text-3xl font-extrabold capitalize">{{ app_name }} Dashboard</h1>
+    <p class="text-sm text-gray-200 mt-2">Manage and monitor all aspects of your {{ app_name }}.</p>
+</div>
 
+<div class="p-6 grid grid-cols-3 gap-6 mt-6 bg-neutral-900 text-gray-100 rounded-lg">
+    <!-- Total Objects -->
+    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
+        <h2 class="text-lg font-bold">Total {{ app_name }} Records</h2>
+        <p class="text-3xl mt-2 font-extrabold">1,234</p>
+    </div>
+    
+    <!-- Recent Updates -->
+    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
+        <h2 class="text-lg font-bold">Recent Updates</h2>
+        <p class="text-3xl mt-2 font-extrabold text-blue-400">12</p>
+    </div>
+    
+    <!-- Active Status -->
+    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
+        <h2 class="text-lg font-bold">Active {{ app_name }}</h2>
+        <p class="text-3xl mt-2 font-extrabold text-green-400">98</p>
+    </div>
+</div>
 
+<div class="p-6 grid grid-cols-2 gap-6 mt-6 bg-gradient-to-r from-neutral-700 to-neutral-900 text-gray-100 rounded-lg">
+    <!-- List of Objects -->
+    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
+        <h2 class="text-lg font-bold mb-2">List of {{ app_name }}</h2>
+        <ul class="divide-y divide-neutral-700">
+            <li class="py-2">Object 1</li>
+            <li class="py-2">Object 2</li>
+            <li class="py-2">Object 3</li>
+            <li class="py-2 text-gray-400">...More</li>
+        </ul>
+    </div>
+    
+    <!-- Chart Representation -->
+    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
+        <h2 class="text-lg font-bold mb-2">Data Insights</h2>
+        <canvas id="appDataChart" class="w-full h-48"></canvas>
+    </div>
+</div>
 
-App View
+<div class="p-6 mt-6 bg-neutral-800 text-gray-100 rounded-lg">
+    <h2 class="text-lg font-bold mb-4">Quick Actions</h2>
+    <div class="grid grid-cols-2 gap-4">
+        <a href="{{ app_name }}/add" class="bg-neutral-700 p-4 rounded-lg text-center hover:bg-neutral-600 transition transform shadow-md font-bold">
+            Add New {{ app_name }}
+        </a>
+        <a href="{{ app_name }}/report" class="bg-neutral-700 p-4 rounded-lg text-center hover:bg-neutral-600 transition transform shadow-md font-bold">
+            Generate Report
+        </a>
+    </div>
+</div>
+
+<script>
+    // Example Chart for Data Insights
+    const appDataCtx = document.getElementById('appDataChart').getContext('2d');
+    new Chart(appDataCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Category 1', 'Category 2', 'Category 3'],
+            datasets: [{
+                label: 'Data',
+                data: [10, 20, 30],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(255, 206, 86, 0.6)'
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 206, 86, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+        }
+    });
+</script>
 
 {% endblock  %}

@@ -3,5 +3,61 @@
 
 
 {% block content %}
-    
+<div class="p-6 bg-gradient-to-r from-neutral-600 to-neutral-800 text-gray-100 rounded-lg shadow-lg">
+    <h1 class="text-3xl font-extrabold capitalize">{{ app_name }} Settings</h1>
+    <p class="text-sm text-gray-200 mt-2">Configure preferences and integrations for {{ app_name }}.</p>
+</div>
+
+<div class="p-6 grid grid-cols-2 gap-6 mt-6 bg-neutral-900 text-gray-100 rounded-lg">
+    <!-- General Settings -->
+    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
+        <h2 class="text-lg font-bold mb-2">General Settings</h2>
+        <ul class="divide-y divide-neutral-700">
+            <li class="py-2 flex justify-between">
+                <span>Application Name</span>
+                <span class="font-bold">{{ app_name }}</span>
+            </li>
+            <li class="py-2 flex justify-between">
+                <span>Default Language</span>
+                <span class="font-bold">English</span>
+            </li>
+            <li class="py-2 flex justify-between">
+                <span>Timezone</span>
+                <span class="font-bold">UTC</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Notification Preferences -->
+    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
+        <h2 class="text-lg font-bold mb-2">Notification Preferences</h2>
+        <form>
+            <div class="flex items-center mb-4">
+                <input type="checkbox" id="emailNotifications" class="mr-2">
+                <label for="emailNotifications">Email Notifications</label>
+            </div>
+            <div class="flex items-center">
+                <input type="checkbox" id="smsNotifications" class="mr-2">
+                <label for="smsNotifications">SMS Notifications</label>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="p-6 grid grid-cols-1 gap-6 mt-6 bg-gradient-to-r from-neutral-700 to-neutral-900 text-gray-100 rounded-lg">
+    <!-- Integrations -->
+    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
+        <h2 class="text-lg font-bold mb-2">Third-Party Integrations</h2>
+        <p>Connect to external services for enhanced functionality.</p>
+        <div class="grid grid-cols-2 gap-4 mt-4">
+            <a href="#" class="bg-blue-600 p-4 rounded-lg text-center hover:bg-blue-500 transition transform shadow-md font-bold text-white">
+                Connect to Google
+            </a>
+            <a href="#" class="bg-green-600 p-4 rounded-lg text-center hover:bg-green-500 transition transform shadow-md font-bold text-white">
+                Connect to Stripe
+            </a>
+        </div>
+    </div>
+</div>
+
 {% endblock  %}
