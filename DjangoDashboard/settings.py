@@ -57,6 +57,10 @@ MIDDLEWARE = [
 ]
 
 OCTOPUSDASH_ROUTE = 'octopuushash/'
+OCTOPUSDASH_SETTINGS = {
+    'API_URL_PATTERN':'api/v1/',
+    'DEFAULT_JWT_AUTHORIZATION_HEADER':'bearer'
+}
 
 
 
