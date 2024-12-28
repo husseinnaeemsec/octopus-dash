@@ -4,6 +4,8 @@
 
 **THIS PROJECT IS CURRENTLY IN DEVELOPMENT AND NOT READY FOR PRODUCTION USE**
 
+
+
 This version of OctopusDash contains incomplete features and may cause serious bugs or errors in your Django application. Please DO NOT install it in production environments or critical projects at this time.
 
 and we recommend that you wait until we realse the stable version of OctopusDash on `master` branch 
@@ -37,6 +39,12 @@ OctopusDash is a lightweight, modern Django admin panel alternative that provide
 - **Dynamic Widgets**: Add and manage custom widgets to your dashboard
 - **Error Handling**: Improved error detection and reporting
 - **Permissions**: Robust permission management system
+
+## Comming soon 
+
+- **Dynamic Django Rest API Views**
+- **JWT based authentication permssion and authorization**
+- **JWT Middleware**
 
 ## Credits
 
