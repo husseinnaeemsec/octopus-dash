@@ -2235,3 +2235,5 @@
 {"message": "Not Found: /favicon.ico", "status_code": 404, "request": "<WSGIRequest: GET '/favicon.ico'>"}
 {"message": "/home/hussein/DjangoProjects/DjangoDashboard/octopusDash/forms.py changed, reloading."}
 {"message": "Watching for file changes with StatReloader"}
+{"message": "\"GET /dashboard/ HTTP/1.1\" 200 16044", "request": "<socket.socket fd=7, family=2, type=1, proto=0, laddr=('127.0.0.1', 8080), raddr=('127.0.0.1', 36280)>", "server_time": "29/Mar/2025 06:16:46", "status_code": 200}
+{"message": "\"GET /static/octopusDash/css/tailwindcss.css HTTP/1.1\" 200 33520", "request": "<socket.socket fd=5, family=2, type=1, proto=0, laddr=('127.0.0.1', 8080), raddr=('127.0.0.1', 36296)>", "server_time": "29/Mar/2025 06:16:47", "status_code": 200}
