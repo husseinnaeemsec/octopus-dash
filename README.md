@@ -47,7 +47,7 @@ OctopusDash is a lightweight, modern Django admin panel alternative that provide
 ## Comming soon 
 
 - **Dynamic Django Rest API Views**
-- **JWT based authentication permssion and authorization**
+- **JWT based authentication permission and authorization**
 - **JWT Middleware**
 
 ## Credits
