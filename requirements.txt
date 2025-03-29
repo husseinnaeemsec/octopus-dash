@@ -1,0 +1,6 @@
+asgiref==3.8.1
+Django==5.1.7
+pillow==11.1.0
+psutil==7.0.0
+python-json-logger==3.3.0
+sqlparse==0.5.3
