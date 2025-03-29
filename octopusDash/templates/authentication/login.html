@@ -1,4 +1,4 @@
-<!-- templates/registration/login.html -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - OctopusDash</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
+    <link href="{% static 'octopusDash/css/tailwindcss.css' %}" rel="stylesheet">
 </head>
 
 <body class="bg-gray-100 h-screen flex items-center justify-center">
@@ -14,13 +14,14 @@
     <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
         <!-- App Name -->
         <div class="text-center mb-6">
-            <h1 class="text-3xl font-semibold text-indigo-600">OctopusDash</h1>
+            <div class="text-2xl capitalize text-center font-bold w-full  mb-8 ">
+                <span class="text-3xl text-blue-500">O</span>ctopus
+            </div>
         </div>
 
         <!-- Login Form -->
         <form method="POST">
             {% csrf_token %}
-
             <!-- Display messages -->
             {% if messages %}
                 <div class="mb-4">
@@ -31,27 +32,27 @@
             {% endif %}
 
             <!-- Username Field -->
-            <div class="mb-4">
-                <label for="id_username" class="block text-sm font-medium text-gray-700">Username</label>
-                {{ form.username }}
+            <div class="mb-4 space-y-2">
+                <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                <input type="text" id="username" name="username" class="w-full border bg-transparent rounded p-2 px-5">
             </div>
 
             <!-- Password Field -->
-            <div class="mb-4">
-                <label for="id_password" class="block text-sm font-medium text-gray-700">Password</label>
-                {{ form.password }}
+            <div class="mb-4 space-y-2">
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" id="password" name="password" class="w-full border bg-transparent rounded p-2 px-5">
             </div>
 
             <!-- Submit Button -->
             <div>
-                <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
                     Login
                 </button>
             </div>
         </form>
 
         <div class="mt-4 text-center text-sm">
-            <a href="#" class="text-indigo-600 hover:text-indigo-800">Forgot your password?</a>
+            <a href="#" class="text-blue-600 hover:text-blue-800">Forgot your password?</a>
         </div>
     </div>
 

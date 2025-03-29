@@ -4,26 +4,26 @@
 {% block title %} {{app_name}} -Home  {% endblock %}
 
 {% block content %}
-<div class="p-6 bg-gradient-to-r from-neutral-600 to-neutral-800 text-gray-100 rounded-lg shadow-lg">
+<div class="p-6 bg-gradient-to-r from-neutral-600 to-indigo-500 text-gray-100 rounded-lg shadow-lg">
     <h1 class="text-3xl font-extrabold capitalize">{{ app_name }} Dashboard</h1>
     <p class="text-sm text-gray-200 mt-2">Manage and monitor all aspects of your {{ app_name }}.</p>
 </div>
 
 <div class="p-6 grid grid-cols-3 gap-6 mt-6 bg-neutral-900 text-gray-100 rounded-lg">
     <!-- Total Objects -->
-    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
+    <div class="bg-indigo-500 p-4 rounded-lg shadow-md">
         <h2 class="text-lg font-bold">Total {{ app_name }} Records</h2>
         <p class="text-3xl mt-2 font-extrabold">1,234</p>
     </div>
     
     <!-- Recent Updates -->
-    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
+    <div class="bg-indigo-500 p-4 rounded-lg shadow-md">
         <h2 class="text-lg font-bold">Recent Updates</h2>
         <p class="text-3xl mt-2 font-extrabold text-blue-400">12</p>
     </div>
     
     <!-- Active Status -->
-    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
+    <div class="bg-indigo-500 p-4 rounded-lg shadow-md">
         <h2 class="text-lg font-bold">Active {{ app_name }}</h2>
         <p class="text-3xl mt-2 font-extrabold text-green-400">98</p>
     </div>
@@ -31,7 +31,7 @@
 
 <div class="p-6 grid grid-cols-2 gap-6 mt-6 bg-gradient-to-r from-neutral-700 to-neutral-900 text-gray-100 rounded-lg">
     <!-- List of Objects -->
-    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
+    <div class="bg-indigo-500 p-4 rounded-lg shadow-md">
         <h2 class="text-lg font-bold mb-2">List of {{ app_name }}</h2>
         <ul class="divide-y divide-neutral-700">
             <li class="py-2">Object 1</li>
@@ -42,13 +42,13 @@
     </div>
     
     <!-- Chart Representation -->
-    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
+    <div class="bg-indigo-500 p-4 rounded-lg shadow-md">
         <h2 class="text-lg font-bold mb-2">Data Insights</h2>
         <canvas id="appDataChart" class="w-full h-48"></canvas>
     </div>
 </div>
 
-<div class="p-6 mt-6 bg-neutral-800 text-gray-100 rounded-lg">
+<div class="p-6 mt-6 bg-indigo-500 text-gray-100 rounded-lg">
     <h2 class="text-lg font-bold mb-4">Quick Actions</h2>
     <div class="grid grid-cols-2 gap-4">
         <a href="{{ app_name }}/add" class="bg-neutral-700 p-4 rounded-lg text-center hover:bg-neutral-600 transition transform shadow-md font-bold">

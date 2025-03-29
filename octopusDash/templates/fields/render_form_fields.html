@@ -1,0 +1,34 @@
+{% load octopus_tags %}
+
+<form method="post" >
+    {% csrf_token %}
+
+    <div class="grid lg:grid-cols-1 gap-5">
+        {% for field in form %}
+        {{field.field.editable}}
+            {% get_field_metadata field as metadata %}
+            <!-- Use the custom tag to get the metadata of the field -->
+            {% if metadata.widget_type == 'PasswordInput' %}
+            {% include 'fields/PasswordInput.html' %}
+            {% elif metadata.widget_type == 'TextInput' %}
+            {% include 'fields/TextInput.html' %}
+            {% elif metadata.widget_type == 'DateTimeInput' %}
+            {% include 'fields/DateTimeInput.html' %}
+
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    
+    {% for field in form  %}
+    {% get_field_metadata field as metadata %}
+    {% if metadata.widget_type == 'SelectMultiple' %}
+        <div>
+        {% include 'fields/SelectMultiple.html' %}
+        </div>
+    {% endif %}
+    {% endfor %}
+        
+
+    <button class="p-3 bg-blue-500 text-white hover:bg-blue-600 rounded px-5" type="submit">Submit</button>
+</form>

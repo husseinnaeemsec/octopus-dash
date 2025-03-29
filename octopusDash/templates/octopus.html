@@ -2,43 +2,50 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="{{settings.mode}}" >
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> {% block title %} {% endblock %} octopus Dash </title>
-    <link rel="shortcut icon" href="{% static 'octopusDash/images/octopus.png' %}" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'octopusDash/images/favicon.svg' %}">
     <link href="{% static 'octopusDash/css/tailwind.min.css' %}" rel="stylesheet">
     <link href="{% static 'octopusDash/css/tailwindcss.css' %}" rel="stylesheet">
-
     <link href="{% static 'octopusDash/css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'octopusDash/css/forms.css' %}" rel="stylesheet">
+    <link href="{% static 'octopusDash/css/tippy.css' %}" rel="stylesheet">
+    <link href="{% static 'octopusDash/css/quill.snow.css' %}" rel="stylesheet">
     <script src="{% static 'octopusDash/js/gsap.min.js' %}"></script>
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <script src="{% static 'octopusDash/js/quill.min.js' %}"></script>
     <script src="{% static 'octopusDash/js/jquery-3.7.1.min.js' %}"></script>
     <script src="{% static 'octopusDash/js/fontawesome.js' %}"></script>
     <script src="{% static 'octopusDash/js/chart.js' %}"></script>
+    <script src="{% static 'octopusDash/js/Sortable.min.js' %}"></script>   
+    <script src="{% static 'octopusDash/js/redux-4.0.5.js' %}"></script>
+    <script src="{% static 'octopusDash/js/popperjs.js' %}"></script>
+    <script src="{% static 'octopusDash/js/tippy-bundle.umd.min.js' %}"></script>
+    
 
 </head>
 
-<body class="bg-gray-100">
-    <main class="lg:grid content-container">
+<body class="">
+    <main class="lg:grid content-container bg-white">
         <!-- Sidebar -->
         <div>
             {% include 'partials/sidebar.html' %}
         </div>
         <!-- Page content -->
-        <div class="min-h-screen bg-neutral-950 text-neutral-50 w-full">
+        <div class="min-h-screen  w-full">
             <!-- Navbar -->
             {% include 'partials/navbar.html' %}
 
-            <div class="max-w-[100rem] m-auto p-10">
-                {% include 'partials/breadcrumb.html' %}
+            <div class="p-5 pt-10 max-w-[1500px] mx-auto ">
+                <!-- {% include 'partials/breadcrumb.html' %} -->
                 {% block content %} {% endblock %}
             </div>
         </div>
     </main>
 </body>
-
+<script src="{% static 'octopusDash/js/animation.js' %}"></script>   
+<script src="{% static 'octopusDash/js/forms.js' %}"></script>   
 </html>

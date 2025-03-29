@@ -1,0 +1,33 @@
+<div class="space-y-10">
+
+
+   <div class="grid lg:grid-cols-4 gap-4">
+      {% for model_table in app_info.get_models_table %}
+
+
+      <div class="bg-neutral-900 p-5 rounded">
+         <div title="{% if model_table.registred %} {{model_table.name}} is registred in the app {% else %} {{model_table.name}} is not in the app {% endif %} "
+               class=" text-neutral-300 hover:text-white space-y-3">
+            <div class="flex items-center justify-between">
+               {{model_table.name}}
+            {% if model_table.registred%}
+               <span > <i class="fa-solid fa-check text-emerald-500"></i> </span>
+               {% else %}
+               <span> <i class="fa-solid text-rose-500/50 fa-xmark"></i> </span>
+            {% endif %}
+            </div>
+            
+            {% if model_table.registred %}
+               <a href="" class=" underline text-neutral-500 block w-fit  rounded"> Configure model </a>
+            {% endif %}
+               
+         </div>
+
+      </div>
+
+
+      {% endfor %}
+
+   </div>
+
+</div>

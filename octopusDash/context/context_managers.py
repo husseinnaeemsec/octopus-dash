@@ -1,10 +1,10 @@
-from django.urls import reverse
-from octopusDash.core.urls import build_urls
-from octopusDash.core.model_registry import octopus_registry
+from ..core import DashboardApp,app_registry
+from ..models import DashboardSetting
+
 def url_context(request):
-    urls = build_urls(octopus_registry.registry)
     # Split the request path into segments
     path_segments = request.path.strip('/').split('/')
+    settings,created= DashboardSetting.objects.get_or_create(site_id=1)
     
     # Create a list of breadcrumbs (you can customize this part as needed)
     breadcrumb_data = []
@@ -15,4 +15,4 @@ def url_context(request):
             'name': segment.replace('-', ' ').title(),  # Capitalize and replace hyphens
             'url': url
         })
-    return {"urls":urls,'path':breadcrumb_data}
+    return {'path':breadcrumb_data,'app_registry': app_registry.items(),'settings':settings}

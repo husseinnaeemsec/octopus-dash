@@ -1,0 +1,9 @@
+document.querySelectorAll(".left-t-right").forEach((ele)=>{
+    gsap.fromTo(ele,{
+        x:-100
+    },{
+        x:0,
+        stagger:1,
+        duration:0.5
+    });
+})

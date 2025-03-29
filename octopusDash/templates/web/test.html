@@ -1,0 +1,41 @@
+{% extends 'octopus.html' %}
+
+
+{% block content %}
+<form method="post" class="space-y-6 p-6 max-w-7xl m-auto">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit"
+        class="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition duration-200">
+        Submit
+    </button>
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        $('.selected-widget option').remove();
+        // Initialize SortableJS for all options and selected widgets
+        document.querySelectorAll('.options-widget').forEach(function (optionsWidget) {
+            Sortable.create(optionsWidget, {
+                group: 'shared', // Allow dragging between lists
+                animation: 150,
+                onEnd: function (evt) {
+                    console.log('Item moved in options widget');
+                }
+            });
+        });
+
+        document.querySelectorAll('.selected-widget').forEach(function (selectedWidget) {
+            Sortable.create(selectedWidget, {
+                group: 'shared', // Allow dragging between lists
+                animation: 150,
+                onEnd: function (evt) {
+                    console.log('Item moved in selected widget');
+                }
+            });
+        });
+
+
+    });
+</script>
+{% endblock content %}

@@ -1,0 +1,27 @@
+{% load i18n %}
+
+<div class="space-y-2">
+    {% if field.errors %}
+    <ul class="space-y-2 text-rose-500">
+        {% for error in field.errors %}
+        <li>{% blocktrans %}{{error}}{% endblocktrans %}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <label class="text-slate-500" for="{{ field.id_for_label }}">
+        {{ field.label }}
+        {% if field.field.required %} 
+            <strong class="text-rose-500">*</strong> 
+        {% endif %}
+    </label>
+    <input
+        class="w-full border rounded p-2 px-5"
+        data-tooltip="{{ field.help_text|default:'No additional info' }}"
+        aria-label="{{ field.label }}"
+        aria-invalid="{% if field.errors %}true{% else %}false{% endif %}"
+        type="datetime-local"
+        
+        value="{{ field.value|default:'' }}"
+        maxlength="{{ metadata.widget.attrs.maxlength }}"
+        placeholder="{{ metadata.widget.attrs.placeholder }}">
+</div>

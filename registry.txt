@@ -1,2 +1,0 @@
-dict_items(
-    [('octopusdash', {'app': 'octopusdash', 'app_registry_object': <octopusDash.core.model_registry.AppRegistryObject object at 0x7f22cf2c6840>, 'models': [<octopusDash.core.model_registry.RegistryObject object at 0x7f22cf2c4b60>, <octopusDash.core.model_registry.RegistryObject object at 0x7f22cf4915e0>]}), ('home', {'app': 'home', 'app_registry_object': <octopusDash.core.model_registry.AppRegistryObject object at 0x7f22cf2e4320>, 'models': [<octopusDash.core.model_registry.RegistryObject object at 0x7f22cf2e43b0>]})])

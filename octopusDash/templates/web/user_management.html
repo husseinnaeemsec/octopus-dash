@@ -1,0 +1,168 @@
+{% extends 'octopus.html' %}
+
+
+{% block content %}
+<div class="flex justify-between">
+    <div class="space-y-3">
+        <h1 class="text-2xl font-bold"> User Management </h1>
+        <p class="text-gray-500"> Manage users and admins accounts </p>
+    </div>
+    <div class="flex items-center gap-5">
+        <input type="search" placeholder="search for a user" name=""
+            class="w-72 rounded-md text-sm bg-gray-50  border p-2" id="">
+        <a href="{% url 'octopus:add-new-user' %}" id="add-new-user" class="bg-blue-500 text-white rounded-md p-2 text-sm px-5"> Add User </a>
+    </div>
+
+</div>
+
+<div class="my-5  mt-10 flex items-center w-full gap-3">
+    <button class="p-2 px-5 text-slate-600 rounded-md bg-slate-200 flex items-center gap-3">
+        Filters
+        <i class="fa-solid fa-filter"></i>
+    </button>
+    <button class="p-2 px-5 text-slate-600 rounded-md bg-slate-200 flex items-center gap-3">
+        Sort By
+        <i class="fa-solid fa-sort"></i>
+    </button>
+</div>
+
+
+<!-- User Table -->
+<div class="overflow-x-auto   mt-10">
+    <table class="min-w-full table-auto border-collapse">
+        <thead>
+            <tr class="bg-gray-100 text-left text-sm text-gray-600">
+                <th class="py-3 px-4"></th>
+
+                <th class="py-3 px-4">Username</th>
+                <th class="py-3 px-4">First Name</th>
+                <th class="py-3 px-4">Last Name</th>
+                <th class="py-3 px-4">Email</th>
+                <th class="py-3 px-4">Is Active</th>
+                <th class="py-3 px-4">Is Admin</th>
+                <th class="py-3 px-4">Is Staff</th>
+                <th class="py-3 px-4">Last Login</th>
+                <th class="py-3 px-4">Joined At</th>
+                <th class="py-3 px-4">Actions</th>
+
+            </tr>
+        </thead>
+        <tbody class="text-sm">
+            {% for user in users %}
+            <tr class="border-b hover:bg-gray-50">
+                <td class="py-3 px-4"> <input type="checkbox" name="" id=""> </td>
+
+                <td class="py-3 px-4">{{ user.username }}</td>
+                <td class="py-3 px-4">{{ user.first_name }}</td>
+                <td class="py-3 px-4">{{ user.last_name }}</td>
+                <td class="py-3 px-4">{{ user.email }}</td>
+
+                <td class="py-3 px-4">
+                    <span
+                        class="px-2 py-1 text-xs rounded-full {% if user.is_active %}bg-green-100 {% else %}bg-rose-100 {% endif %}">
+                        {% if user.is_active %}Active{% else %}Inactive{% endif %}
+                    </span>
+                </td>
+                <td class="py-3 px-4">
+                    <span
+                        class="px-2 py-1 text-xs rounded-full ">
+                        {% if user.is_superuser %}
+                        <i class="fa-solid text-xl fa-check-circle text-green-500"></i>
+                        {% else %}
+                        <div class="fa-solid text-xl fa-circle-xmark text-rose-500"></div>
+                        {% endif %}
+                    </span>
+                </td>
+                <td class="py-3 px-4">
+                    <span
+                        class="px-2 py-1 text-xs rounded-full ">
+                        {% if user.is_staff %}
+                        <i class="fa-solid text-xl fa-check-circle text-green-500"></i>
+                        {% else %}
+                        <div class="fa-solid text-xl fa-circle-xmark text-rose-500"></div>
+                        {% endif %}
+                    </span>
+                </td>
+                <td class="py-3 px-4">
+                    {% if user.last_login %}
+                    {{ user.last_login|date:"Y-m-d H:i" }}
+                    {% else %}
+                    Never logged in
+                    {% endif %}
+                </td>
+                <td class="py-3 px-4">{{ user.date_joined|date:"Y-m-d" }}</td>
+                <th class="py-3 px-4 flex items-center gap-3">
+                    <a href="" title="Edit" class="text-slate-500"> <i class="fa-solid fa-pen"></i> </a>
+                    <a href="" title="View" class="text-slate-500"> <i class="fa-solid fa-eye"></i> </a>
+                    <a href="" title="Delete" class="text-slate-500"> <i class="fa-solid fa-trash"></i> </a>
+
+                </th>
+
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="py-3 px-4 text-center text-gray-500">No users found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    // Ensure GSAP is available
+    document.addEventListener("DOMContentLoaded", function () {
+        const closeBtn = document.getElementById("close-user-model");
+        const openBtn = document.getElementById("add-new-user");
+        const modal = document.getElementById("user-create-modal");
+
+        // Close the modal with a slide-left animation
+        closeBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            gsap.to(modal, {
+                duration: 0.5,
+                x: "-100%", // Move to the left
+                opacity: 0,
+                ease: "power2.out",
+                onComplete: function () {
+                    modal.style.display = "none"; // Hide after animation
+                }
+            });
+        });
+
+        // Open the modal with a slide-in animation
+        openBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            modal.style.display = "block"; // Make it visible first
+            gsap.fromTo(
+                modal,
+                { x: "-100%", opacity: 0 }, // Start from the left
+                { duration: 0.5, x: "0%", opacity: 1, ease: "power2.out" } // Slide in
+            );
+        });
+    });
+
+
+</script>
+<!-- Toggle button -->
+<div class="hidden bg-green-500 bg-blue-500"></div>
+<script>
+    function toggleCheckbox(id) {
+        let checkbox = document.getElementById(id);
+        let bg = document.getElementById(id + "_bg");
+        let toggle = document.getElementById(id + "_toggle");
+
+        checkbox.checked = !checkbox.checked;
+
+        if (checkbox.checked) {
+            bg.classList.remove("bg-gray-300");
+            toggle.classList.add("translate-x-6");
+            bg.classList.add(id === "is_active" ? "bg-green-500" : "bg-blue-500");
+        } else {
+            bg.classList.remove("bg-green-500", "bg-blue-500");
+            toggle.classList.remove("translate-x-6");
+            bg.classList.add("bg-gray-300");
+        }
+    }
+</script>
+
+
+{% endblock content %}

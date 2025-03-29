@@ -52,16 +52,18 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # Octoput middleware
-    'octopusDash.middlewares.access_middleware.AccessMiddleware',
+    "octopusDash.middlewares.debug.LogPostDataMiddleware"
+
 ]
 
-OCTOPUSDASH_ROUTE = 'octopuushash/'
+OCTOPUSDASH_ROUTE = '/dashboard/'
 OCTOPUSDASH_SETTINGS = {
     'API_URL_PATTERN':'api/v1/',
     'DEFAULT_JWT_AUTHORIZATION_HEADER':'bearer'
 }
 
+LOGIN_URL = '/admin/login/?next=/dashboard'
+DASHBOARD_LOGIN_URL = '/login/?next=/dashboard'
 
 
 ROOT_URLCONF = 'DjangoDashboard.urls'
@@ -97,6 +99,39 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+}
+
+from pythonjsonlogger import jsonlogger
+import os
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'json_file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'request_status.json'),
+            'formatter': 'json',
+        },
+    },
+    'formatters': {
+        'json': {
+            '()': jsonlogger.JsonFormatter,
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['json_file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'myapp.middleware.log_request_status': {
+            'handlers': ['json_file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
 }
 
 
@@ -146,10 +181,16 @@ LOCALE_PATHS = [
 
 STATIC_URL = '/static/'
 
+# Mdia urls
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR /'media'
+
+
 # Add your app-specific static directories
 STATICFILES_DIRS = [
     BASE_DIR / 'octopusDash/static',  # Add the path to your app's static folder
 ]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

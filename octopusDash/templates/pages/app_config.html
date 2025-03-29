@@ -1,0 +1,13 @@
+{% extends 'octopus.html' %}
+
+
+
+{% block content %}
+
+<form action="" method="post" class="space-y-5">
+    {% csrf_token %}
+    {{form}}
+    <button class="bg-indigo-500 text-white p-3 px-5 rounded-md "> Save </button>
+</form>
+
+{% endblock content %}

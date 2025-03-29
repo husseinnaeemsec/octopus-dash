@@ -1,0 +1,80 @@
+{% extends 'octopus.html' %} {% load octopus_tags %} {% block content %}
+
+<div class="overflow-x-auto">
+    <table class="min-w-full dark:bg-neutral-800 border border-neutral-700">
+        <thead>
+            <tr class="dark:bg-neutral-900 border-b border-neutral-700">
+                {% for field in object_headers %}
+                <th class="px-4 py-2 text-left dark:text-neutral-50 font-medium uppercase">
+                    {{ field|capfirst }}
+                </th>
+                {% endfor %}
+                <th title="Edit" class="px-4 py-2 text-left dark:text-neutral-50 font-medium uppercase">
+                    <a href=""> <i class="fa-solid fa-pen"></i> </a>
+                </th>
+                <th title="Detail" class="px-4 py-2 text-left dark:text-neutral-50 font-medium uppercase">
+                    <a href=""> <i class="fa-solid fa-eye"></i> </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-neutral-700 dark:bg-neutral-900">
+            {% for obj in objects %}
+            <tr class="hover:bg-neutral-900">
+                {% for field in object_headers %}
+                <td class="px-4 py-2 dark:text-neutral-200">{{ obj|attr:field }}</td>
+                {% endfor %}
+                <th title="Edit" class="px-4 py-2 text-left dark:text-neutral-50 font-medium uppercase">
+                    <a href="{% get_url 'update' model_name obj.pk %}">
+                        Edit
+                    </a>
+                </th>
+                <th title="Detail" class="px-4 py-2 text-left dark:text-neutral-50 font-medium uppercase">
+                    <a href="{% get_url 'detail' model_name obj.pk %}">Detail</a>
+                </th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="container mx-auto">
+
+    <!-- Pagination -->
+    <div class="flex justify-between items-center my-4">
+        <div class="flex space-x-2">
+            {% if page_obj.has_previous %}
+            <a href="?page=1" class="px-4 py-2 text-white bg-neutral-800 rounded hover:bg-neutral-900">First</a>
+            <a href="?page={{ page_obj.previous_page_number }}"
+                class="px-4 py-2 text-white bg-neutral-800 rounded hover:bg-neutral-900">Previous</a>
+            {% else %}
+            <span class="px-4 py-2 text-neutral-600 dark:bg-neutral-800 rounded">First</span>
+            <span class="px-4 py-2 text-neutral-600 dark:g-neutral-800 rounded">Previous</span>
+            {% endif %}
+        </div>
+
+        <div class="flex space-x-2">
+            {% for page_num in page_obj.paginator.page_range %}
+            {% if page_obj.number == page_num %}
+            <span class="px-4 py-2 text-neutral-50 dark:bg-neutral-600 rounded">{{ page_num }}</span>
+            {% else %}
+            <a href="?page={{ page_num }}"
+                class="px-4 py-2 text-neutral-50 dark:bg-neutral-800 rounded hover:bg-neutral-700">{{ page_num }}</a>
+            {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="flex space-x-2">
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}"
+                class="px-4 py-2 text-white bg-neutral-800 rounded hover:bg-neutral-900">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}"
+                class="px-4 py-2 text-white bg-neutral-800 rounded hover:bg-neutral-900">Last</a>
+            {% else %}
+            <span class="px-4 py-2 text-neutral-600 bg-neutral-800 rounded">Next</span>
+            <span class="px-4 py-2 text-neutral-600 bg-neutral-800 rounded">Last</span>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

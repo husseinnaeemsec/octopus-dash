@@ -1,0 +1,51 @@
+<div class="form-group flex items-center">
+    <input type="checkbox" id="{{ field.id_for_label }}" name="{{ field.name }}" value="{{ field.value }}" class="hidden" />
+    <label for="{{ field.id_for_label }}" class="flex items-center cursor-pointer">
+        <!-- Toggle container -->
+        <div class="relative">
+            <!-- Background container -->
+            <div class="w-12 h-6 bg-gray-300 rounded-full transition-all duration-300 ease-in-out"></div>
+            <!-- Circle inside toggle, initially positioned to the left -->
+            <div class="absolute left-0 top-0 w-6 h-6 bg-white rounded-full shadow-md transition-all duration-300 ease-in-out"></div>
+        </div>
+        <span class="ml-2">{{ field.label }}</span>
+    </label>
+</div>
+
+<script>
+    document.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {
+        const toggleCircle = checkbox.nextElementSibling.querySelector('div:nth-child(2)'); // Target the toggle circle
+        const toggleBackground = checkbox.nextElementSibling.querySelector('div:nth-child(1)'); // Target the background
+        if (checkbox.checked) {
+                // Move the circle to the right and change the background color
+                toggleCircle.classList.add('translate-x-6');
+                toggleBackground.children[0].classList.remove('bg-gray-300');
+
+                toggleBackground.children[0].classList.add('bg-blue-500');
+
+            } else {
+                // Move the circle back to the left and reset the background color
+                toggleCircle.classList.remove('translate-x-6');
+                toggleBackground.children[0].classList.remove('bg-blue-500');
+                toggleBackground.children[0].classList.add('bg-gray-300');
+
+            }
+
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                // Move the circle to the right and change the background color
+                toggleCircle.classList.add('translate-x-6');
+                toggleBackground.children[0].classList.remove('bg-gray-300');
+
+                toggleBackground.children[0].classList.add('bg-blue-500');
+
+            } else {
+                // Move the circle back to the left and reset the background color
+                toggleCircle.classList.remove('translate-x-6');
+                toggleBackground.children[0].classList.remove('bg-blue-500');
+                toggleBackground.children[0].classList.add('bg-gray-300');
+
+            }
+        });
+    });
+</script>

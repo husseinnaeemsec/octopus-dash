@@ -1,0 +1,11 @@
+Watching for file changes with StatReloader
+Not Found: /
+"GET / HTTP/1.1" 404 2652
+Not Found: /favicon.ico
+/home/hussein/DjangoProjects/DjangoDashboard/DjangoDashboard/settings.py changed, reloading.
+Watching for file changes with StatReloader
+/home/hussein/DjangoProjects/DjangoDashboard/DjangoDashboard/settings.py changed, reloading.
+Watching for file changes with StatReloader
+/home/hussein/DjangoProjects/DjangoDashboard/DjangoDashboard/settings.py changed, reloading.
+Watching for file changes with StatReloader
+/home/hussein/DjangoProjects/DjangoDashboard/DjangoDashboard/settings.py changed, reloading.

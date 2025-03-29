@@ -1,0 +1,113 @@
+
+{% if field.errors %}
+    <ul class="space-y-3 text-rose-500">
+        
+        {% for error in field.errors  %}
+            <li> {{error}} </li>
+        {% endfor %}
+            
+    </ul>
+{% endif %}
+
+    
+
+<div class="bg-slate-50 rounded overflow-hidden my-3">
+    {% if field.field.choices %}
+    <div class="grid lg:grid-cols-2">
+        <!-- Available items list -->
+        <ul class="border {% if field.errors %} border-rose-500  {% endif %} bg-white max-h-96 overflow-y-auto">
+            <div class="p-3 border-b flex items-center justify-between gap-3 sticky top-0 z-10 bg-slate-100">
+                <div>
+                    {{ field.label }}
+                    <span class="text-slate-500 px-5 border-l ml-2"> select multiple </span>
+                </div>
+                <input type="search" id="search-available-{{ field.name }}" placeholder="Search available items..."
+                    class="p-2 px-5 bg-slate-50 border rounded">
+            </div>
+            <div id="multi-select-items-{{ field.name }}">
+                {% for value, label in field.field.choices %}
+                <li data-value="{{ value }}" class="multi-select-item cursor-pointer hover:bg-slate-200 pl-3 flex items-center justify-between">
+                    <span class="item-label">{{ label }}</span>
+                    <button data-tooltip="Move" class="p-3 px-5 bg-slate-100 move-item">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </li>
+                {% endfor %}
+            </div>
+        </ul>
+
+        <!-- Selected items list -->
+        <ul class="border {% if field.errors %} border-rose-500  {% endif %}  max-h-96 overflow-y-auto bg-white">
+            <div class="p-3 border-b flex items-center justify-between gap-3 sticky top-0 z-10 bg-slate-100">
+                <div>
+                    Selected items
+                    <span class="text-slate-500 px-5 border-l ml-2"> select multiple </span>
+                </div>
+                <input type="search" id="search-selected-{{ field.name }}" placeholder="Search selected items..."
+                    class="p-2 px-5 bg-slate-50 border rounded">
+            </div>
+            <div id="selected-{{ field.name }}"></div>
+        </ul>
+    </div>
+
+    {% else %}
+    <div>
+        <p class="p-3 bg-slate-200"> {{field.name}} {% if field.field.required %} <strong> * required field </strong> {% endif %}  </p>
+        <div class="p-3 flex items-center justify-between ">
+            <p> You have no <strong class="font-bold underline"> {{field.name}} </strong>  available </p>
+            <button class="p-3 px-5 bg-slate-200 rounded"> Add {{field.name}} </button>
+        </div>
+    </div>
+
+    {% endif %}
+    <!-- Hidden Select Input for Form Submission -->
+    <select name="{{ field.name }}" id="hidden-{{ field.name }}" multiple hidden></select>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(".multi-select-item .move-item").click(function (e) {
+            e.preventDefault();
+
+            let item = $(this).closest(".multi-select-item");
+            let value = item.data("value");
+            let selectedContainer = $("#selected-{{ field.name }}");
+            let originalContainer = $("#multi-select-items-{{ field.name }}");
+            let hiddenSelect = $("#hidden-{{ field.name }}");
+
+            if (item.parent().attr("id") === "multi-select-items-{{ field.name }}") {
+                // Move to selected list
+                $(this).children("i").removeClass("fa-arrow-right").addClass("fa-arrow-left");
+                selectedContainer.prepend(item);
+
+                // Add value to hidden select
+                hiddenSelect.append(`<option value="${value}" selected></option>`);
+            } else {
+                // Move back to available list
+                $(this).children("i").removeClass("fa-arrow-left").addClass("fa-arrow-right");
+                originalContainer.prepend(item);
+
+                // Remove value from hidden select
+                hiddenSelect.find(`option[value="${value}"]`).remove();
+            }
+        });
+
+        // Search functionality for both lists
+        $("#search-available-{{ field.name }}").on("input", function () {
+            let query = $(this).val().toLowerCase();
+            $("#multi-select-items-{{ field.name }} .multi-select-item").each(function () {
+                let label = $(this).find(".item-label").text().toLowerCase();
+                $(this).toggle(label.includes(query));
+            });
+        });
+
+        $("#search-selected-{{ field.name }}").on("input", function () {
+            let query = $(this).val().toLowerCase();
+            $("#selected-{{ field.name }} .multi-select-item").each(function () {
+                let label = $(this).find(".item-label").text().toLowerCase();
+                $(this).toggle(label.includes(query));
+            });
+        });
+    });
+</script>

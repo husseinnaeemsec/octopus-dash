@@ -1,0 +1,66 @@
+{% extends 'octopus.html' %}
+
+{% block content %}
+<div class="space-y-20">
+    <div class="p-10 rounded space-y-5">
+        <div class="bg-neutral-900 p-10">
+            <div class="flex justify-between">
+                <div class="space-y-3">
+                    <h1 class="text-3xl font-bold capitalize text-neutral-200">{{ app_config.name }}</h1>
+                    <p class="text-neutral-300 max-w-4xl  ">{{ app_config.description }}</p>
+                </div>
+                <button class="w-12 h-12 rounded bg-neutral-700 p-2">
+                    <i class="fa-solid fa-gear"></i>
+                </button>
+            </div>
+            <div class="space-y-3">
+                <div class="my-4 grid w-full lg:grid-cols-5 gap-5">
+                    <div title="App Staff"
+                        class="flex items-center gap-2 justify-between flex-col text-center hover:bg-neutral-950 hover:scale-105 transition-all bg-neutral-800 rounded-md p-10">
+                        <i class="fa-solid text-5xl text-neutral-400 fa-user-circle"></i>
+                        <span class="text-neutral-600">Staff for this app</span>
+                        <span class="text-xl">{{ app_config.staff.all.count }}</span>
+                    </div>
+                    <div title="Registered Models"
+                        class="flex items-center gap-2 justify-between flex-col text-center hover:bg-neutral-950 hover:scale-105 transition-all bg-neutral-800 rounded-md p-10">
+                        <i class="fa-solid text-5xl text-neutral-400 fa-gauge"></i>
+                        <span class="text-neutral-600">Registered Models</span>
+                        <span class="text-xl">{{ app_info.db_info.registred_models_count }}</span>
+                    </div>
+                    <div title="Registered Models"
+                        class="flex items-center gap-2 justify-between flex-col text-center hover:bg-neutral-950 hover:scale-105 transition-all bg-neutral-800 rounded-md p-10">
+                        <i class="fa-solid text-5xl text-neutral-400 fa-cube"></i>
+                        <span class="text-neutral-600">Total Models</span>
+                        <span class="text-xl">{{ app_info.db_info.models_count }}</span>
+                    </div>
+                    <div title="Database tables count for this app"
+                        class="flex items-center gap-2 justify-between flex-col text-center hover:bg-neutral-950 hover:scale-105 transition-all bg-neutral-800 rounded-md p-10">
+                        <i class="fa-solid text-5xl text-neutral-400 fa-database"></i>
+                        <span class="text-neutral-600">Database Tables</span>
+                        <span class="text-xl">{{ app_info.db_info.tables_count }}</span>
+                    </div>
+                    <div title="The date which the app started using OctopusDash"
+                        class="flex items-center gap-2 justify-between flex-col text-center hover:bg-neutral-950 hover:scale-105 transition-all bg-neutral-800 rounded-md p-10">
+                        <i class="fa-solid text-5xl text-neutral-400 fa-calendar"></i>
+                        <span class="text-neutral-600">Created at</span>
+                        <span class="text-xl">{{ app_config.created_at }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Add app resources access chart here -->
+        <!-- Add app resources access chart here -->
+        <div class="rounded">
+            <!-- Models table  -->
+            <div class=" rounded">
+                <h2 class="text-2xl text-white mb-5">App models </h2>
+                {% include 'pages/context/app/models_table.html' %}
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+    {% endblock content %}

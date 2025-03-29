@@ -1,135 +1,182 @@
 {% extends 'octopus.html' %}
 
 {% block content %}
-<div class="p-6 bg-gradient-to-r from-neutral-800 via-neutral-900 to-neutral-950 text-gray-100 flex justify-between items-center rounded-lg shadow-lg">
-    <h1 class="text-3xl font-extrabold">Dashboard Overview</h1>
-    <p class="text-sm text-gray-200">Your platform insights at a glance</p>
+<div class="w-full">
+    <!-- Dashboard Overview Section -->
+    <div class="p-6 bg-gradient-to-r from-gray-50 to-slate-50 rounded-lg border mb-6">
+        <div class="flex justify-between items-center">
+            <h1 class="text-3xl font-extrabold">Dashboard Overview</h1>
+        </div>
+        <p class="mt-3 text-sm text-gray-600 max-w-xl">
+            <strong>Note</strong>: This data is only for the registered <strong>apps, models</strong> in Octopus dashboard.
+            You may have more than these apps, but they will not be shown.
+        </p>
+    </div>
+
+    <!-- General Stats Cards Section -->
+        <section class="grid    grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+            <h1 class="lg:col-span-full text-xl font-bold"> Overview </h1>
+            <!-- Total Users Card -->
+            <div class="gap-3 flex w-full  rounded p-4 bg-slate-50 border">
+                <div class="w-14 text-2xl h-14 text-white bg-amber-500 rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+                <div>
+                    <p class="text-xl font-semibold">{{ users_count }}</p>
+                    <p class="text-slate-500 text-sm">Total Users</p>
+                </div>
+            </div>
+
+            <!-- Active Sessions Card -->
+            <div class="gap-3 flex w-full  rounded p-4 bg-slate-50 border">
+                <div class="w-14 text-2xl h-14 text-white bg-rose-500 rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <div>
+                    <p class="text-xl font-semibold">{{ active_sessions_count }}</p>
+                    <p class="text-slate-500 text-sm">Active Sessions</p>
+                </div>
+            </div>
+
+            <!-- Total Apps Card -->
+            <div class="gap-3 flex w-full  rounded p-4 bg-slate-50 border">
+                <div class="w-14 text-2xl h-14 text-white bg-blue-500 rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <div>
+                    <p class="text-xl font-semibold">{{ apps_count }}</p>
+                    <p class="text-slate-500 text-sm">Total Apps</p>
+                </div>
+            </div>
+
+            <!-- System Health Card -->
+            <div class="gap-3 flex w-full  rounded p-4 bg-slate-50 border">
+                <div class="w-14 text-2xl h-14 text-white bg-green-500 rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-heartbeat"></i>
+                </div>
+                <div>
+                    <p class="text-xl font-semibold">{{ system_status }}</p>
+                    <p class="text-slate-500 text-sm">System Health</p>
+                </div>
+            </div>
+        </section>
+
+    <!-- Detailed System Health Section -->
+    <section class="grid lg:grid-cols-5 gap-6 mt-6">
+        <h1 class="lg:col-span-full text-xl font-bold"> System Health </h1>
+
+        <!-- Database Health Card -->
+        <div class="gap-3 flex w-full  rounded p-4 bg-slate-50 border">
+            <div class="w-14 text-2xl h-14 text-white bg-blue-500 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-database"></i>
+            </div>
+            <div>
+                <p class="text-xl font-semibold">{{ database_health.status }}</p>
+                {% if database_health.query_time %}
+                    <p class="text-sm text-slate-500">Last Query Time: {{ database_health.query_time }} seconds</p>
+                {% endif %}
+                <p class="text-sm text-slate-500"> Database Status </p>
+            </div>
+        </div>
+
+        <!-- CPU Usage Card -->
+        <div class="gap-3 flex w-full  rounded p-4 bg-slate-50 border">
+            <div class="w-14 text-2xl h-14 text-white bg-green-500 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-cogs"></i>
+            </div>
+            <div>
+                <p class="text-xl font-semibold">{{ cpu_usage }}%</p>
+                {% if cpu_usage > 80 %}
+                    <p class="text-red-500">Warning: High CPU usage!</p>
+                {% endif %}
+                <p class="text-sm text-slate-500"> CPU Usage </p>
+
+            </div>
+        </div>
+
+        <!-- Memory Usage Card -->
+        <div class="gap-3 flex w-full  rounded p-4 bg-slate-50 border">
+            <div class="w-14 text-2xl h-14 text-white bg-yellow-500 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-memory"></i>
+            </div>
+            <div>
+                <p class="text-xl font-semibold">{{ memory_usage_percent }}%</p>
+                <p class="text-sm text-slate-500">Available Memory: {{ memory_usage_available }} MB</p>
+            </div>
+        </div>
+
+        <!-- Disk Space Card -->
+        <div class="gap-3 flex w-full  rounded p-4 bg-slate-50 border">
+            <div class="w-14 text-2xl h-14 text-white bg-red-500 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-hdd"></i>
+            </div>
+            <div>
+                <p class="text-xl font-semibold">{{ disk_free_gb }} GB free</p>
+                <p class="text-sm text-slate-500">Total Disk Space: {{ disk_total_gb }} GB</p>
+            </div>
+        </div>
+
+
+        <!-- System Uptime Card -->
+        <div class="gap-3 flex w-full  rounded p-4 bg-slate-50 border">
+            <div class="w-14 text-2xl h-14 text-white bg-indigo-500 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-clock"></i>
+            </div>
+            <div>
+                <p class="text-xl font-semibold">{{ system_uptime }}</p>
+                <p class="text-sm text-slate-500">System Uptime</p>
+            </div>
+        </div>
+    </section>
+    <!-- End of Detailed System Health Section -->
+<!-- Website Statistics Section -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+    <h1 class="lg:col-span-full text-xl font-bold"> Website Statistics </h1>
+
+    <!-- Total Visits Card -->
+    <div class="gap-3 flex w-full rounded p-4 bg-slate-50 border">
+        <div class="w-14 text-2xl h-14 text-white bg-purple-500 rounded-full flex items-center justify-center">
+            <i class="fa-solid fa-eye"></i>
+        </div>
+        <div>
+            <p class="text-xl font-semibold">{{ website_status.total_visits }}</p>
+            <p class="text-slate-500 text-sm">Total Visits</p>
+        </div>
+    </div>
+
+    <!-- Total Requests Card -->
+    <div class="gap-3 flex w-full rounded p-4 bg-slate-50 border">
+        <div class="w-14 text-2xl h-14 text-white bg-cyan-500 rounded-full flex items-center justify-center">
+            <i class="fa-solid fa-server"></i>
+        </div>
+        <div>
+            <p class="text-xl font-semibold">{{ website_status.total_requests }}</p>
+            <p class="text-slate-500 text-sm">Total Requests</p>
+        </div>
+    </div>
+
+    <!-- Unique Visitors Card -->
+    <div class="gap-3 flex w-full rounded p-4 bg-slate-50 border">
+        <div class="w-14 text-2xl h-14 text-white bg-teal-500 rounded-full flex items-center justify-center">
+            <i class="fa-solid fa-user-check"></i>
+        </div>
+        <div>
+            <p class="text-xl font-semibold">{{ website_status.unique_visitors }}</p>
+            <p class="text-slate-500 text-sm">Unique Visitors</p>
+        </div>
+    </div>
+
+    <!-- Bounce Rate Card -->
+    <div class="gap-3 flex w-full rounded p-4 bg-slate-50 border">
+        <div class="w-14 text-2xl h-14 text-white bg-orange-500 rounded-full flex items-center justify-center">
+            <i class="fa-solid fa-arrow-rotate-left"></i>
+        </div>
+        <div>
+            <p class="text-xl font-semibold">{{ website_status.bounce_rate }}%</p>
+            <p class="text-slate-500 text-sm">Bounce Rate</p>
+        </div>
+    </div>
+</section>
+
 </div>
-
-<div class="p-6 grid grid-cols-4 gap-6 mt-6 bg-gradient-to-r  text-gray-100 rounded-lg">
-    <!-- Total Users -->
-    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
-        <h2 class="text-lg font-bold">Total Users</h2>
-        <p class="text-3xl mt-2 font-extrabold">3,403</p>
-    </div>
-
-    <!-- Active Sessions -->
-    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
-        <h2 class="text-lg font-bold">Active Sessions</h2>
-        <p class="text-3xl mt-2 font-extrabold">245</p>
-    </div>
-
-    <!-- Security Alerts -->
-    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
-        <h2 class="text-lg font-bold">Security Alerts</h2>
-        <p class="text-3xl mt-2 font-extrabold text-red-500">12</p>
-    </div>
-
-    <!-- System Uptime -->
-    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
-        <h2 class="text-lg font-bold">System Uptime</h2>
-        <p class="text-3xl mt-2 font-extrabold text-green-400">99.99%</p>
-    </div>
-</div>
-
-<div class="p-6 grid grid-cols-2 gap-6 mt-6 bg-gradient-to-r  text-gray-100 rounded-lg">
-    <!-- Weekly User Growth -->
-    <div class="bg-gradient-to-r from-neutral-800 via-neutral-900 to-neutral-950 p-4 rounded-lg shadow-md">
-        <h2 class="text-lg font-bold mb-2">Weekly User Growth</h2>
-        <canvas id="userGrowthChart" class="w-full h-48"></canvas>
-    </div>
-
-    <!-- Security Alerts by Type -->
-    <div class="bg-gradient-to-r from-neutral-800 via-neutral-900 to-neutral-950 p-4 rounded-lg shadow-md">
-        <h2 class="text-lg font-bold mb-2">Security Alerts by Type</h2>
-        <canvas id="securityAlertsChart" class="w-full h-48"></canvas>
-    </div>
-</div>
-
-<div class="p-6 grid grid-cols-3 gap-6 mt-6 bg-gradient-to-r  text-gray-100 rounded-lg">
-    <!-- Revenue Overview -->
-    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
-        <h2 class="text-lg font-bold">Monthly Revenue</h2>
-        <p class="text-3xl mt-2 font-extrabold text-blue-400">$45,320</p>
-    </div>
-
-    <!-- Tickets Resolved -->
-    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
-        <h2 class="text-lg font-bold">Tickets Resolved</h2>
-        <p class="text-3xl mt-2 font-extrabold text-yellow-400">85%</p>
-    </div>
-
-    <!-- Pending Approvals -->
-    <div class="bg-neutral-800 p-4 rounded-lg shadow-md">
-        <h2 class="text-lg font-bold">Pending Approvals</h2>
-        <p class="text-3xl mt-2 font-extrabold text-orange-400">18</p>
-    </div>
-</div>
-
-<div class="p-6 mt-6 bg-gradient-to-r  text-gray-100 rounded-lg">
-    <h2 class="text-lg font-bold mb-4">Quick Links</h2>
-    <div class="grid grid-cols-4 gap-4">
-        <a href="/users" class="bg-neutral-700 p-4 rounded-lg text-center hover:bg-neutral-600 transition transform shadow-md font-bold">
-            Users
-        </a>
-        <a href="/sessions" class="bg-neutral-700 p-4 rounded-lg text-center hover:bg-neutral-600 transition transform shadow-md font-bold">
-            Sessions
-        </a>
-        <a href="/security" class="bg-neutral-700 p-4 rounded-lg text-center hover:bg-neutral-600 transition transform shadow-md font-bold">
-            Security
-        </a>
-        <a href="/reports" class="bg-neutral-700 p-4 rounded-lg text-center hover:bg-neutral-600 transition transform shadow-md font-bold">
-            Reports
-        </a>
-    </div>
-</div>
-
-<script>
-    // Example: Weekly User Growth Chart
-    const userGrowthCtx = document.getElementById('userGrowthChart').getContext('2d');
-    new Chart(userGrowthCtx, {
-        type: 'line',
-        data: {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            datasets: [{
-                label: 'Users',
-                data: [200, 220, 250, 300, 320, 350, 370],
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-        }
-    });
-
-    // Example: Security Alerts by Type
-    const securityAlertsCtx = document.getElementById('securityAlertsChart').getContext('2d');
-    new Chart(securityAlertsCtx, {
-        type: 'pie',
-        data: {
-            labels: ['SQL Injection', 'XSS', 'Broken Auth', 'CSRF'],
-            datasets: [{
-                data: [5, 3, 2, 2],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.6)',
-                    'rgba(54, 162, 235, 0.6)',
-                    'rgba(255, 206, 86, 0.6)',
-                    'rgba(75, 192, 192, 0.6)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-        }
-    });
-</script>
 {% endblock content %}

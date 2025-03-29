@@ -1,12 +1,12 @@
 <nav aria-label="breadcrumb" class="my-3 mb-5">
-    <ol class="flex space-x-2 text-sm text-teal-200">
+    <ol class="flex space-x-2 text-sm text-neutral-200">
         {% for part in path %}
         <li class="flex items-center">
             {% if not forloop.last %}
-            <a href="{{ part.url }}" class="text-teal-600 hover:text-teal-700">{{ part.name }}</a>
+            <a href="{{ part.url }}" class="text-neutral-400 hover:text-neutral-600">{{ part.name }}</a>
             <span class="mx-2">/</span>
             {% else %}
-            <span class="font-semibold text-teal-100">{{ part.name }}</span>
+            <span class="font-semibold text-neutral-100">{{ part.name }}</span>
             {% endif %}
         </li>
         {% endfor %}

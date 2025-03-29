@@ -1,9 +1,13 @@
 from django.contrib import admin
-from octopusDash.core.model_registry import octopus_registry
 from .models import HomePage
 from django.contrib.auth.models import User
+from octopusDash.core import DashboardApp
+from .apps import HomeConfig
+
+app = DashboardApp(HomeConfig)
+
+app.register(HomePage)
+app.register(User)
 
 
-octopus_registry.register_model(HomePage)
-octopus_registry.register_model(User)
-
+admin.site.register(HomePage)

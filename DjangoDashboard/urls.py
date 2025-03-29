@@ -21,10 +21,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LoginView, LogoutView
 from octopusDash.core import views
+from octopusDash.views import Login
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('dashboard/',include('octopusDash.urls')),
+    path("login/",Login.as_view(),name='login')
 
 ]
 
