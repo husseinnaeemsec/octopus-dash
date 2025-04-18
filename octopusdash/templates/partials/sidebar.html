@@ -1,0 +1,30 @@
+{% load static %}
+{% load octopus_tags %}
+<!-- octopusDash/templates/octopusDash/partials/sidebar.html -->
+<aside class="h-screen sticky bg-gray-800 border-r w-full text-lg z-20 overflow-y-auto top-0 p-4 py-0 px-0 sidebar">
+    <div>
+        <div class="text-3xl font-bold text-center text-white p-5 ">
+            <span class="text-blue-500">O</span>ctopus
+        </div>
+
+        <!-- Sidebar Navigation Links -->
+        <ul class="space-y-6 text-[16px] font-inter font-medium  text-gray-300">
+            <ul class="  shadow-md">
+                
+                {% for app_config, app_data in registry.items %}
+                    <li>
+                        <span class="text-slate-400 border-b border-gray-700 bg-gray-950 text-sm p-3 capitalize block mt-2">{{ app_config.name }}</span>
+                        
+                        {% for model, model_data in app_data.models.items %}
+                            <button data-menu="#menu-{{ model_name }}" class="p-3 w-full border-b border-gray-700 open-menu  flex items-center justify-between  transition duration-300">
+                                <a href="{% url 'list-objects' app_config.name model_data.name %}" class="capitalize text-gray-200">  {{ model_data.name }} </a>
+                                <a href="{% url 'create-object' app_config.name model_data.name  %}"> <i class="fa-solid fa-plus text-gray-400"></i> </a>
+                            </button>
+                        {% endfor %}
+                    </li>
+                {% endfor %}
+                
+            </ul>
+        </ul>
+    </div>
+</aside>

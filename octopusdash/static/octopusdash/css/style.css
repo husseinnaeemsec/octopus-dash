@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+
+body{
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight:normal;
+    font-style: normal;
+}
+
+.font-inter,*{
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: normal;
+    font-style: normal;
+}
+
+main{
+    grid-template-columns: 280px 1fr;
+
+}
+
+#profile-menu {
+    display: none; /* Hidden initially */
+    position: absolute;
+    top: 100%; /* Adjust based on your layout */
+    left: 0;
+    z-index: 10;
+}

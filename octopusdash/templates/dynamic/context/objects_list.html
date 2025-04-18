@@ -1,0 +1,22 @@
+{% load octopus_tags %}
+<table class="min-w-full my-10">
+
+    <thead>
+        <tr class="bg-slate-50 rounded-t border ">
+            <td class="p-3 flex items-center gap-x-3"> <input type="checkbox" name="select-all-objects" id=""> select all  </td>
+        </tr>
+    </thead>
+    <tbody>
+        
+        {% for object in page_obj  %}
+        <tr class="bg-white rounded-t border ">
+            <td class="p-3 flex items-center gap-x-3"> 
+                <input type="checkbox" name="select-all-objects" id="">
+                {{object}}
+            </td>
+        </tr>
+        {% endfor %}
+            
+    </tbody>
+</table>
+

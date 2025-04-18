@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+<div class="flex items-center pb-3 border-b justify-between">
+    <h1 class="text-2xl "> {{model_name_plural }} list  </h1>
+
+    <button class="bg-blue-500 text-white p-3 px-5 rounded"> Add new {{model_name}} </button>
+
+</div>
+
+
+<form method="get" class="p-3 bg-slate-100 flex items-center justify-between my-5">
+    <div class="flex items-center gap-3"> 
+        <input  required type="search" value="{{request.GET.search}}"  name="search" placeholder="Search for {{model_name_plural}} " id="" class="p-2 max-w-md w-full border bg-white rounded text-slate-600">
+        <button data-tooltip="Search {{model_name_plural}}" title="Search" type="submit" class="w-12 h-10 rounded-md flex items-center justify-center  bg-white " > <i class="fa-solid fa-search "></i> </button>    
+    </div>
+    <div class="flex items-center gap-x-3">
+        <button data-tooltip="Sort {{model_name_plural}}"  type="button" class="w-12 h-10 active:border-2 bg-white flex items-center justify-center rounded-md"> 
+            <i class="fa-solid fa-sort"></i>
+        </button>
+        <button data-tooltip="Filter {{model_name_plural}}"  type="button" class="w-12 active:border-2 h-10 bg-white flex items-center justify-center rounded-md"> 
+            <i class="fa-solid fa-filter"></i>
+        </button>
+    </div>
+</form>
+
+<div class="flex items-center gap-3 flex-wrap overflow-x-auto p-3 my-5">
+    
+    {% if request.GET.search %}
+        <a data-tooltip="Remove search query "  href="{% querystring search=None %}" class="p-3 border rounded px-5 flex items-center gap-3">
+            <span class="text-slate-600"> <strong> Search </strong> : {{request.GET.search}}   </span>
+            <span><i class="fa-solid fa-xmark"></i></span>
+        </a>
+    {% endif %}
+    
+    {% if request.GET.filter %}
+    <a data-tooltip="Remove filter  "  href="{% querystring filter=None %}" class="p-3 border rounded px-5 flex items-center gap-3">
+        <span class="text-slate-600"> <strong> filter </strong> : {{request.GET.filter}}   </span>
+        <span><i class="fa-solid fa-xmark"></i></span>
+    </a>
+    {% endif %}
+        
+</div>
+
+
+{% if request.GET.search %}
+    <p class="text-slate-500 my-3"> Search results  : {{page_obj|length}}  </p>
+{% endif %}
+    
+{% if page_obj %}
+{% if model_admin.list_display %}
+
+
+{% else %}
+{% include 'dynamic/context/objects_list.html' %}
+
+{% endif %}
+
+{% if is_paginated %}
+<nav class="flex justify-center mt-6">
+
+    <ul class="inline-flex items-center space-x-1">
+
+        {% if page_obj.has_previous %}
+        <li>
+            <a href="{% querystring page=page_obj.previous_page_number %}"
+                class="px-3 py-2 text-blue-600 bg-white border border-blue-300 rounded hover:bg-blue-50">
+                Previous
+            </a>
+        </li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+        {% if num == page_obj.number %}
+        <li>
+            <span class="px-3 py-2 text-white bg-blue-600 border border-blue-600 rounded">
+                {{ num }}
+            </span>
+        </li>
+        {% elif num > page_obj.number|add:"-3" and num < page_obj.number|add:"3" %}
+        <li>
+            <a href="{% querystring page=num %}"
+                class="px-3 py-2 text-blue-600 bg-white border border-blue-300 rounded hover:bg-blue-50">
+                {{ num }}
+            </a>
+        </li>
+        {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li>
+            <a href="{% querystring page=page_obj.next_page_number %}"
+                class="px-3 py-2 text-blue-600 bg-white border border-blue-300 rounded hover:bg-blue-50">
+                Next
+            </a>
+        </li>
+        {% endif %}
+
+    </ul>
+</nav>
+{% endif %}
+<form action="" id="pagination_form" >
+    <select name="objects_per_page" value="{{request.GET.objects_per_page}}" class="p-3 rounded bg-slate-100" id="">
+        <option value="10" {% if request.GET.objects_per_page == "10" %} selected {% endif %} > 10 {{model_name_plural }} per page </option>
+        <option value="30" {% if request.GET.objects_per_page == "30" %} selected {% endif %} > 30 {{model_name_plural }} per page </option>
+        <option value="50" {% if request.GET.objects_per_page == "50" %} selected {% endif %} > 50 {{model_name_plural }} per page </option>
+        <option value="70" {% if request.GET.objects_per_page == "70" %} selected {% endif %} > 70 {{model_name_plural }} per page </option>
+    </select>
+</form>
+
+<script>
+    $('[name=objects_per_page]').on('change', function () {
+        $("#pagination_form").submit()
+    });
+</script>
+
+{% else %}
+
+<div class="p-20 bg-yellow-50 text-yellow-500 flex-col gap-5 rounded border flex items-center justify-center text-3xl"> 
+    <h1 class="text-3xl "> No {{model_name_plural}} found </h1>
+    
+</div>
+
+{% endif %}
+    
+
+
+
+{% endblock content %}

@@ -1,0 +1,51 @@
+<!-- octopusdash/templates/octopusdash/dashboard.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" class="{{settings.mode}}" >
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {% block title %} {% endblock %} octopus Dash </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'octopusdash/images/favicon.svg' %}">
+    <link href="{% static 'octopusdash/css/tailwindcss.css' %}" rel="stylesheet">
+    <link href="{% static 'octopusdash/css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'octopusdash/css/forms.css' %}" rel="stylesheet">
+    <link href="{% static 'octopusdash/css/tippy.css' %}" rel="stylesheet">
+    <link href="{% static 'octopusdash/css/quill.snow.css' %}" rel="stylesheet">
+    <script src="{% static 'octopusdash/js/gsap.min.js' %}"></script>
+    <script src="{% static 'octopusdash/js/quill.min.js' %}"></script>
+    <script src="{% static 'octopusdash/js/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'octopusdash/js/fontawesome.js' %}"></script>
+    <script src="{% static 'octopusdash/js/chart.js' %}"></script>
+    <script src="{% static 'octopusdash/js/Sortable.min.js' %}"></script>   
+    <script src="{% static 'octopusdash/js/redux-4.0.5.js' %}"></script>
+    <script src="{% static 'octopusdash/js/popperjs.js' %}"></script>
+    <script src="{% static 'octopusdash/js/tippy-bundle.umd.min.js' %}"></script>
+    
+    <script src="{% static 'octopusdash/js/alerts.js' %}"></script>
+
+</head>
+
+<body class="">
+    <main class="lg:grid content-container bg-white">
+        <!-- Sidebar -->
+        <div>
+            {% include 'partials/sidebar.html' %}
+        </div>
+        <!-- Page content -->
+        <div class="min-h-screen  w-full">
+            <!-- Navbar -->
+            {% include 'partials/navbar.html' %}
+
+            <div class="p-5 pt-10 max-w-[1500px] mx-auto ">
+                <!-- {% include 'partials/breadcrumb.html' %} -->
+                {% block content %} {% endblock %}
+            </div>
+        </div>
+    </main>
+</body>
+<script src="{% static 'octopusdash/js/animation.js' %}"></script>   
+<script src="{% static 'octopusdash/js/forms.js' %}"></script>   
+</html>
