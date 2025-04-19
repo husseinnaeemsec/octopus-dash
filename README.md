@@ -25,7 +25,7 @@ We recommend:
 
 ## Screenshots
 
-![Dashboard view](img/octopus.png "Dashboard view")
+![Dashboard view](img/screenshot.png "Dashboard view")
 
 
 OctopusDash is a lightweight, modern Django admin panel alternative that provides an enhanced UI/UX experience using TailwindCSS. It offers seamless model management with drag-and-drop capabilities, advanced filtering, and built-in analytics while maintaining simplicity in setup and usage.
