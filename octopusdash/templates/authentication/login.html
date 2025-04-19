@@ -6,53 +6,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - OctopusDash</title>
-    <link href="{% static 'octopusDash/css/tailwindcss.css' %}" rel="stylesheet">
+    <link href="{% static 'octopusdash/css/tailwindcss.css' %}" rel="stylesheet">
 </head>
 
-<body class="bg-gray-100 h-screen flex items-center justify-center">
+<body class="bg-gray-950 text-white min-h-screen flex items-center justify-center">
 
-    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
-        <!-- App Name -->
-        <div class="text-center mb-6">
-            <div class="text-2xl capitalize text-center font-bold w-full  mb-8 ">
-                <span class="text-3xl text-blue-500">O</span>ctopus
-            </div>
+    <div class="bg-gray-900/40 backdrop-blur-sm p-8 rounded-xl shadow-lg w-full max-w-sm border border-gray-800">
+        <!-- Logo -->
+        <div class="flex items-center justify-center gap-3 mb-8">
+            <img src="{% static 'octopusdash/logo/64.svg' %}" alt="Octopusdash Logo" class="w-12 h-12">
+            <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-indigo-500 text-transparent bg-clip-text">
+                Octopusdash
+            </h1>
         </div>
 
         <!-- Login Form -->
-        <form method="POST">
+        <form method="POST" class="space-y-6">
             {% csrf_token %}
-            <!-- Display messages -->
+
             {% if messages %}
-                <div class="mb-4">
+                <div>
                     {% for message in messages %}
-                        <div class="text-red-500 text-sm">{{ message }}</div>
+                        <div class="text-red-400 text-sm">{{ message }}</div>
                     {% endfor %}
                 </div>
             {% endif %}
 
-            <!-- Username Field -->
-            <div class="mb-4 space-y-2">
-                <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-                <input type="text" id="username" name="username" class="w-full border bg-transparent rounded p-2 px-5">
-            </div>
-
-            <!-- Password Field -->
-            <div class="mb-4 space-y-2">
-                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                <input type="password" id="password" name="password" class="w-full border bg-transparent rounded p-2 px-5">
-            </div>
-
-            <!-- Submit Button -->
             <div>
-                <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                <label for="username" class="block text-sm font-medium text-gray-300">Username</label>
+                <input type="text" name="username" id="username" required
+                       class="w-full mt-1 p-2 px-4 bg-gray-900 bg-gray-800/60 border border-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
+                <input type="password" name="password" id="password" required
+                       class="w-full mt-1 p-2 px-4 bg-gray-900 bg-gray-800/60 border border-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            </div>
+
+            <div>
+                <button type="submit"
+                        class="w-full py-2 px-4 bg-gradient-to-r from-purple-600 via-indigo-500 to-purple-600 hover:from-purple-600 hover:to-indigo-500 text-white font-semibold rounded-lg transition duration-300">
                     Login
                 </button>
             </div>
         </form>
 
-        <div class="mt-4 text-center text-sm">
-            <a href="#" class="text-blue-600 hover:text-blue-800">Forgot your password?</a>
+        <div class="mt-6 text-center text-sm text-gray-400">
+            <a href="#" class="hover:underline hover:text-indigo-400">Forgot your password?</a>
         </div>
     </div>
 
