@@ -16,8 +16,15 @@ app_urls = [
 ]
 
 
+apps_urls = [
+    path('',views.apps_view,name='octopusdash-apps_list'),
+    path("<str:app>/",include(app_urls),name='app-views'),
+    
+]
 
 urlpatterns = [
-    path("<str:app>/",include(app_urls),name='app-views')
+    path('',views.dashboard_view,name='octopusdash-dashboard'),
+    path("login/",views.login_view,name='octopusdash-login'),
+    path("apps/",include(apps_urls))
 ]
 

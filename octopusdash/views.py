@@ -9,11 +9,46 @@ from django.db.models import Q
 from .exceptions import AppNotFound
 from .forms import form_factory
 from django.contrib import messages
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login,logout
 
 from .registry import dashboard
 # Create your views here.
 
 registry = dashboard.get_registry()
+
+
+def login_view(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            if user.is_staff:
+                login(request, user)
+                messages.success(request, "Logged in successfully.")
+                return redirect("octopusdash-dashboard")  # update route as needed
+            else:
+                messages.error(request, "You are not authorized to access the admin dashboard.")
+                # optional: logout just in case
+                logout(request)
+        else:
+            messages.error(request, "Invalid username or password.")
+
+    return render(request, "authentication/login.html")
+
+
+def dashboard_view(request):
+    return render(request,'index.html')
+
+
+def apps_view(request):
+    
+    
+    
+    return render(request,'apps_list.html')
 
 class ModelContexttMixin:
     
