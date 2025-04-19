@@ -155,3 +155,18 @@ def format_profile_key(value):
     row_tuple_key = ast.literal_eval(val)
     
     return f" Key: {row_tuple_key[0]} , Category : {row_tuple_key[1]} "
+
+
+@register.filter
+def startswith(value, arg):
+    """Check if the value starts with the given argument"""
+    if isinstance(value, str):
+        return value.startswith(arg)
+    return False
+
+
+@register.filter
+def split_get_last(value,arg):
+    """Check if the value starts with the given argument"""
+    
+    return value.split(arg)[-1]
