@@ -8,7 +8,7 @@
 
 This version of OctopusDash contains incomplete features and may cause serious bugs or errors in your Django application. Please DO NOT install it in production environments or critical projects at this time.
 
-and we recommend that you wait until we realse the stable version of OctopusDash on `master` branch 
+and we recommend that you wait until we realse the stable version of OctopusDash on `main` branch 
 
 **Current Status:**
 - Several core features are still under development
