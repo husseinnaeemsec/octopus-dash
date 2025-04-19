@@ -52,13 +52,15 @@ class ModelContexttMixin:
             self.model_admin = get_model_admin(self.model._meta.app_config, self.model)
             self.app_name = self.model._meta.app_config.label
             self.model_name = self.model._meta.model_name
+            success_action = request.POST.get("__success__",None)            
             self.form_class = form_factory(self.model)
-            success_action = request.POST.get("__success__",None)
             
             if success_action == 'save-add':
                 self.success_url = reverse_lazy(f"create-object",args=[app_name,model_name])
             else:
                 self.success_url = reverse_lazy(f"list-objects",args=[app_name,model_name])
+        
+
         
         return super().dispatch(request, *args, **kwargs)
 
@@ -138,7 +140,9 @@ class UpdateModelView(ModelContexttMixin,UpdateView):
 
 class CreateInstanceView(ModelContexttMixin,CreateView):
     template_name = 'dynamic/create.html'
-
+    
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
     
 
 
@@ -148,6 +152,23 @@ class CreateInstanceView(ModelContexttMixin,CreateView):
 
         # Add a success message with the instance's data
         messages.success(self.request, f"Successfully created {self.model._meta.verbose_name}: {instance}.")
+
+        # Redirect to another page (could be the list view or detail view of the instance)
+        return HttpResponseRedirect(self.success_url)
+
+
+class UpdateInstanceView(ModelContexttMixin,CreateView):
+    template_name = 'dynamic/update.html'
+
+    
+
+
+    def form_valid(self, form):
+        # Save the new instance
+        instance = form.save()
+
+        # Add a success message with the instance's data
+        messages.success(self.request, f"Successfully updated {self.model._meta.verbose_name}: {instance}.")
 
         # Redirect to another page (could be the list view or detail view of the instance)
         return HttpResponseRedirect(self.success_url)

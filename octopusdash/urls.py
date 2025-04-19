@@ -7,7 +7,7 @@ edit_model_views = [
 model_urls = [
     path("list/",views.ModelListView.as_view(),name='list-objects'),
     path("create/",views.CreateInstanceView.as_view(),name='create-object'),
-    path("update/<int:pk>/",views.UpdateModelView.as_view(),name='update-object')
+    path("update/<int:pk>/",views.UpdateInstanceView.as_view(),name='update-object'),
 ]
 
 app_urls = [

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .registry import dashboard
+from .registry import dashboard,ModelAdmin
 
 
 def mark_as_published(modeladmin, request, queryset):
@@ -10,8 +10,12 @@ mark_as_published.short_description = "Mark selected posts as published"
 # Register your models here.
 from .models import Post,Book
 
-dashboard.register(Post)
+class PostAdminModel(ModelAdmin):
+    list_display = ['id','title','content','duration']
+
+dashboard.register(Post,PostAdminModel)
 dashboard.register(Book)
+
 
 
 @admin.register(Post)

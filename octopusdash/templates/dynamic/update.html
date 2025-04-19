@@ -4,10 +4,6 @@
 {% block content %}
 
 
-
-
-
-
 {% if messages %}
     <div id="messages" class="my-3 bg-green-50 text-green-600 p-2 rounded border border-green-600">
         
@@ -24,7 +20,7 @@
 {% endif %}
     
 <h1 class="text-2xl">Create new  {{model_name}} </h1>
-<form method="post" enctype="multipart/form-data" class="space-y-5 my-5">
+<form method="post" class="space-y-5 my-5">
     {% csrf_token %}
     {% for field in form  %}
     {{field.widget}}
