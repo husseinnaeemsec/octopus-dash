@@ -37,7 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'octopusdash'
+    'octopusdash',
+    'orders',
+    'products',
+    'stores',
+    'projects',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'octopusdash.middleware.CheckAuthenticationMiddleware'
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -81,6 +86,10 @@ DATABASES = {
     }
 }
 
+
+OCTOPUSDASH_SETTINGS = {
+    "INCLUDE_ALL_APPS":True
+}
 
 
 # Password validation
@@ -118,6 +127,14 @@ import os
 
 # The directory where static files will be collected in production
 STATIC_URL = '/static/'
+
+
+import os
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+DASHBOARD_PATH = '/dashboard/'
 
 # The directory where static files will be stored for development
 # STATICFILES_DIRS = [
