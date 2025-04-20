@@ -23,8 +23,8 @@
 <!-- Menu items -->
 <ul class="text-gray-400 p-3 mt-5 space-y-4">
 <!-- Dashboard -->
-<a href="#dashboard"
-    class="flex items-center gap-3 p-3 text-indigo-50 bg-gradient-to-r from-indigo-500 to-indigo-700 rounded-lg">
+<a href="{% url 'octopusdash-dashboard' %}"
+    class="flex items-center gap-3 p-3 text-indigo-50 bg-gradient-to-r  {% if request.path == '/dashboard/' %} from-indigo-500 to-indigo-700 {% endif %}  rounded-lg">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
         stroke="currentColor" class="size-6">
         <path stroke-linecap="round" stroke-linejoin="round"
@@ -34,7 +34,7 @@
 </a>
 <!-- Applications List  -->
 <a href="{% url 'octopusdash-apps_list' %}"
-    class="flex items-center gap-3 p-3 text-indigo-50 bg-gradient-to-r hover:bg-gray-900 rounded-lg">
+    class="flex items-center gap-3 p-3 text-indigo-50 bg-gradient-to-r {% if request.path == '/dashboard/apps/' %} from-indigo-500 to-indigo-700 {% endif %}  hover:bg-gray-900 rounded-lg">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
         <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
     </svg>

@@ -41,10 +41,15 @@ def login_view(request):
 
 
 def dashboard_view(request):
+    
+    if request.method == 'POST':
+        print(request.POST)
+    
     return render(request,'index.html')
 
 
 def apps_view(request):
+    
     
     
     

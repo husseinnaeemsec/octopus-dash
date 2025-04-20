@@ -22,13 +22,13 @@
 
     {% if not app.name|startswith:'django.' %}
     <div
-        class="w-64  rounded-lg card bg-gradient-to-b from-indigo-700  text-center overflow-hidden border border-gray-700">
+        class="w-64  rounded-lg card bg-gradient-to-b from-gray-900  text-center overflow-hidden border border-gray-700">
         <div class="p-6">
             <h1 class="text-xl font-bold text-gray-100 truncate "> {{app.name}} </h1>
             <p class="text-6xl mt-3 font-extrabold text-indigo-200"> {{app.models|length}} </p>
             <p class="text-lg text-indigo-300"> Models </p>
         </div>
-        <div class="border-b p-1 w-full border-indigo-700"></div>
+        <div class="border-b p-1 w-full border-gray-700"></div>
         <a href="" class="w-full p-4  block rounded-b text-indigo-100 hover:text-indigo-50"> Manage app </a>
     </div>
     {% endif %}
@@ -36,7 +36,7 @@
     {% else %}
     {% for app_config,app_data in registry.items %}
     <div
-        class="w-64  rounded-lg card bg-gradient-to-b from-indigo-700  text-center overflow-hidden border border-gray-700">
+        class="w-64  rounded-lg card bg-gradient-to-b from-gray-900  text-center overflow-hidden border border-gray-700">
         <div class="p-6">
             <h1 class="text-xl font-bold text-gray-100 truncate "> {{app_config.name.title}} </h1>
             <p class="text-6xl mt-3 font-extrabold text-indigo-200"> {{app_data.models|length}} </p>
@@ -58,13 +58,13 @@
 
     {% if app.name|startswith:"django." %}
     <div
-        class="w-64  rounded-lg card bg-gradient-to-b  from-teal-950  text-center overflow-hidden border border-teal-400">
+        class="w-64  rounded-lg card bg-gradient-to-b  from-gray-900  text-center overflow-hidden border border-gray-700">
         <div class="p-6">
             <h1 class="text-xl font-bold text-teal-100 truncate"> {{app.name|split_get_last:'.'}} </h1>
             <p class="text-6xl mt-3 font-extrabold text-teal-400"> {{app.models|length}} </p>
             <p class="text-lg text-teal-500"> Models </p>
         </div>
-        <div class="border-b p-1 w-full border-teal-400"></div>
+        <div class="border-b p-1 w-full border-gray-700"></div>
         <a href="" class="w-full p-4  block rounded-b text-gray-100 hover:text-gray-50"> Manage app </a>
     </div>
     {% endif %}

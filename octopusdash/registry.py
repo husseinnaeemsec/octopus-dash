@@ -2,6 +2,7 @@ from django.db.models import Model
 import inspect 
 from django.apps import apps
 from django.http import JsonResponse
+from .conf import settings
 
 class DuplicationError(Exception):
     pass
@@ -125,9 +126,11 @@ class AppRegistry:
     @classmethod
     def get_app(cls,app:str):
         
+        
         if not app:
             return None
         
+        app = app.rpartition(".")[-1]
         try:
             app = apps.get_app_config(app)
             

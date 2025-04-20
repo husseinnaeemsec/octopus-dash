@@ -9,7 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> {% block title %} {% endblock %}  octopusdash </title>
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'octopusdash/logo/32.svg' %}">
-    <link href="{% static 'octopusdash/css/tailwindcss.css' %}" rel="stylesheet">
     <link href="{% static 'octopusdash/css/style.css' %}" rel="stylesheet">
     <link href="{% static 'octopusdash/css/forms.css' %}" rel="stylesheet">
     <link href="{% static 'octopusdash/css/tippy.css' %}" rel="stylesheet">
@@ -23,10 +22,8 @@
     <script src="{% static 'octopusdash/js/redux-4.0.5.js' %}"></script>
     <script src="{% static 'octopusdash/js/popperjs.js' %}"></script>
     <script src="{% static 'octopusdash/js/tippy-bundle.umd.min.js' %}"></script>
-    <script src="{% static 'octopusdash/js/ScrollTrigger.min.js' %}"></script>
-
-    
     <script src="{% static 'octopusdash/js/alerts.js' %}"></script>
+    <link href="{% static 'octopusdash/css/tailwindcss.css' %}" rel="stylesheet">
 
 </head>
 
@@ -39,7 +36,7 @@
             <!-- Navbar -->
             {% include 'partials/navbar.html' %}
 
-            <div class="p-5 pt-10 max-w-[1500px] mx-auto overflow-y-auto">
+            <div class="p-5 pt-10 max-w-[1500px] mx-auto h-full">
                 {% include 'partials/breadcrumb.html' %}
                 {% block content %} {% endblock %}
             </div>
