@@ -8,11 +8,12 @@ model_urls = [
     path("list/",views.ModelListView.as_view(),name='list-objects'),
     path("create/",views.CreateInstanceView.as_view(),name='create-object'),
     path("update/<int:pk>/",views.UpdateInstanceView.as_view(),name='update-object'),
+    path("delete/<int:pk>/",views.DeleteInstanceView.as_view(),name='delete-object'),
 ]
 
 app_urls = [
     path("",views.AppView.as_view(),name='app-view'),
-    path("<str:model_name>/",include(model_urls),name='model')
+    path("<str:model_name>/",include(model_urls),name='model-view')
 ]
 
 
