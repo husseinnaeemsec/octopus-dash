@@ -31,8 +31,6 @@ class StoreReview(models.Model):
     rating = models.IntegerField()
     review_text = models.TextField()
 
-    def __str__(self):
-        return f"Review for {self.store.name}"
 
 class StoreInventory(models.Model):
     store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name="inventory")
