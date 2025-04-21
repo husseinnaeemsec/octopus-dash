@@ -1,99 +1,91 @@
 {% extends 'base.html' %}
 {% load octopus_tags %}
 
-
 {% block content %}
 
 {% if not octopusdash_settings.INCLUDE_ALL_APPS %}
-<div class="p-4 bg-gray-900 rounded-md my-10">
-    <h1 class="text-3xl "> Registred Applications. </h1>
-    <p class="text-gray-500 my-2"> Octopusdash only shows the apps that you've been registred thier models in your app
+<div class="p-6 bg-gray-900 border border-gray-800 rounded-lg my-8">
+    <h1 class="text-3xl font-semibold text-white">Registered Applications</h1>
+    <p class="text-gray-400 mt-2">OctopusDash only displays apps you've explicitly registered their models.</p>
+    <p class="text-gray-400 mt-1">
+        To include all project apps, set <code class="text-indigo-300">INCLUDE_ALL_APPS = True</code> inside
+        <strong>OCTOPUSDASH_SETTINGS</strong>.
     </p>
-    <p class="text-gray-500 my-2"> If you want to include all applications in your project set the option <i> <strong>
-                INCLUDE_ALL_APPS </strong> </i> to True in <strong> OCTOPUSDAHS_SETTINGS </strong> </p>
-
 </div>
 {% endif %}
 
-<h1 class="text-2xl"> Project's applications </h1>
-<div class=" rounded-md my-10  flex gap-5 flex-wrap">
+<h1 class="text-2xl font-bold text-white mt-10 mb-6">Project Applications</h1>
+<div class="grid lg:grid-cols-5 gap-6">
     {% if octopusdash_settings.INCLUDE_ALL_APPS %}
-    {% for app in installed_apps %}
+        {% for app in installed_apps %}
+            {% if not app.name|startswith:'django.' %}
+            <div class="p-6 card bg-gray-900 rounded-xl shadow-md hover:shadow-lg transition-all">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-semibold text-gray-400 truncate">{{ app.name }}</h2>
+                </div>
 
-    {% if not app.name|startswith:'django.' %}
-    <div
-        class="w-64  rounded-lg card bg-gradient-to-b from-gray-900  text-center overflow-hidden border border-gray-700">
-        <div class="p-6">
-            <h1 class="text-xl font-bold text-gray-100 truncate "> {{app.name}} </h1>
-            <p class="text-6xl mt-3 font-extrabold text-indigo-200"> {{app.models|length}} </p>
-            <p class="text-lg text-indigo-300"> Models </p>
-        </div>
-        <div class="border-b p-1 w-full border-gray-700"></div>
-        <a href="" class="w-full p-4  block rounded-b text-indigo-100 hover:text-indigo-50"> Manage app </a>
-    </div>
-    {% endif %}
-    {% endfor %}
+                <div class="text-center my-6">
+                    <p class="text-5xl font-bold text-indigo-300">{{ app.models|length }}</p>
+                    <p class="text-sm text-gray-400 uppercase tracking-widest mt-1">Models</p>
+                </div>
+
+                <div class="mt-6 flex justify-between w-full">
+                    <a href="/admin/myapp" class="w-full   gap-1 px-4 py-2 text-sm font-medium bg-gray-800 hover:bg-indigo-700 text-white rounded-md transition text-center">
+                        Manage
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
     {% else %}
-    {% for app_config,app_data in registry.items %}
-    <div
-        class="w-64  rounded-lg card bg-gradient-to-b from-gray-900  text-center overflow-hidden border border-gray-700">
-        <div class="p-6">
-            <h1 class="text-xl font-bold text-gray-100 truncate "> {{app_config.name.title}} </h1>
-            <p class="text-6xl mt-3 font-extrabold text-indigo-200"> {{app_data.models|length}} </p>
-            <p class="text-lg text-indigo-300"> Models </p>
+        {% for app_config, app_data in registry.items %}
+        <div class="p-6 card bg-gray-900 rounded-xl shadow-md hover:shadow-lg transition-all">
+            <div class="text-center">
+                <h2 class="text-xl font-semibold text-white truncate">{{ app_config.name.title }}</h2>
+                <p class="text-6xl font-extrabold text-indigo-300 mt-4">{{ app_data.models|length }}</p>
+                <p class="text-sm text-indigo-200 uppercase tracking-widest mt-1">Models</p>
+            </div>
+
+            <div class="mt-6 flex justify-between">
+                <a href="/admin/myapp" class="inline-flex  items-center gap-1 px-4 py-2 text-sm font-medium bg-gray-800 hover:bg-indigo-700 text-white rounded-md transition">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6.75l7.5 7.5-7.5 7.5" />
+                    </svg>
+                    Manage
+                </a>
+            </div>
         </div>
-        <div class="border-b p-1 w-full border-gray-700"></div>
-        <a href="" class="w-full p-4  block rounded-b text-indigo-100 hover:text-gray-50"> Manage app </a>
-    </div>
-    {% endfor %}
+        {% endfor %}
     {% endif %}
 </div>
 
 {% if octopusdash_settings.INCLUDE_ALL_APPS %}
-<h1 class="text-2xl"> Django's applications </h1>
-<p class="text-gray-500 my-2"> The applications name are splited but the orginal names starts with <strong> django.contrib </strong> </p>
-<div class="rounded-md my-10  flex gap-5 flex-wrap">
-
+<h2 class="text-2xl font-bold text-white mt-14 mb-4">Django Internal Applications</h2>
+<p class="text-gray-500 mb-6">Applications starting with <code class="text-indigo-300">django.contrib</code></p>
+<div class="grid lg:grid-cols-5 gap-6">
     {% for app in installed_apps %}
+        {% if app.name|startswith:"django." %}
+        <div class="p-6 card bg-gray-900 rounded-xl shadow-md hover:shadow-lg transition-all">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-xl font-semibold text-white truncate">{{ app.name|split_get_last:"." }}</h2>
+                <span class="text-xs font-semibold px-2 py-1 bg-teal-600 text-white rounded-full">Django App</span>
+            </div>
 
-    {% if app.name|startswith:"django." %}
-    <div
-        class="w-64  rounded-lg card bg-gradient-to-b  from-gray-900  text-center overflow-hidden border border-gray-700">
-        <div class="p-6">
-            <h1 class="text-xl font-bold text-teal-100 truncate"> {{app.name|split_get_last:'.'}} </h1>
-            <p class="text-6xl mt-3 font-extrabold text-teal-400"> {{app.models|length}} </p>
-            <p class="text-lg text-teal-500"> Models </p>
+            <div class="text-center my-6">
+                <p class="text-5xl font-bold text-indigo-300">{{ app.models|length }}</p>
+                <p class="text-sm text-gray-400 uppercase tracking-widest mt-1">Models</p>
+            </div>
+
+            <div class="mt-6 flex justify-between">
+                <a href="/admin/myapp" class="w-full gap-1 text-center px-4 py-2 text-sm font-medium bg-gray-800 hover:bg-indigo-700 text-white rounded-md transition">
+                    Manage
+                </a>
+            </div>
         </div>
-        <div class="border-b p-1 w-full border-gray-700"></div>
-        <a href="" class="w-full p-4  block rounded-b text-gray-100 hover:text-gray-50"> Manage app </a>
-    </div>
-    {% endif %}
-
+        {% endif %}
     {% endfor %}
-
 </div>
 {% endif %}
 
-<script>
-    // Ensure the document is fully loaded before initializing GSAP and ScrollTrigger
-    document.addEventListener('DOMContentLoaded', function () {
-        gsap.registerPlugin(ScrollTrigger);
-
-        gsap.from('.card', {
-            scrollTrigger: {
-                trigger: '.card', // Set trigger element (could be a container or individual card)
-                start: 'top 80%', // Trigger when top of the card reaches 80% of the viewport
-                end: 'bottom 20%', // End animation when the bottom of the card is 20% from the viewport
-                scrub: true, // If true, the animation follows the scroll
-                markers: false, // Set to true to see the trigger points (optional)
-            },
-            opacity: 0, // Start with cards being invisible
-            y: 50, // Start with cards being slightly below
-            duration: 1, // Duration for each card
-            stagger: 0.2, // Stagger the animation by 0.2 seconds for each card
-            ease: 'power3.out', // Ease effect for smooth animation
-        });
-    });
-</script>
 
 {% endblock content %}

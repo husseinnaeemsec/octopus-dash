@@ -1,7 +1,7 @@
 {% load static %}
-<nav class="flex items-center justify-between w-full sticky top-0 bg-gray-950 px-5 p-4 ">
+<nav class="flex items-center justify-between w-full sticky top-0 z-10 bg-gray-950 px-5 p-4 ">
     <!-- Search -->
-    <div class="flex items-center  relative z-[1]">
+    <div class="flex items-center  relative z-1">
         <input id="dashboard_search" type="text" placeholder="Search"
             class="text-sm px-4 pl-10 placeholder:text-gray-500 p-3 text-gray-300 rounded-lg bg-gray-950 outline focus:outline-indigo-800 focus:outline  focus:outline outline-gray-800  lg:w-xl " />
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -124,7 +124,7 @@
             </div>
         </div>
         <!-- Profile -->
-        <div class=" p-2 relative z-[1] rounded-md text-slate-400">
+        <div class=" p-2 relative z-1 rounded-md text-slate-400">
             
             {% if request.user.is_authenticated %}
             <button data-open="false" id="toggle_profile_menu" class=" flex items-center gap-3">
@@ -135,7 +135,7 @@
             </button>
             
             <!-- Profile Menu -->
-            <div id="profile_menu" class="absolute w-[250px] hidden right-5 top-[110%]">
+            <div id="profile_menu" class="absolute w-[250px] hidden right-5 z-10 top-[110%]">
                 <div class="space-y-3 items-center p-4 text-sm  bg-gray-800 rounded-md h-fit text-gray-200 ">
                     <a href="" class="p-3 flex items-center gap-3 hover:bg-gray-900  rounded-md">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -200,7 +200,8 @@
                     opacity: 1,
                     y: 0,
                     duration: 0.3,
-                    ease: "power2.out"
+                    ease: "power2.out",
+                    zIndex:10,
                 }
             );
         } else {

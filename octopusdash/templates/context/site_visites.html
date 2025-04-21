@@ -1,0 +1,67 @@
+<div class="p-6 bg-gray-900 rounded-lg shadow-lg hover:shadow-2xl transition-all mx-auto">
+    <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-semibold text-indigo-300">Website Traffic</h3>
+        <span class="px-3 py-1 text-xs font-semibold text-gray-900 bg-indigo-500 rounded-full">Traffic</span>
+    </div>
+
+    <!-- Line Chart Widget -->
+    <div>
+        <canvas id="trafficChart" class="min-w-full h-full"></canvas>
+    </div>
+
+    <!-- Widget Footer -->
+    <div class="mt-4 flex justify-between text-sm text-gray-400">
+        <span>Last updated: 2 hours ago</span>
+        <button class="text-indigo-400 hover:text-indigo-500 transition-all">View Details</button>
+    </div>
+</div>
+
+<script>
+    var ctx = document.getElementById('trafficChart').getContext('2d');
+    var trafficChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+            datasets: [
+                {
+                    label: 'Users',
+                    data: [200, 350, 600, 500, 700],
+                    backgroundColor: 'rgba(99, 102, 241, 0.2)',
+                    borderColor: 'rgba(99, 102, 241, 1)',
+                    borderWidth: 2,
+                    tension: 0.3
+                },
+                {
+                    label: 'Non-Users',
+                    data: [100, 150, 200, 250, 300],
+                    backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                    borderColor: 'rgba(16, 185, 129, 1)',
+                    borderWidth: 2,
+                    tension: 0.3
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: 'white'
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: { color: 'rgba(255, 255, 255, 0.7)' },
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                },
+                y: {
+                    beginAtZero: true,
+                    ticks: { color: 'rgba(255, 255, 255, 0.7)' },
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                }
+            }
+        }
+    });
+</script>
