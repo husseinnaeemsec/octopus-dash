@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import View
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,JsonResponse
 from django.urls import reverse_lazy
 from django.apps import apps
 from django.views.generic import TemplateView,ListView,CreateView,UpdateView,DeleteView,DetailView
@@ -9,8 +9,10 @@ from django.db.models import Q
 from .exceptions import AppNotFound
 from .forms import form_factory
 from django.contrib import messages
+
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login,logout
+from .django_relatedobjects_fetcher.related_objects_fetcher import RelatedObjectsCollector
 
 from .registry import dashboard
 # Create your views here.
@@ -18,42 +20,6 @@ from .registry import dashboard
 registry = dashboard.get_registry()
 
 
-def login_view(request):
-    if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            if user.is_staff:
-                login(request, user)
-                messages.success(request, "Logged in successfully.")
-                return redirect("octopusdash-dashboard")  # update route as needed
-            else:
-                messages.error(request, "You are not authorized to access the admin dashboard.")
-                # optional: logout just in case
-                logout(request)
-        else:
-            messages.error(request, "Invalid username or password.")
-
-    return render(request, "authentication/login.html")
-
-
-def dashboard_view(request):
-    
-    if request.method == 'POST':
-        print(request.POST)
-    
-    return render(request,'index.html')
-
-
-def apps_view(request):
-    
-    
-    
-    
-    return render(request,'apps_list.html')
 
 class ModelContexttMixin:
     
@@ -63,9 +29,6 @@ class ModelContexttMixin:
     model_admin = None
     queryset = None
     
-    
-
-
     
     def dispatch(self, request, *args, **kwargs):
         # Fetch app and model from kwargs
@@ -92,14 +55,8 @@ class ModelContexttMixin:
             self.model_admin = get_model_admin(self.model._meta.app_config, self.model)
             self.app_name = self.model._meta.app_config.label
             self.model_name = self.model._meta.model_name
-            success_action = request.POST.get("__success__",None)            
             self.form_class = form_factory(self.model)
-            
-            if success_action == 'save-add':
-                self.success_url = reverse_lazy(f"create-object",args=[app_name,model_name])
-            else:
-                self.success_url = reverse_lazy(f"list-objects",args=[app_name,model_name])
-        
+            self.success_url = reverse_lazy(f"list-objects",args=[app_name,model_name])
 
         
         return super().dispatch(request, *args, **kwargs)
@@ -163,23 +120,19 @@ class ModelListView(ModelContexttMixin,ListView):
 
 
 
-class UpdateModelView(ModelContexttMixin,UpdateView):
-    
-    model = None
-    template_name = 'dynamic/list.html'
-    
-    
-    def get(self, request,*args, **kwargs):
-        
-        self.app_config = apps.get_app_config(kwargs.get("app"))
-        self.model = self.app_config.get_model(kwargs.get("model_name"))
-        
-        
-        return super().get(request, *args, **kwargs)
+
 
 
 class CreateInstanceView(ModelContexttMixin,CreateView):
     template_name = 'dynamic/create.html'
+
+    def get_success_url(self):
+        success_action = self.request.POST.get("__success__",None)
+        
+        if success_action == 'save-add':
+            self.success_url = reverse_lazy('create-object',args=[self.app_name,self.model_name])
+
+        return self.success_url
     
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
@@ -189,7 +142,6 @@ class CreateInstanceView(ModelContexttMixin,CreateView):
     def form_valid(self, form):
         # Save the new instance
         instance = form.save()
-
         # Add a success message with the instance's data
         messages.success(self.request, f"Successfully created {self.model._meta.verbose_name}: {instance}.")
 
@@ -197,10 +149,19 @@ class CreateInstanceView(ModelContexttMixin,CreateView):
         return HttpResponseRedirect(self.success_url)
 
 
-class UpdateInstanceView(ModelContexttMixin,CreateView):
+class UpdateInstanceView(ModelContexttMixin,UpdateView):
     template_name = 'dynamic/update.html'
+    context_object_name = 'object'
 
     
+    def get_success_url(self):
+        
+        
+        obj = self.get_object()
+        
+        self.success_url = reverse_lazy("update-object",args=[self.app_name,self.model_name,obj.pk])
+        
+        return self.success_url
 
 
     def form_valid(self, form):
@@ -211,9 +172,32 @@ class UpdateInstanceView(ModelContexttMixin,CreateView):
         messages.success(self.request, f"Successfully updated {self.model._meta.verbose_name}: {instance}.")
 
         # Redirect to another page (could be the list view or detail view of the instance)
-        return HttpResponseRedirect(self.success_url)
+        return super().form_valid(instance)
 
 
+class DeleteInstanceView(ModelContexttMixin,DeleteView):
+    template_name = 'dynamic/delete.html'
+    context_object_name = 'object'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['related_objects'] = RelatedObjectsCollector(self.get_object())
+        
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        try:
+            obj = self.get_object()
+            obj.delete()
+            
+            return HttpResponseRedirect(self.get_success_url())
+        
+        except Exception as e:
+            print(e)
+            
+            return JsonResponse(False,safe=False)
+    
 class AppView(View):
     
     def dispatch(self, request, *args, **kwargs):
@@ -228,3 +212,42 @@ class AppView(View):
     
     def get(self,request,app,*args,**kwargs):
         return render(request,'dynamic/app.html')
+
+
+
+
+
+def login_view(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            if user.is_staff:
+                login(request, user)
+                messages.success(request, "Logged in successfully.")
+                return redirect("octopusdash-dashboard")  # update route as needed
+            else:
+                messages.error(request, "You are not authorized to access the admin dashboard.")
+                # optional: logout just in case
+                logout(request)
+        else:
+            messages.error(request, "Invalid username or password.")
+
+    return render(request, "authentication/login.html")
+
+
+def dashboard_view(request):
+
+    
+    return render(request,'index.html')
+
+
+def apps_view(request):
+    
+    
+    
+    
+    return render(request,'apps_list.html')
