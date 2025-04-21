@@ -3,6 +3,7 @@ import inspect
 from django.apps import apps
 from django.http import JsonResponse
 from .conf import settings
+from .forms import form_factory
 
 class DuplicationError(Exception):
     pass
@@ -63,12 +64,18 @@ class ModelAdmin(BaseModelAdmin):
     actions = ['delete_objects']
     list_display = []
     search_fields = []
+    fields = '__all__'
     
     def __init__(self,model:Model):
         
         default_search_fields = ("CharField","TextField","JSONField","SlugField")
         
         super().__init__(model)
+        
+        self.form_class = form_factory(model,self.fields)
+        self.meta = model._meta
+        self.model_name = self.meta.model_name
+        
         
         if not self.search_fields :
             for field in self.model._meta.get_fields():
@@ -105,7 +112,7 @@ class AppRegistry:
             self.__registry[app_config] = {
                 "models":{
                     model:{
-                        "admin": admin if admin is not None else ModelAdmin(model),
+                        "admin": admin(model) if admin is not None else ModelAdmin(model),
                         "name":model._meta.model_name,
                         "plural":model._meta.verbose_name_plural,
                     }
