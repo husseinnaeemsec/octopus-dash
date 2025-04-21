@@ -6,8 +6,8 @@ import ast
 
 register = template.Library()
 
-@register.filter(name='attr')
-def attr(obj, field_name):
+@register.simple_tag
+def get_attr(obj, field_name):
     return getattr(obj, field_name, None)
 
 
