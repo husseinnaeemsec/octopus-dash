@@ -4,3 +4,5 @@ class AppNotFound(Exception):
         self.extra_context = extra_context
         super().__init__(message)
 
+class ModelNotFound(Exception):
+    pass
