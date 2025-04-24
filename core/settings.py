@@ -88,7 +88,6 @@ DATABASES = {
 
 
 OCTOPUSDASH_SETTINGS = {
-    "INCLUDE_ALL_APPS":True
 }
 
 
