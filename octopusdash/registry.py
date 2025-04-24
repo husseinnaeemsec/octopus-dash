@@ -64,23 +64,47 @@ class ModelAdmin(BaseModelAdmin):
     actions = ['delete_objects']
     list_display = []
     search_fields = []
+    filter_fields = []
     fields = '__all__'
+    icon = None
     
     def __init__(self,model:Model):
         
-        default_search_fields = ("CharField","TextField","JSONField","SlugField")
+        self.model_search_fields = []
+        self.model_filter_fields = []
         
+        default_search_fields = ("CharField","TextField","JSONField","SlugField")
+        default_filter_fields = ("BooleanField","DateField","DateTimeField","TimeField")
+
         super().__init__(model)
         
         self.form_class = form_factory(model,self.fields)
         self.meta = model._meta
         self.model_name = self.meta.model_name
+
         
-        
-        if not self.search_fields :
+        # Get default search fields (based on type if it's searchable or not )
+        if not self.search_fields:
             for field in self.model._meta.get_fields():
                 if field.get_internal_type() in default_search_fields:
-                    self.search_fields.append(field.name)
+                    self.model_search_fields.append(field.name)
+        else:
+            self.model_search_fields = self.search_fields
+        if not self.filter_fields:
+            for field in self.model._meta.get_fields():
+                if field.get_internal_type() in default_filter_fields and field.name in self.list_display:
+                    self.model_filter_fields.append({
+                        'name':field.name.replace("_"," ").title(),
+                        'field':field.name,
+                        'type':field.get_internal_type(),
+                        'is_bool':field.get_internal_type() == 'BooleanField',
+                        'is_date':field.get_internal_type() == 'DateField',
+                        'is_datetime':field.get_internal_type() == 'DateTimeField',
+                        'is_time':field.get_internal_type() == 'TimeField'
+                    })
+        
+        else:
+            self.model_filter_fields = self.filter_fields
     
     def delete_objects(self,request,queryset):
         """ Deleting all selected users  """
@@ -88,7 +112,11 @@ class ModelAdmin(BaseModelAdmin):
         return JsonResponse("Deleted",safe=False)
 
 
-
+class AppConfiguration:
+    
+    icon = None
+    display_name = None
+    
 
 class AppRegistry:
     
@@ -117,7 +145,7 @@ class AppRegistry:
                         "plural":model._meta.verbose_name_plural,
                     }
                 },
-                'app_name':app_config.name,
+                'app_name':app_config.label,
             }
         else:
             if not self.get_registry().get(app_config)['models'].get(model):
@@ -129,6 +157,25 @@ class AppRegistry:
             else:
                 raise DuplicationError(f"model ({model._meta.model_name})  is already regisrtered  ")
     
+    @classmethod
+    def set_app_config(cls,app_label,app_config,register_app=False):
+        try:
+            django_app_config = apps.get_app_config(app_label)
+            app = cls.__registry[django_app_config]
+            app['config'] = app_config
+        except LookupError:
+            raise LookupError(f"App with the label {app_label} not found")
+        
+        except KeyError:
+            if register_app:
+                cls.__registry[app_config] = {
+                    'config':app_config,
+                    'models':{},
+                }
+                
+            
+            else:
+                raise LookupError(f'App with the label {app_label} is not registered remove the app or set register_app to True ')
     
     @classmethod
     def get_app(cls,app:str):
