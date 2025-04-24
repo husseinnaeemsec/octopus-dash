@@ -5,6 +5,7 @@ Django==5.2
 django-cors-headers==4.7.0
 djangorestframework==3.16.0
 executing==2.2.0
+Faker==37.1.0
 ipython==9.1.0
 ipython_pygments_lexers==1.1.1
 jedi==0.19.2
@@ -13,10 +14,12 @@ parso==0.8.4
 pexpect==4.9.0
 pillow==11.2.1
 prompt_toolkit==3.0.51
+psycopg==3.2.6
 ptyprocess==0.7.0
 pure_eval==0.2.3
 Pygments==2.19.1
 sqlparse==0.5.3
 stack-data==0.6.3
 traitlets==5.14.3
+tzdata==2025.2
 wcwidth==0.2.13
