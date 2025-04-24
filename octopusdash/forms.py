@@ -1,13 +1,17 @@
 
 from django import forms
+from django.contrib.auth import get_user_model
+from .conf import settings,default_settings
 
+User = get_user_model()
 class FieldMetaData:
     
     def __init__(self,field:forms.Field):
-        self.input_type = field.widget.input_type
+        self.input_type = field.widget.input_type if hasattr(field.widget,'input_type') else ''
         self.type = type(field).__name__
         self.choices = field.choices if hasattr(field,'choices') else []
-        
+
+
 class DynamiModelForm(forms.ModelForm):
     
     fields_metadata = {}
@@ -17,7 +21,7 @@ class DynamiModelForm(forms.ModelForm):
         
         # Optionally, you can loop through fields and print them or customize further
         for field_name,field in self.fields.items():
-            field.widget.attrs['class'] = 'w-full p-2 px-5 bg-gray-800 my-2 rounded-md '
+            field.widget.attrs['class'] = 'w-full p-2 px-5 bg-gray-200 dark:bg-gray-800 my-2 rounded-md '
             if not self.fields_metadata.get(field_name):
                 self.fields_metadata[field_name] = {
                     'metadata':FieldMetaData(field),
@@ -28,6 +32,19 @@ class DynamiModelForm(forms.ModelForm):
     class Meta:
         model = None
         fields = "__all__"
+
+
+form_class_fields = settings.get("USER_FORM_FIELDS",default_settings.get("USER_FORM_FIELDS"))
+exclude_fields = []
+
+if 'password' in form_class_fields:
+    exclude_fields = ['password']
+class UserModelForm(DynamiModelForm):
+    
+    class Meta:
+        model = User
+        fields = form_class_fields
+        exclude = exclude_fields
 
 # Form factory function
 def form_factory(model, fields='__all__'):
@@ -42,3 +59,5 @@ def form_factory(model, fields='__all__'):
     form_class = type(f"DynamicModelForm", (DynamiModelForm,), {"Meta": Meta})
     
     return form_class
+
+
