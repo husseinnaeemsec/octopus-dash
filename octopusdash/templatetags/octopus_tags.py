@@ -2,7 +2,8 @@ from django import template
 from django.urls import reverse_lazy
 from django.db.models import Model
 import ast
-
+import re
+from django.utils.safestring import mark_safe
 
 register = template.Library()
 
@@ -17,8 +18,15 @@ def image_field(obj, field_name):
 
     return file.url if file else ''
 
+@register.filter
+def get(obj:dict,key,default=None):
+    return obj.get(key,default)
 
 
+
+@register.filter("contains")
+def contains(text:str,value:str):
+    return str(value).lower() in str(text).lower()
 
 @register.simple_tag
 def get_url(view_name, model_name, pk=None):
@@ -53,9 +61,42 @@ def get_field_metadata(field):
 
 
 @register.simple_tag
-def startswith(path1:str,text:str):
+def startswith(path:str,text:str):
     
-    return path1.startswith(text)
+    return path.startswith(text)
+
+@register.filter
+def endswith(path:str,text:str):
+    return path.endswith(text)
+
+@register.filter
+def is_filtred(field,active_filters:dict):
+    if not active_filters:
+        return False
+    
+    filtres_querystring = active_filters.keys()
+    
+    return field in filtres_querystring or f'from_{field}' in filtres_querystring or f'to_{field}' in filtres_querystring
+
+@register.simple_tag
+def cast_value(value,type):
+    if type == 'str':
+        return str(value)
+    return str(value)
+
+@register.filter
+def highlight(value, search_term):
+    if not search_term:
+        return value
+
+    pattern = re.escape(search_term)
+    highlighted = re.sub(
+        pattern,
+        lambda m: f'<mark class="bg-amber-400/40 text-white">{m.group(0)}</mark>',
+        str(value),
+        flags=re.IGNORECASE
+    )
+    return mark_safe(highlighted)
 
 @register.simple_tag
 def startswith_list(path1:str,search_list:list):
