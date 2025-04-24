@@ -1,30 +1,63 @@
 {% extends 'base.html' %}
 
-
-
 {% block content %}
+
+<div class="w-full p-3 items-center gap-3  rounded-t flex justify-between"> 
+    <h1 class="text-xl font-bold"> {{ model_admin.meta.verbose_name_plural.title }} </h1>
+    <a href="{% url 'create-object' app_name model_admin.model_name %}" class="bg-gradient-to-r text-white from-indigo-500 to-purple-600 p-3 rounded-md"> 
+        Add new {{ model_name }} 
+    </a>
+</div>
+
+<div class="mt-10">
+    {% include 'dynamic/context/search_and_filter.html' %}
+    
+    {% if model_admin.list_display %}
+        {% include 'dynamic/table.html' %}
+    {% else %}
+        {% include 'dynamic/objects_list.html' %}
+    {% endif %}
+
+    {% include 'dynamic/paginator.html' %}
+</div>
+
+{% endblock content %}
 
 
 
 {% if objects %}
-<div class="w-full p-3 items-center gap-3  rounded-t flex justify-between"> 
-    <h1 class="text-xl font-bold"> {{model_admin.meta.verbose_name_plural.title}}  </h1>
-    <a href="{% url 'create-object' app_name model_admin.model_name  %}" class="bg-gradient-to-r from-indigo-500 to-purple-600 p-3 rounded-md"> Add new {{model_name}} </a>
+{% block script %}
+<script>
+    const selectAllObjectsBtn = document.getElementById("select-all-objects");
+    const removeSelectedObjectsBtn = document.getElementById("remove-all-selected-objects");
+    let toggleAllCheckbox = document.getElementById("checkbox-toggle-all");
+    let checkboxObjects = document.querySelectorAll(".checkbox-object-item");
+    const dispatchSelectedItems = (target,store)=>{
+                if(target.checked){
+                    store.dispatch({
+                        type:'ADD_TO_SELECTED',
+                        payload:target.dataset.id,
+                    })
+                }else{
+                    store.dispatch({
+                        type:'REMOVE_FROM_SELECTED',
+                        payload:target.dataset.id,
+                    })
+                }
+            }
 
-</div>
-{% if model_admin.list_display %}
-{% include 'dynamic/table.html' %}
-{% else %}
-{% include 'dynamic/objects_list.html' %}
-{% endif %}
-{% else %}
-<div class="w-full p-20 bg-gray-900 rounded-md max-w-7xl mx-auto my-auto flex items-center justify-center flex-col gap-5">
-    <h1 class="text-2xl"> You have no {{model_admin.meta.verbose_name_plural}}  Yet </h1>
-    <a href="{% url 'create-object' app_name model_admin.model_name  %}" class="bg-gradient-to-r from-indigo-500 to-purple-600 p-3 rounded-md"> Add new {{model_name}} </a>
-</div>
+    // Add event listenr to the checkboxes 
+    document.addEventListener("DOMContentLoaded",()=>{
+        if(window.store){
+            checkboxObjects.forEach((checkbox)=>{
+            dispatchSelectedItems(checkbox,window.store)
+            checkbox.addEventListener("click",(e)=>{
+                dispatchSelectedItems(e.target,window.store)
+            })
+        })
+        }
+    })
+</script>
+{% endblock script %}
 {% endif %}
     
-    
-
-{% include 'dynamic/paginator.html' %}
-{% endblock content %}
