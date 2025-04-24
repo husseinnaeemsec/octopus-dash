@@ -1,0 +1,32 @@
+{% load octopus_tags %}
+{% for filter in model_admin.model_filter_fields  %}
+            
+<div class="p-3 hover:bg-gray-200 dark:hover:bg-gray-950 dark:hover:text-gray-100 last:border-none   text-gray-400">
+    {% if filter.is_bool %}
+    <!-- Boolean filter -->
+    {% with field__value=request.GET|get:filter.field %}
+    {% include 'dynamic/context/filter/boolean_filter.html' %}
+    {% endwith %}
+    <!-- Time filter -->
+    {% elif filter.is_time %}
+    {% include 'dynamic/context/filter/time_filter.html' %}
+    <!-- Date filter -->
+    {% elif filter.is_date %}
+    {% include 'dynamic/context/filter/date_filter.html' %}
+    <!-- Datetime filter -->
+    {% elif filter.is_datetime %}
+    {% include 'dynamic/context/filter/datetime_filter.html' %}
+    {% endif %}
+
+</div>
+    {% empty %}
+    <div class="p-5 flex items-center justify-center text-gray-600"> This model has no fields to be filtered </div>
+    {% endfor %}
+
+    
+    {% if model_admin.model_filter_fields %}
+    <div class="p-3">
+        <button class="bg-amber-600 text-amber-50 rounded-md p-2 px-4"> Filter </button>
+    </div>
+    {% endif %}
+        
