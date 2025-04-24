@@ -14,9 +14,6 @@ from .registry import dashboard
 
 registry = dashboard.get_registry()
 
-
-
-
 class ModelListView(ListViewMixin,ListView):
     model = None
     template_name = 'dynamic/list.html'
