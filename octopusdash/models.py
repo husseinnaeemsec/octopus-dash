@@ -10,7 +10,18 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 
 User = get_user_model()
 
+class Field(models.Model):
+    
+    name = models.CharField(max_length=150)
+    desc = models.TextField(max_length=4000,blank=True)
+    
+    def __str__(self):
+        return self.name
 
+class FieldAttr(models.Model):
+    field  = models.ForeignKey(Field,on_delete=models.CASCADE)
+    attr = models.CharField(max_length=140)
+    desc = models.TextField(max_length=4000,blank=True)
 
 class Profile(models.Model):
     
