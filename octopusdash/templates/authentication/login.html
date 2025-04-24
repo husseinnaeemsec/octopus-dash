@@ -9,9 +9,9 @@
     <link href="{% static 'octopusdash/css/tailwindcss.css' %}" rel="stylesheet">
 </head>
 
-<body class="bg-gray-950 text-white min-h-screen flex items-center justify-center">
+<body class="dark:bg-gray-950 text-white min-h-screen flex items-center justify-center">
 
-    <div class="bg-gray-900/40 backdrop-blur-sm p-8 rounded-xl shadow-lg w-full max-w-sm border border-gray-800">
+    <div class="dark:bg-gray-900/40 bg-white  backdrop-blur-sm p-8 rounded-xl shadow-lg w-full max-w-sm border border-gray-300 dark:border-gray-800">
         <!-- Logo -->
         <div class="flex items-center justify-center gap-3 mb-8">
             <img src="{% static 'octopusdash/logo/64.svg' %}" alt="Octopusdash Logo" class="w-12 h-12">
@@ -33,15 +33,15 @@
             {% endif %}
 
             <div>
-                <label for="username" class="block text-sm font-medium text-gray-300">Username</label>
+                <label for="username" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Username</label>
                 <input type="text" name="username" id="username" required
-                       class="w-full mt-1 p-2 px-4 bg-gray-900 bg-gray-800/60 border border-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    class="w-full mt-1 p-2 px-4 dark:bg-gray-900 bg-gray-50  border dark:border-gray-700 border-gray-300 dark:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
             </div>
 
             <div>
-                <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
+                <label for="password" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Password</label>
                 <input type="password" name="password" id="password" required
-                       class="w-full mt-1 p-2 px-4 bg-gray-900 bg-gray-800/60 border border-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    class="w-full mt-1 p-2 px-4 dark:bg-gray-900 bg-gray-50  border dark:border-gray-700 border-gray-300 dark:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
             </div>
 
             <div>
