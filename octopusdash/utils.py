@@ -8,7 +8,10 @@ def get_model_admin(app_config,model):
     
     
     try:
-        return registry[app_config]['models'][model]['admin']
+        models = registry[app_config]['models']
+
+        return models[model]['admin']
+
     
     except KeyError:
         return None
