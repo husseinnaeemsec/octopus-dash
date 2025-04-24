@@ -60,7 +60,7 @@ class BaseModelAdmin(metaclass=ModelAdminMetaClass):
         self.model = model
 
 
-class ModelAdmin(BaseModelAdmin):
+class ODModelAdmin(BaseModelAdmin):
     actions = ['delete_objects']
     list_display = []
     search_fields = []
@@ -140,7 +140,7 @@ class AppRegistry:
             self.__registry[app_config] = {
                 "models":{
                     model:{
-                        "admin": admin(model) if admin is not None else ModelAdmin(model),
+                        "admin": admin(model) if admin is not None else ODModelAdmin(model),
                         "name":model._meta.model_name,
                         "plural":model._meta.verbose_name_plural,
                     }
@@ -150,7 +150,7 @@ class AppRegistry:
         else:
             if not self.get_registry().get(app_config)['models'].get(model):
                 self.__registry[app_config]['models'][model] = {
-                    'admin':admin(model) if admin is not None else ModelAdmin(model),
+                    'admin':admin(model) if admin is not None else ODModelAdmin(model),
                     "name":model._meta.model_name,
                     "plural":model._meta.verbose_name_plural,
                 }
