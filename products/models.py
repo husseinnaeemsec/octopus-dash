@@ -1,5 +1,14 @@
 from django.db import models
 
+class Category(models.Model):
+    
+    name  = models.CharField(max_length=150)
+    is_active = models.BooleanField(default=False)
+    description = models.CharField(max_length=500,null=True)
+    date = models.DateField()
+    time = models.TimeField()
+    datetime = models.DateTimeField()
+
 class Product(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
