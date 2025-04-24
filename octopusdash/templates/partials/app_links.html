@@ -1,27 +1,44 @@
+{% for app_config,app_data in registry.items %}
+{% url 'app-view' app_config.label as app_url %}
 <div>
     <div
-        id="app-{{app_config.name}}" class="flex app-link items-center justify-between gap-3 rounded-lg p-3 {% if app_config.name in request.path and not request.path == app_url  %} bg-gradient-to-r text-indigo-50 from-gray-700 to-gray-900 {% else %} {% if request.path == app_url %}  bg-gradient-to-r text-indigo-50 from-indigo-500 to-indigo-700  {% else %} hover:bg-gray-900 {% endif %}  {% endif %}   ">
+        id="app-{{app_config.label}}" class="flex app-link items-center justify-between gap-3 rounded-lg p-3 {% if app_config.label in request.path and not request.path == app_url  %} bg-gradient-to-r text-gray-900 dark:text-indigo-50 from-gray-100 to-gray-300 dark:from-gray-700 dark:to-gray-900 {% else %} {% if request.path == app_url %}  bg-gradient-to-r text-indigo-50 from-indigo-500 to-indigo-700  {% else %} text-gray-300  hover:bg-gray-200 dark:hover:bg-gray-900 {% endif %}  {% endif %}   ">
         <div class="flex items-center gap-3">
-            <svg title="Change the icon from the admin model" xmlns="http://www.w3.org/2000/svg" fill="none"
-                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
-            </svg>
-            <a href="{{app_url}}"> {{app_config.name.title}} </a>
+            <!-- App icon -->
+            {% if app_data.config and app_data.config.icon %}
+                {{app_data.config.icon|safe}}
+                {% else %}
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12H12m-8.25 5.25h16.5" />
+                </svg>
+            {% endif %}
+            <!-- App display name  -->
+            {% if app_data.config and app_data.config.display_name %}
+                <a href="{{app_url}}"> {{app_data.config.display_name}} </a>
+                {% else %}
+                <a href="{{app_url}}"> {{app_config.label.title}} </a>
+            {% endif %}
+            
         </div>
-        <button data-app-link="app-{{app_config.name}}" data-menu="menu-{{app_config.name}}" class="toggle-models-menu"> <i
+        <button data-app-link="app-{{app_config.label}}" data-menu="menu-{{app_config.label}}" class="toggle-models-menu"> <i
                 class="fa-solid fa-angle-down"></i> </button>
     </div>
-    <ul id="menu-{{app_config.name}}"
-        class=" rounded model-links-menu {% if app_config.name in request.path %} flex flex-col {% else %} h-0 overflow-hidden {% endif %} ">
+    <ul id="menu-{{app_config.label}}"
+        class=" rounded model-links-menu {% if app_config.label in request.path %} flex flex-col {% else %} h-0 overflow-hidden {% endif %} ">
 
         {% for model,model_data in app_data.models.items %}
-        {% url 'list-objects' app_config.name model_data.name as model_view %}
+        {% url 'list-objects' app_config.label model_data.name as model_view %}
         <a href="{{model_view}}"
-            class="p-3 my-2 pl-5 inline-block model-link text-sm flex items-center gap-1 rounded-md {% if request.path == model_view %} bg-gradient-to-r text-indigo-50 from-indigo-700 to-indigo-900 {% else %} text-gray-500 hover:bg-gray-900 hover:text-gray-100 {% endif %}  ">
+            class="p-3 my-2 pl-5 inline-block model-link text-sm flex items-center gap-2 rounded-md {% if request.path == model_view %} bg-gradient-to-r text-indigo-50 from-indigo-500 to-indigo-600 dark:from-indigo-700 dark:to-indigo-900 {% else %} text-gray-700 dark:text-gray-500  hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-900 dark:hover:text-gray-100 {% endif %}  ">
+            
+            {% if model_data.admin.icon %}
+                {{model_data.admin.icon|safe}}
+            {% endif %}
+                
             {{model_data.plural.title}}
         </a>
         {% endfor %}
 
     </ul>
 </div>
+{% endfor %}

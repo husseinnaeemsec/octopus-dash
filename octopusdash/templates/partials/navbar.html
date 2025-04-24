@@ -1,16 +1,16 @@
 {% load static %}
-<nav class="flex items-center justify-between w-full sticky top-0 z-10 bg-gray-950 px-5 p-4 ">
+<nav class="flex items-center justify-between w-full sticky top-0 z-10 bg-gray-50 dark:bg-gray-950 px-5 p-4 ">
     <!-- Search -->
     <div class="flex items-center  relative z-1">
         <input id="dashboard_search" type="text" placeholder="Search"
-            class="text-sm px-4 pl-10 placeholder:text-gray-500 p-3 text-gray-300 rounded-lg bg-gray-950 outline focus:outline-indigo-800 focus:outline  focus:outline outline-gray-800  lg:w-xl " />
+            class="text-sm px-4 pl-10 placeholder:text-gray-500 p-3 text-gray-300 rounded-lg bg-gray-50 dark:bg-gray-950 outline focus:outline-indigo-800 focus:outline  focus:outline outline:gray-200 dark:outline-gray-800  lg:w-xl " />
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
             stroke="currentColor" class="size-5 absolute left-3 text-gray-500">
             <path stroke-linecap="round" stroke-linejoin="round"
                 d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
         </svg>
         <!-- Seach result -->
-        <div id="search_results" class="absolute hidden max-w-2xl w-96 overflow-hidden overflow-y-auto h-96   bg-gray-900 top-[130%] border border-gray-700 rounded-lg">
+        <div id="search_results" class="absolute hidden max-w-2xl w-96 overflow-hidden overflow-y-auto h-96   dark:bg-gray-900 top-[130%] border border-gray-700 rounded-lg">
             <p class="text-gray-400 sticky top-0 z-10 p-4 bg-gray-950 text-xs flex items-center gap-3">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
@@ -111,13 +111,13 @@
     <div class="flex items-center gap-3">
         <div class="flex items-center gap-3 text-slate-400">
             <!-- Messages -->
-            <div class="w-12 h-12 rounded-md bg-gray-900 p-2 flex items-center justify-center">
+            <div class="w-12 h-12 rounded-md dark:bg-gray-900 bg-gray-200 p-2 flex items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
                 </svg>
             </div>
             <!-- Notifcations -->
-            <div class="w-12 h-12 rounded-md bg-gray-900 p-2 flex items-center justify-center">
+            <div class="w-12 h-12 rounded-md dark:bg-gray-900 bg-gray-200 p-2 flex items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
                 </svg>
@@ -136,8 +136,8 @@
             
             <!-- Profile Menu -->
             <div id="profile_menu" class="absolute w-[250px] hidden right-5 z-10 top-[110%]">
-                <div class="space-y-3 items-center p-4 text-sm  bg-gray-800 rounded-md h-fit text-gray-200 ">
-                    <a href="" class="p-3 flex items-center gap-3 hover:bg-gray-900  rounded-md">
+                <div class="space-y-3 items-center p-4 text-sm  bg-gray-100 dark:bg-gray-800 rounded-md h-fit text-gray-600 dark:text-gray-200 ">
+                    <a href="" class="p-3 flex items-center gap-3 hover:bg-gray-200 dark:hover:bg-gray-900  rounded-md">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -145,7 +145,7 @@
                         </svg>
                         Edit Profile
                     </a>
-                    <a href="" class="p-3 flex items-center gap-3 hover:bg-gray-900">
+                    <a href="" class="p-3 flex items-center gap-3 hover:bg-gray-200 dark:hover:bg-gray-900">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -155,7 +155,7 @@
         
                         Dashboard Settings
                     </a>
-                    <a href="" class="p-3 flex items-center gap-3 hover:bg-gray-900">
+                    <a href="" class="p-3 flex items-center gap-3 hover:bg-gray-200 dark:hover:bg-gray-900">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -163,8 +163,8 @@
                         </svg>
                         Lock Screen
                     </a>
-                    <span class="border-b w-full inline-block border-gray-700  p-2"></span>
-                    <a href="" class="p-3 flex items-center gap-3 hover:bg-gray-900 text-rose-300">
+                    <span class="border-b w-full inline-block border-gray-300 dark:border-gray-700  p-2"></span>
+                    <a href="" class="p-3 flex items-center gap-3 hover:bg-gray-200 dark:hover:bg-gray-900 text-rose-500 dark:text-rose-300">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
