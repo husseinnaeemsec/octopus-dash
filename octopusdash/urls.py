@@ -1,5 +1,7 @@
 from . import views
+from . import octopusdash_views
 from django.urls import path,include
+
 
 edit_model_views = [
 ]
@@ -23,9 +25,15 @@ apps_urls = [
     
 ]
 
+octopusdash_urls = [
+    path('',octopusdash_views.dashboard_view,name='octopusdash-dashboard'),
+    path("login/",octopusdash_views.login_view,name='octopusdash-login'),
+    path('users/',octopusdash_views.UserListView.as_view(),name='octopusdash-users-list'),
+    path('users/update/<int:pk>/',octopusdash_views.UpdateUserView.as_view(),name='octopusdash-update-user')
+]
+
 urlpatterns = [
-    path('',views.dashboard_view,name='octopusdash-dashboard'),
-    path("login/",views.login_view,name='octopusdash-login'),
+    path('',include(octopusdash_urls)),
     path("apps/",include(apps_urls))
 ]
 
