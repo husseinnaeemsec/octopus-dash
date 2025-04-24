@@ -2,7 +2,7 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html id="htmlRoot" lang="en" class="">
+<html id="htmlRoot" lang="en" class="light">
 
 <head>
     <meta charset="UTF-8">
@@ -14,15 +14,22 @@
     <script src="{% static 'octopusdash/js/jquery-3.7.1.min.js' %}"></script>
     <script src="{% static 'octopusdash/js/fontawesome.js' %}"></script>
     <script src="{% static 'octopusdash/js/chart.js' %}"></script>
+    <script src="{% static 'octopusdash/js/redux-4.0.5.js' %}"></script>
     <link href="{% static 'octopusdash/css/tailwindcss.css' %}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- GridStack CSS -->
     <link href="https://cdn.jsdelivr.net/npm/gridstack@9.2.0/dist/gridstack.min.css" rel="stylesheet" />
     <!-- GridStack JS -->
     <script src="https://cdn.jsdelivr.net/npm/gridstack@9.2.0/dist/gridstack-all.min.js"></script>
+    <!-- Tippy -->
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css" />
+    
 </head>
 
 <body class="">
-    <main class="bg-gray-950 grid lg:grid-cols-[310px_1fr] text-gray-100 justify-center h-screen overflow-x-hidden">
+<main class="bg-gray-50 dark:bg-gray-950 dark:text-gray-100 text-gray-900 grid lg:grid-cols-[310px_1fr] text-gray-100 justify-center h-screen overflow-x-hidden">
         <!-- Sidebar -->
         {% include 'partials/sidebar.html' %}
         <!-- Page content -->
@@ -59,4 +66,18 @@
     })();
 </script>
 
+<!-- Tooltip -->
+<script>
+    tippy('[data-tippy-content]');
+</script>
+<!-- Manage store -->
+<script>
+    document.addEventListener("DOMContentLoaded",()=>{
+        window.Redux = Redux;
+    })
+</script>
+<script type="module" src="{% static 'octopusdash/js/index.js' %}"></script>
+
+{% block script %}{% endblock script %}
+    
 </html>
