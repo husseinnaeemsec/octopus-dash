@@ -4,88 +4,47 @@
 {% block content %}
 
 {% if not octopusdash_settings.INCLUDE_ALL_APPS %}
+
+
 <div class="p-6 bg-gray-900 border border-gray-800 rounded-lg my-8">
     <h1 class="text-3xl font-semibold text-white">Registered Applications</h1>
-    <p class="text-gray-400 mt-2">OctopusDash only displays apps you've explicitly registered their models.</p>
-    <p class="text-gray-400 mt-1">
-        To include all project apps, set <code class="text-indigo-300">INCLUDE_ALL_APPS = True</code> inside
-        <strong>OCTOPUSDASH_SETTINGS</strong>.
-    </p>
+    <p class="text-gray-400 mt-2">OctopusDash only displays apps whose models you've explicitly registered.</p>
+
+    <!-- Coming Soon Alert -->
+    <div class="flex mt-6 justify-between items-start bg-yellow-800/60 text-yellow-100 p-5 rounded-lg shadow-md border border-yellow-700">
+        <div class="flex items-start gap-4">
+            <div>
+                <p class="text-sm leading-relaxed">
+                    <span class="font-medium">Feature coming soon:</span> full management for 
+                    <strong>Django & Third Party Applications</strong>.
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
+
 {% endif %}
 
-<h1 class="text-2xl font-bold text-white mt-10 mb-6">Project Applications</h1>
+<h1 class="text-2xl font-bold text-white mt-10 mb-6">Applications</h1>
 <div class="grid lg:grid-cols-5 gap-6">
-    {% if octopusdash_settings.INCLUDE_ALL_APPS %}
-        {% for app in installed_apps %}
-            {% if not app.name|startswith:'django.' %}
-            <div class="p-6 card bg-gray-900 rounded-xl shadow-md hover:shadow-lg transition-all">
-                <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-xl font-semibold text-gray-400 truncate">{{ app.name }}</h2>
-                </div>
-
-                <div class="text-center my-6">
-                    <p class="text-5xl font-bold text-indigo-300">{{ app.models|length }}</p>
-                    <p class="text-sm text-gray-400 uppercase tracking-widest mt-1">Models</p>
-                </div>
-
-                <div class="mt-6 flex justify-between w-full">
-                    <a href="/admin/myapp" class="w-full   gap-1 px-4 py-2 text-sm font-medium bg-gray-800 hover:bg-indigo-700 text-white rounded-md transition text-center">
-                        Manage
-                    </a>
-                </div>
-            </div>
-            {% endif %}
-        {% endfor %}
-    {% else %}
-        {% for app_config, app_data in registry.items %}
-        <div class="p-6 card bg-gray-900 rounded-xl shadow-md hover:shadow-lg transition-all">
-            <div class="text-center">
-                <h2 class="text-xl font-semibold text-white truncate">{{ app_config.name.title }}</h2>
-                <p class="text-6xl font-extrabold text-indigo-300 mt-4">{{ app_data.models|length }}</p>
-                <p class="text-sm text-indigo-200 uppercase tracking-widest mt-1">Models</p>
-            </div>
-
-            <div class="mt-6 flex justify-between">
-                <a href="/admin/myapp" class="inline-flex  items-center gap-1 px-4 py-2 text-sm font-medium bg-gray-800 hover:bg-indigo-700 text-white rounded-md transition">
-                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6.75l7.5 7.5-7.5 7.5" />
-                    </svg>
-                    Manage
-                </a>
-            </div>
+    {% for app_config, app_data in registry.items %}
+    <div class="p-6 card bg-gray-900 rounded-xl shadow-md hover:shadow-lg transition-all">
+        <div class="text-center">
+            <h2 class="text-xl font-semibold text-white truncate">{{ app_config.label.title }}</h2>
+            <p class="text-6xl font-extrabold text-indigo-300 mt-4">{{ app_data.models|length }}</p>
+            <p class="text-sm text-indigo-200 uppercase tracking-widest mt-1">Models</p>
         </div>
-        {% endfor %}
-    {% endif %}
-</div>
 
-{% if octopusdash_settings.INCLUDE_ALL_APPS %}
-<h2 class="text-2xl font-bold text-white mt-14 mb-4">Django Internal Applications</h2>
-<p class="text-gray-500 mb-6">Applications starting with <code class="text-indigo-300">django.contrib</code></p>
-<div class="grid lg:grid-cols-5 gap-6">
-    {% for app in installed_apps %}
-        {% if app.name|startswith:"django." %}
-        <div class="p-6 card bg-gray-900 rounded-xl shadow-md hover:shadow-lg transition-all">
-            <div class="flex items-center justify-between mb-4">
-                <h2 class="text-xl font-semibold text-white truncate">{{ app.name|split_get_last:"." }}</h2>
-                <span class="text-xs font-semibold px-2 py-1 bg-teal-600 text-white rounded-full">Django App</span>
-            </div>
-
-            <div class="text-center my-6">
-                <p class="text-5xl font-bold text-indigo-300">{{ app.models|length }}</p>
-                <p class="text-sm text-gray-400 uppercase tracking-widest mt-1">Models</p>
-            </div>
-
-            <div class="mt-6 flex justify-between">
-                <a href="/admin/myapp" class="w-full gap-1 text-center px-4 py-2 text-sm font-medium bg-gray-800 hover:bg-indigo-700 text-white rounded-md transition">
-                    Manage
-                </a>
-            </div>
+        <div class="mt-6 flex justify-between">
+            <a href="{% url 'app-view' app_config.label %}" class="inline-flex w-full text-center justify-center items-center gap-1 px-4 py-2 text-sm font-medium bg-gray-800 hover:bg-indigo-700 text-white rounded-md transition">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6.75l7.5 7.5-7.5 7.5" />
+                </svg>
+                Manage
+            </a>
         </div>
-        {% endif %}
+    </div>
     {% endfor %}
 </div>
-{% endif %}
-
 
 {% endblock content %}
