@@ -216,7 +216,6 @@
     });
 
     searchInput.addEventListener("focus",()=>{
-        console.log("Focus")
         searchResults.classList.remove("hidden"); // show it first so GSAP can animate it
 
         gsap.fromTo(
@@ -232,7 +231,6 @@
     })
 
     searchInput.addEventListener("blur",()=>{
-        console.log("blur")
         gsap.to(searchResults, {
                 opacity: 0,
                 y: -10,

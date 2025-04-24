@@ -4,7 +4,6 @@ class Alert{
     alertsCount = 0;
 
     constructor(type,appendTo=null,message='',timeout=1000){
-        console.log(this.getStyle().containerClassList)
         this.message = message
         this.type = type
         this.container = document.createElement("div")
