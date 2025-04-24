@@ -38,10 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'octopusdash',
-    'orders',
-    'products',
-    'stores',
-    'projects',
+    'blog',
 ]
 
 MIDDLEWARE = [

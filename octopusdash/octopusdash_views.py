@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views.generic import ListView,UpdateView
 from django.contrib.auth import get_user_model
-from .registry import ModelAdmin
+from .registry import ODModelAdmin
 from .views_mixin import SearchFilterMixin
 from .forms import UserModelForm
 User = get_user_model()
@@ -22,7 +22,7 @@ class UpdateUserView(UpdateView):
         messages.success(self.request, f"Successfully updated {self.model._meta.verbose_name}: {instance}.")
         return super().form_valid(form)
 
-class UserAdmin(ModelAdmin):
+class UserAdmin(ODModelAdmin):
     list_display = ['username','is_superuser','is_staff','first_name','last_name','email','is_active']
 
 class UserListView(SearchFilterMixin,ListView):
