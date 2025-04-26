@@ -52,6 +52,11 @@ OctopusDash is a lightweight, modern Django admin panel alternative that provide
 - **Dynamic Widgets**: Add and manage custom widgets to your dashboard
 - **Error Handling**: Improved error detection and reporting
 - **Permissions**: Robust permission management system
+- **Pre-Detection of Protected Fields**: OctopusDash now automatically identifies fields that are protected from changes, providing better management of sensitive data in models.
+- **do_nothing Option**: We’ve added a do_nothing option to improve flexibility in model management. This allows certain actions to be skipped in specific cases, making the admin interface more adaptable to custom workflows.
+- **Query Optimizations** : Significant optimizations have been made to improve query performance. This ensures faster data retrieval, especially when dealing with large datasets, leading to better user experience and reduced server load.
+
+
 
 ## Comming soon 
 
