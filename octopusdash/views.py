@@ -5,9 +5,12 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView,ListView,CreateView,UpdateView,DeleteView,DetailView
 from django.contrib import messages
 from .exceptions import AppNotFound
-from .views_mixin import ListViewMixin,ModelContexttMixin,AppLookupMixin,ModelLookupMixin
+from .views_mixin import ListViewMixin,ModelContextMixin,AppLookupMixin,ModelLookupMixin
 from django.shortcuts import render
+from django.db.models import ProtectedError,RestrictedError
 from .django_relatedobjects_fetcher.related_objects_fetcher import RelatedObjectsCollector
+from django.db import IntegrityError
+from django.core.exceptions import ObjectDoesNotExist
 
 from .registry import dashboard
 # Create your views here.
@@ -20,10 +23,7 @@ class ModelListView(ListViewMixin,ListView):
     paginate_by  = 10
     context_object_name = 'objects'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['search_query'] = self.request.GET.get("query")
-        return context
+
 
     def get(self, request, *args, **kwargs):
         super().get(request,*args,**kwargs)
@@ -47,7 +47,7 @@ class ModelListView(ListViewMixin,ListView):
 
 
 
-class CreateInstanceView(ModelContexttMixin,CreateView):
+class CreateInstanceView(ModelContextMixin,CreateView):
     template_name = 'dynamic/create.html'
 
     def get_success_url(self):
@@ -73,7 +73,7 @@ class CreateInstanceView(ModelContexttMixin,CreateView):
         return HttpResponseRedirect(self.success_url)
 
 
-class UpdateInstanceView(ModelContexttMixin,UpdateView):
+class UpdateInstanceView(ModelContextMixin,UpdateView):
     template_name = 'dynamic/update.html'
     context_object_name = 'object'
 
@@ -99,38 +99,58 @@ class UpdateInstanceView(ModelContexttMixin,UpdateView):
         return super().form_valid(instance)
 
 
-class DeleteInstanceView(ModelContexttMixin,DeleteView):
+class DeleteInstanceView(ModelContextMixin,DeleteView):
     template_name = 'dynamic/delete.html'
+    error_template = 'errors/object_not_found.html'
     context_object_name = 'object'
     
+    def get(self, request, *args, **kwargs):
+        try:
+            self.object = self.get_object()
+        except ObjectDoesNotExist:
+            return render(request, self.error_template, {'error_message': 'Object not found'})
+
+        context = self.get_context_data()
+        return self.render_to_response(context)
+    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         context['related_objects'] = RelatedObjectsCollector(self.get_object())
         
+        
         return context
-
-
     
     def post(self, request, *args, **kwargs):
         try:
-            obj = self.get_object()
-            
+            self.object = self.get_object()
+        except ObjectDoesNotExist:
+            return render(request, self.error_template, {'error_message': 'Object not found'})
 
-            obj.delete()
-            
-            return HttpResponseRedirect(self.get_success_url())
+        context = self.get_context_data()
+        context['obj'] = self.object
         
+        try:
+            self.object.delete()
+            return HttpResponseRedirect(self.success_url)
+        
+        except ProtectedError:
+            return render(request, 'errors/object_protected.html', context)
+
+        except IntegrityError:
+            return render(request, 'errors/integrity_error_on_delete.html', context)
+
         except Exception as e:
-            print(e,"Exception")
-            
-            return JsonResponse(False,safe=False)
+            context['exception'] = e
+            return render(request, 'errors/unknown_error.html', context)
 
 class AppView(AppLookupMixin,View):
     
     
     def get(self,request,app,*args,**kwargs):
         return render(request,'dynamic/app.html')
+
 
 
 class ModelView(ModelLookupMixin,View):
