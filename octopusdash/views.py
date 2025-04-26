@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView,ListView,CreateView,UpdateView,DeleteView,DetailView
 from django.contrib import messages
 from .exceptions import AppNotFound
-from .views_mixin import ListViewMixin,ModelContexttMixin
+from .views_mixin import ListViewMixin,ModelContexttMixin,AppLookupMixin,ModelLookupMixin
 from django.shortcuts import render
 from .django_relatedobjects_fetcher.related_objects_fetcher import RelatedObjectsCollector
 
@@ -126,20 +126,19 @@ class DeleteInstanceView(ModelContexttMixin,DeleteView):
             
             return JsonResponse(False,safe=False)
 
-class AppView(View):
+class AppView(AppLookupMixin,View):
     
-    def dispatch(self, request, *args, **kwargs):
-        app_name = kwargs.get("app",None)
-        app = dashboard.get_app(app_name)
-        self.app = app
-        
-        if not self.app:
-            raise AppNotFound(f" App not found  ")
-        
-        return super().dispatch(request, *args, **kwargs)
     
     def get(self,request,app,*args,**kwargs):
         return render(request,'dynamic/app.html')
+
+
+class ModelView(ModelLookupMixin,View):
+    
+    
+    def get(self,request,app,*args,**kwargs):
+        return render(request,'dynamic/model.html')
+
 
 
 

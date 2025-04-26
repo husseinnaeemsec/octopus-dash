@@ -1,5 +1,6 @@
 from django.db.models import Q
 from .utils import get_model_admin
+from django.shortcuts import render
 from .exceptions import AppNotFound,ModelNotFound
 from .forms import form_factory
 from django.urls import reverse_lazy
@@ -14,8 +15,9 @@ class BaseContextMixin:
         
         
         return super().get_context_data() or {}
+    
 
-class ModelContexttMixin(BaseContextMixin):
+class AppLookupMixin:
     
     model = None
     model_name = None
@@ -27,36 +29,39 @@ class ModelContexttMixin(BaseContextMixin):
     def dispatch(self, request, *args, **kwargs):
         # Fetch app and model from kwargs
         app_name = kwargs.get("app", None)
-        model_name = kwargs.get("model_name", None)
         try:
-            app_config = apps.get_app_config(app_name)
+            self.app_config = apps.get_app_config(app_name)
         except LookupError:
-            app_config = None
-        
-        else:
-            if not app_config:
-                raise AppNotFound(f"App with the name {app_name.title()} not found in the installed apps ")
-            
-            try:
-                self.model = app_config.get_model(model_name)
-            
-            except LookupError:
-                raise ModelNotFound(f" App ({app_name.title()}) does not have a model named ({model_name.title()}) ")
-
-            else:
-                # If model is found, set the queryset, model admin, and other properties
-                self.queryset = self.model.objects.all().order_by('id')
-                self.model_admin = get_model_admin(self.model._meta.app_config, self.model)
-                self.app_name = self.model._meta.app_config.label
-                self.model_name = self.model._meta.model_name
-                self.form_class = form_factory(self.model)
-                self.success_url = reverse_lazy(f"list-objects",args=[app_name,model_name])
-
-
+            app_name = kwargs.get("app",None)
+            return render(request,'errors/app_not_found.html',{'app_name':app_name})
         return super().dispatch(request, *args, **kwargs)
 
+class ModelLookupMixin(AppLookupMixin):
+    
+    def dispatch(self,request,*args,**kwargs):
+        
+        view = super().dispatch(request,*args,**kwargs)
+        
+        model_name = kwargs.get("model_name")
+        
+        try:
+            self.model = self.app_config.get_model(model_name)
+            self.queryset = self.model.objects.all().order_by('id')
+            self.model_admin = get_model_admin(self.model._meta.app_config, self.model)
+            self.app_name = self.model._meta.app_config.label
+            self.model_name = self.model._meta.model_name
+            self.form_class = form_factory(self.model)
+            self.success_url = reverse_lazy(f"list-objects",args=[self.app_config.label,model_name])
+        
+        except LookupError:
+            
+            return render(request,'errors/model_not_found.html',{'model_name':model_name})
 
+        
+        return view
 
+class ModelContexttMixin(ModelLookupMixin,BaseContextMixin):
+    
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
