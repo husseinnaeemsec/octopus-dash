@@ -2,14 +2,17 @@ from django import template
 from django.urls import reverse_lazy
 from django.db.models import Model
 import ast
+import bleach
 import re
 from django.utils.safestring import mark_safe
+
 
 register = template.Library()
 
 @register.simple_tag
 def get_attr(obj, field_name):
     return getattr(obj, field_name, None)
+
 
 
 @register.filter
@@ -97,6 +100,13 @@ def highlight(value, search_term):
         flags=re.IGNORECASE
     )
     return mark_safe(highlighted)
+
+@register.filter
+def render_html(html):
+    allowed_tags = ['b', 'i','svg', 'em', 'strong', 'a', 'ul', 'ol', 'li', 'p', 'br']
+    allowed_attributes = bleach.sanitizer.ALLOWED_ATTRIBUTES
+    sanitized_value = bleach.clean(html, tags=allowed_tags, attributes=allowed_attributes)
+    return mark_safe(sanitized_value)
 
 @register.simple_tag
 def startswith_list(path1:str,search_list:list):
