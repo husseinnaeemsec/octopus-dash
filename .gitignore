@@ -2,3 +2,7 @@ node_modules
 venv
 package.json
 package-lock.json
+_dev_*.py
+**/_dev_*.py
+**/test__*.html
+.env
