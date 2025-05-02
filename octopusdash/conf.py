@@ -10,7 +10,8 @@ default_settings = {
             'password',
             'user_permissions',
             'groups',
-        ]
+        ],
+        'DASHBOARD_PATH':None
     }
 
 try:
