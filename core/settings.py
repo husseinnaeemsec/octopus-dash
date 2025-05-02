@@ -9,8 +9,13 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -57,7 +62,11 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+                os.path.join(BASE_DIR,'blog/templates'),
+                # Add octopusdash templates
+                os.path.join(BASE_DIR,'octopusdash/templates'),
+            ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -78,13 +87,24 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv("DB_NAME"),   
+        'USER': os.getenv("DB_USER"),   
+        'PASSWORD': os.getenv("DB_PASSWORD"),
+        'HOST': 'localhost',            # Or the IP address of your DB server
+        'PORT': '5432',                 # Default PostgreSQL port
     }
 }
 
 
+
 OCTOPUSDASH_SETTINGS = {
+    'DASHBOARD_PATH':'/dashboard/',
+    # Enable Radio Group to set a custom radio inputs as groups when the choices are less than 5 items
+    'ENABLE_RADIO_GROUP':True,
+    # Enabling rich text editor for the textarea inputs and handle saving them with the 
+    # Text added as html
+    "ENABLE_RICH_TEXT_EDITOR":False,
 }
 
 
@@ -119,18 +139,15 @@ USE_I18N = True
 USE_TZ = True
 
 
-import os
 
 # The directory where static files will be collected in production
 STATIC_URL = '/static/'
 
 
-import os
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-DASHBOARD_PATH = '/dashboard/'
 
 # The directory where static files will be stored for development
 # STATICFILES_DIRS = [
