@@ -1,18 +1,25 @@
 from django.contrib.auth import authenticate, login,logout
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from django.views.generic import ListView,UpdateView
+from django.views.generic import ListView,UpdateView,View
 from django.contrib.auth import get_user_model
 from .registry import ODModelAdmin
 from .views_mixin import SearchFilterMixin
 from .forms import UserModelForm
+from .models import Field
 User = get_user_model()
 
+
+class ShowFields(View):
+    
+    def get(self,request):
+        fields = Field.objects.all()
+        return render(request,'octopusdash/test__show_fields.html',{'fields':fields})
 
 class UpdateUserView(UpdateView):
     model = User
     form_class = UserModelForm
-    template_name = 'users/update_user.html'
+    template_name = 'octopusdash/users/update_user.html'
     
     def get_success_url(self):
         return self.request.path
@@ -33,7 +40,7 @@ class UserListView(SearchFilterMixin,ListView):
     app_name = User._meta.app_label
     paginate_by = 10
     context_object_name = 'users'
-    template_name = 'users/users_list.html'
+    template_name = 'octopusdash/users/users_list.html'
     
     
     
@@ -47,15 +54,18 @@ class UserListView(SearchFilterMixin,ListView):
 
 def login_view(request):
     if request.method == "POST":
-        username = request.POST.get("username")
+        username_field = User.USERNAME_FIELD or 'username' # in case the user has not set or remove this field 
+        # Getting the username value&argument from the USERNAME_FIELD attribute on the User Model class 
+        username = request.POST.get(username_field,None)
+        username_kwarg = {username_field:username}
+        # Password
         password = request.POST.get("password")
 
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request,**username_kwarg, password=password)
 
         if user is not None:
             if user.is_staff:
                 login(request, user)
-                messages.success(request, "Logged in successfully.")
                 return redirect("octopusdash-dashboard")  # update route as needed
             else:
                 messages.error(request, "You are not authorized to access the admin dashboard.")
@@ -64,10 +74,8 @@ def login_view(request):
         else:
             messages.error(request, "Invalid username or password.")
 
-    return render(request, "authentication/login.html")
+    return render(request, "octopusdash/authentication/login.html")
 
 
 def dashboard_view(request):
-
-    
-    return render(request,'index.html')
+    return render(request,'octopusdash/index.html')
