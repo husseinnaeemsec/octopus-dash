@@ -30,7 +30,8 @@ octopusdash_urls = [
     path('',octopusdash_views.dashboard_view,name='octopusdash-dashboard'),
     path("login/",octopusdash_views.login_view,name='octopusdash-login'),
     path('users/',octopusdash_views.UserListView.as_view(),name='octopusdash-users-list'),
-    path('users/update/<int:pk>/',octopusdash_views.UpdateUserView.as_view(),name='octopusdash-update-user')
+    path('users/update/<int:pk>/',octopusdash_views.UpdateUserView.as_view(),name='octopusdash-update-user'),
+    path("test/",octopusdash_views.ShowFields.as_view())
 ]
 
 urlpatterns = [
