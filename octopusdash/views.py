@@ -55,6 +55,15 @@ class ModelListView(ListViewMixin,ListView):
 
 class CreateInstanceView(ModelContextMixin,CreateView):
     template_name = 'octopusdash/dynamic/create.html'
+    
+    def get_form(self, form_class=None):
+        form_class = self.get_form_class()
+        return form_class(
+            data=self.request.POST or None,
+            files=self.request.FILES or None,
+        )
+    
+
 
     def get_success_url(self):
         success_action = self.request.POST.get("__success__",None)
@@ -68,59 +77,6 @@ class CreateInstanceView(ModelContextMixin,CreateView):
         return super().get(request, *args, **kwargs)
     
 
-
-    def form_valid(self, form):
-        # Save the object first
-        response = super().form_valid(form)
-        instance = self.object
-        print(self.request.FILES)
-        # If this model has image creation enabled
-        # Now: process each Trix field to extract image references
-        for field in instance._meta.fields:
-            if self.model_admin.fields_config.get(field.name):
-                field_config = self.model_admin.fields_config.get(field.name)
-                app_label, module, model_name = field_config.get("model").split(".")
-
-                try:
-                    image_creation_model = apps.get_model(app_label, model_name)
-                    image_creation_form = form_factory(image_creation_model)
-                    file_field_name = field_config.get("file_field_name")
-                    instance_name = field_config.get("model_field_name")
-
-                    images = self.request.FILES.getlist(f"{field.name}_image")
-                    uploaded_image_urls = []
-
-                    for image in images:
-                        data = {
-                            instance_name: instance
-                        }
-                        files = {
-                            file_field_name: image
-                        }
-                        form = image_creation_form(data=data, files=files)
-
-                        if form.is_valid():
-                            image_instance = form.save()
-                            uploaded_image_urls.append(image_instance.image.url)  # or getattr(image_instance, file_field_name).url
-                        else:
-                            print("Image form errors:", form.errors)
-
-                    # Replace placeholder <img src=""> in the original content
-                    content = getattr(instance, field.name)
-                    soup = BeautifulSoup(content, "html.parser")
-
-                    for img_tag, real_url in zip(soup.find_all("img"), uploaded_image_urls):
-                        img_tag["src"] = real_url
-
-                    # Save updated content back to instance
-                    setattr(instance, field.name, str(soup))
-                    instance.save(update_fields=[field.name])
-                except LookupError:
-                    raise LookupError(f"Model with the name {field_config.get("model")} can not be found to assosiate with {field.name} ")
-                except Exception as e:
-                    raise Exception(f"Unknown error  {e} ")
-                
-        return response
 
 class UpdateInstanceView(ModelContextMixin,UpdateView):
     template_name = 'octopusdash/dynamic/update.html'
@@ -136,14 +92,28 @@ class UpdateInstanceView(ModelContextMixin,UpdateView):
         
         return self.success_url
 
+    def get_form(self, form_class=None):
+        form_class = self.get_form_class()
+        return form_class(
+            data=self.request.POST or None,
+            files=self.request.FILES or None,
+            instance=self.get_object(),
+        )
+    
 
     def form_valid(self, form):
         # Save the new instance
         instance = form.save()
-
+        # Remove and delete each flagged file
+        print(getattr(form,'_files_to_remove'),[])
+        for field_name in getattr(form, '_files_to_remove', []):
+            file_field = getattr(instance, field_name, None)
+            if file_field:
+                file_field.delete(save=False)  # delete file from disk
+                setattr(instance, field_name, None)  # set to None in the model
         # Add a success message with the instance's data
-        messages.success(self.request, f"Successfully updated {self.model._meta.verbose_name}: {instance}.")
-
+        messages.success(self.request, f"Successfully updated {self.model._meta.verbose_name}: {instance}.")     
+           
         # Redirect to another page (could be the list view or detail view of the instance)
         return super().form_valid(instance)
 
