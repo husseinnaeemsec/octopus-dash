@@ -1,10 +1,10 @@
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
-from django.conf import settings
+from .conf import settings
 
 
 try:
-    dashboard_path = settings.DASHBOARD_PATH
+    dashboard_path = settings.get('DASHBOARD_PATH')
 
 except:
     dashboard_path = None
