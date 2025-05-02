@@ -5,7 +5,7 @@
 
 
 
-
+{{form.media}}
 
 <div class="mx-auto">
 
@@ -30,9 +30,7 @@
 <form method="post" id="update-object-form" enctype="multipart/form-data" class="space-y-5 my-5">
 {% csrf_token %}
 {% for field in form  %}
-{{field.widget}}
     <div class="space-y-2">
-        <div class="text-gray-400"> {{field.label}} </div>
         {% if field.errors %}
             <ul class="space-y-3 my-2">
                 
