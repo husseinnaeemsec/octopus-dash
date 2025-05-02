@@ -103,7 +103,11 @@ class FileUploader {
     // Render file previews in the preview container
     renderPreviews() {
         this.preview.innerHTML = ''; // Clear existing previews
-        this.files.forEach((file, i) => {
+
+        const isMultiple = this.input.hasAttribute('multiple');
+        const filesToPreview = isMultiple ? this.files : this.files.slice(-1); // Only preview the last one if not multiple
+
+        filesToPreview.forEach((file, i) => {
             const item = document.createElement('div');
             item.className = 'file-item';
 
@@ -117,7 +121,7 @@ class FileUploader {
                 // Generic file icon for non-image files
                 const icon = document.createElement('div');
                 icon.className = 'file-icon';
-                icon.innerHTML = '📄'; // Placeholder icon (replace with hero icons if needed)
+                icon.innerHTML = '📄'; // Placeholder icon
                 item.appendChild(icon);
             }
 
@@ -150,6 +154,7 @@ class FileUploader {
             this.preview.appendChild(item);
         });
     }
+
 
     // Remove a file from the list and update the UI
     removeFile(index) {

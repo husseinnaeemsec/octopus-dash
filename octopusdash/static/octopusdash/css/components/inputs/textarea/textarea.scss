@@ -1,3 +1,11 @@
+.textarea-wrapper::after {
+    content: attr(chars-left) " characters left";
+    display: block;
+    color: var(--slate-500);
+    font-size: 12px;
+    margin-top: 10px;
+}
+
 textarea {
     padding: 8px;
     border: 1px solid var(--slate-300);

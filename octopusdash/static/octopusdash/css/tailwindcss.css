@@ -1,5 +1,3 @@
-/* octopusDash/static/css/tailwind.css */
-
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
@@ -108,7 +106,9 @@
   --tw-contain-style:  ;
 }
 
-/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */
+/*
+! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com
+*/
 
 /*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
@@ -152,7 +152,7 @@ html,
   -moz-tab-size: 4;
   /* 3 */
   -o-tab-size: 4;
-  tab-size: 4;
+     tab-size: 4;
   /* 3 */
   font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   /* 4 */
@@ -197,7 +197,7 @@ Add the correct text decoration in Chrome, Edge, and Safari.
 
 abbr:where([title]) {
   -webkit-text-decoration: underline dotted;
-  text-decoration: underline dotted;
+          text-decoration: underline dotted;
 }
 
 /*
@@ -917,10 +917,6 @@ video {
   height: 100vh;
 }
 
-.max-h-96 {
-  max-height: 24rem;
-}
-
 .max-h-full {
   max-height: 100%;
 }
@@ -995,6 +991,10 @@ video {
   max-width: 48rem;
 }
 
+.max-w-7xl {
+  max-width: 80rem;
+}
+
 .max-w-\[500px\] {
   max-width: 500px;
 }
@@ -1053,8 +1053,8 @@ video {
 
 .appearance-none {
   -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+     -moz-appearance: none;
+          appearance: none;
 }
 
 .grid-cols-2 {
@@ -1111,7 +1111,7 @@ video {
 
 .gap-x-3 {
   -moz-column-gap: 0.75rem;
-  column-gap: 0.75rem;
+       column-gap: 0.75rem;
 }
 
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
@@ -1232,10 +1232,6 @@ video {
   border-bottom-width: 2px;
 }
 
-.border-l {
-  border-left-width: 1px;
-}
-
 .border-r {
   border-right-width: 1px;
 }
@@ -1269,11 +1265,6 @@ video {
   border-color: rgb(55 65 81 / var(--tw-border-opacity, 1));
 }
 
-.border-gray-800 {
-  --tw-border-opacity: 1;
-  border-color: rgb(31 41 55 / var(--tw-border-opacity, 1));
-}
-
 .border-green-300 {
   --tw-border-opacity: 1;
   border-color: rgb(134 239 172 / var(--tw-border-opacity, 1));
@@ -1284,14 +1275,14 @@ video {
   border-color: rgb(253 164 175 / var(--tw-border-opacity, 1));
 }
 
-.border-rose-500 {
-  --tw-border-opacity: 1;
-  border-color: rgb(244 63 94 / var(--tw-border-opacity, 1));
-}
-
 .border-rose-700 {
   --tw-border-opacity: 1;
   border-color: rgb(190 18 60 / var(--tw-border-opacity, 1));
+}
+
+.border-slate-300 {
+  --tw-border-opacity: 1;
+  border-color: rgb(203 213 225 / var(--tw-border-opacity, 1));
 }
 
 .border-yellow-300 {
@@ -1419,6 +1410,11 @@ video {
   background-color: rgb(244 63 94 / var(--tw-bg-opacity, 1));
 }
 
+.bg-rose-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(190 18 60 / var(--tw-bg-opacity, 1));
+}
+
 .bg-rose-800\/50 {
   background-color: rgb(159 18 57 / 0.5);
 }
@@ -1446,8 +1442,17 @@ video {
   background-color: rgb(248 250 252 / var(--tw-bg-opacity, 1));
 }
 
+.bg-slate-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(100 116 139 / var(--tw-bg-opacity, 1));
+}
+
 .bg-slate-800\/50 {
   background-color: rgb(30 41 59 / 0.5);
+}
+
+.bg-transparent {
+  background-color: transparent;
 }
 
 .bg-white {
@@ -1529,7 +1534,11 @@ video {
 
 .bg-clip-text {
   -webkit-background-clip: text;
-  background-clip: text;
+          background-clip: text;
+}
+
+.stroke-slate-600 {
+  stroke: #475569;
 }
 
 .p-1 {
@@ -1607,10 +1616,6 @@ video {
   padding-left: 2.5rem;
 }
 
-.pl-3 {
-  padding-left: 0.75rem;
-}
-
 .pl-5 {
   padding-left: 1.25rem;
 }
@@ -1684,6 +1689,10 @@ video {
 
 .uppercase {
   text-transform: uppercase;
+}
+
+.lowercase {
+  text-transform: lowercase;
 }
 
 .capitalize {
@@ -1818,6 +1827,11 @@ video {
   color: rgb(79 70 229 / var(--tw-text-opacity, 1));
 }
 
+.text-indigo-700 {
+  --tw-text-opacity: 1;
+  color: rgb(67 56 202 / var(--tw-text-opacity, 1));
+}
+
 .text-red-400 {
   --tw-text-opacity: 1;
   color: rgb(248 113 113 / var(--tw-text-opacity, 1));
@@ -1881,6 +1895,11 @@ video {
 .text-slate-500 {
   --tw-text-opacity: 1;
   color: rgb(100 116 139 / var(--tw-text-opacity, 1));
+}
+
+.text-slate-800 {
+  --tw-text-opacity: 1;
+  color: rgb(30 41 59 / var(--tw-text-opacity, 1));
 }
 
 .text-transparent {
@@ -2003,50 +2022,6 @@ video {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.z-1{
-  z-index: 1 !important;
-}
-
-.z-2{
-  z-index: 2 !important;
-}
-
-.z-3{
-  z-index: 3 !important;
-}
-
-.z-4{
-  z-index: 4 !important;
-}
-
-.z-5{
-  z-index: 5 !important;
-}
-
-.z-6{
-  z-index: 6 !important;
-}
-
-.z-7{
-  z-index: 7 !important;
-}
-
-.z-8{
-  z-index: 8 !important;
-}
-
-.z-9{
-  z-index: 9 !important;
-}
-
-.-z-1{
-  z-index: -1 !important;
-}
-
-input[type=checkbox]:checked{
-  background-image: url('./icons/check.svg') !important;
-}
-
 .placeholder\:text-gray-500::-moz-placeholder {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity, 1));
@@ -2108,6 +2083,11 @@ input[type=checkbox]:checked{
   background-color: rgb(209 213 219 / var(--tw-bg-opacity, 1));
 }
 
+.hover\:bg-gray-600:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(75 85 99 / var(--tw-bg-opacity, 1));
+}
+
 .hover\:bg-gray-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(55 65 81 / var(--tw-bg-opacity, 1));
@@ -2131,11 +2111,6 @@ input[type=checkbox]:checked{
 .hover\:bg-rose-200:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(254 205 211 / var(--tw-bg-opacity, 1));
-}
-
-.hover\:bg-slate-200:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(226 232 240 / var(--tw-bg-opacity, 1));
 }
 
 .hover\:from-amber-600:hover {
@@ -2219,11 +2194,6 @@ input[type=checkbox]:checked{
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-.focus\:border-indigo-500:focus {
-  --tw-border-opacity: 1;
-  border-color: rgb(99 102 241 / var(--tw-border-opacity, 1));
-}
-
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -2296,6 +2266,11 @@ input[type=checkbox]:checked{
   border-color: rgb(31 41 55 / var(--tw-border-opacity, 1));
 }
 
+.dark\:border-slate-800:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(30 41 59 / var(--tw-border-opacity, 1));
+}
+
 .dark\:bg-gray-800:is(.dark *) {
   --tw-bg-opacity: 1;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity, 1));
@@ -2323,6 +2298,16 @@ input[type=checkbox]:checked{
   background-color: rgb(136 19 55 / 0.8);
 }
 
+.dark\:bg-slate-800:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity, 1));
+}
+
+.dark\:bg-slate-900:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(15 23 42 / var(--tw-bg-opacity, 1));
+}
+
 .dark\:from-gray-700:is(.dark *) {
   --tw-gradient-from: #374151 var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(55 65 81 / 0) var(--tw-gradient-to-position);
@@ -2341,6 +2326,10 @@ input[type=checkbox]:checked{
 
 .dark\:to-indigo-900:is(.dark *) {
   --tw-gradient-to: #312e81 var(--tw-gradient-to-position);
+}
+
+.dark\:stroke-white:is(.dark *) {
+  stroke: #fff;
 }
 
 .dark\:text-gray-100:is(.dark *) {
@@ -2368,6 +2357,11 @@ input[type=checkbox]:checked{
   color: rgb(107 114 128 / var(--tw-text-opacity, 1));
 }
 
+.dark\:text-indigo-300:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(165 180 252 / var(--tw-text-opacity, 1));
+}
+
 .dark\:text-indigo-50:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgb(238 242 255 / var(--tw-text-opacity, 1));
@@ -2391,6 +2385,16 @@ input[type=checkbox]:checked{
 .dark\:text-rose-400:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgb(251 113 133 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-slate-200:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(226 232 240 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-slate-400:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(148 163 184 / var(--tw-text-opacity, 1));
 }
 
 .dark\:text-white:is(.dark *) {
@@ -2437,13 +2441,6 @@ input[type=checkbox]:checked{
   color: rgb(229 231 235 / var(--tw-text-opacity, 1));
 }
 
-@media (min-width: 640px) {
-  .sm\:text-sm {
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-  }
-}
-
 @media (min-width: 1024px) {
   .lg\:sticky {
     position: sticky;
@@ -2467,10 +2464,6 @@ input[type=checkbox]:checked{
 
   .lg\:grid-cols-1 {
     grid-template-columns: repeat(1, minmax(0, 1fr));
-  }
-
-  .lg\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .lg\:grid-cols-5 {
