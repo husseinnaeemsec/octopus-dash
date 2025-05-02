@@ -1,8 +1,0 @@
-
-{% include 'octopusdash/fields/Label.html' with widget=widget %}
-
-<input type="{{widget.type}}"  
-
-{% if widget.value == 'True' or widget.value == 'true' %} checked {% endif %}
-{% include 'django/forms/widgets/attrs.html' %}
-name="{{ widget.name }}" id="{{ widget.attrs.id }}" class="od-switch">
