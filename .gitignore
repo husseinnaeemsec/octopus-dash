@@ -6,3 +6,4 @@ _dev_*.py
 **/_dev_*.py
 **/test__*.html
 .env
+__pycache__/
