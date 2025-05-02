@@ -1,0 +1,40 @@
+textarea.od{
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border:1px solid var(--gray-800);
+    background-color: transparent;
+    color: var(--gray-50);
+    &:focus{
+        outline: 2px solid var(--gray-600);
+    }
+}
+
+textarea.od.fill{
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color:var(--gray-800);
+    &:focus{
+        outline: 2px solid var(--gray-600);
+    }
+}
+
+@each $color in $colors{
+    textarea.od.#{$color}{
+        padding: 1rem;
+        border-radius: 0.5rem;
+        background-color: transparent;
+        border: 1px solid var(--#{$color}-600);
+        &:focus{
+            outline: 2px solid var(--#{$color}-600);
+        }
+    }
+    textarea.od.#{$color}.fill{
+        padding: 1rem;
+        border-radius: 0.5rem;
+        background-color: var(--#{$color}-950);
+        color: var(--#{$color}-50);
+        &:focus{
+            outline: 2px solid var(--#{$color}-600);
+        }
+    }
+}

@@ -1,0 +1,87 @@
+input.od,
+select.od,
+textarea.od {
+    @extend %rounded-md;
+    @extend %p-2;
+    background-color: var(--slate-100);
+    border: 1px solid var(--slate-300);
+
+    &:focus {
+        outline: 3px solid var(--slate-200);
+    }
+
+    html.dark & {
+        border: 1px solid var(--slate-700);
+        color: var(--slate-200);
+        background-color: var(--slate-800);
+        position: relative;
+        z-index: 0;
+
+        &:focus {
+            outline: 3px solid var(--slate-700);
+        }
+    }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+
+
+.od-number{
+    border: 1px solid color-var(gray,300);
+    width: fit-content;
+    overflow: hidden;
+    @extend %rounded-md;
+
+
+    html.dark &{
+        border-color: color-var(gray,700);
+    }
+    
+    input{
+        border-radius: 0 !important;
+        border: none !important;
+    }
+    .increment{
+        position: relative;
+        z-index: 1;
+        height: 100%;
+        padding: 20px;
+        background-color: color-var(gray,400);
+        background-image:url('/css/icons/plus.svg');
+        background-size: 20px;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    .decrement{
+        position: relative;
+        z-index: 1;
+        height: 100%;
+        padding: 20px;
+        background-color: color-var(gray,400);
+        background-image:url('/css/icons/minus.svg');
+        background-size: 20px;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    button{
+        html.dark &{
+            background-color: color-var(gray,900);
+        }
+    }
+}
+
+input:invalid{
+    background: color-var(rose,800) !important;
+}

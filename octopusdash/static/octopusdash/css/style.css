@@ -33,3 +33,20 @@ main{
 canvas{
     height: 15rem !important;
 }
+
+html.dark .trix-button-group{
+    background-color: var(--slate-600) !important;
+    border-color: var(--slate-600) !important;
+}
+
+html.dark .trix-button-group .trix-button{
+    border-color: var(--slate-600) !important;
+}
+html.dark trix-editor{
+    background-color: var(--slate-800) !important;
+    border-color: var(--slate-700);
+}
+
+.attachment__progress{
+    display: none !important;
+}

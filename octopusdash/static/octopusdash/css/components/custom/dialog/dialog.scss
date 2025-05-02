@@ -1,0 +1,80 @@
+$_colors:'slate','emerald','rose','amber','indigo','violet';
+
+.od-dialog{
+    padding: 20px;
+    border-radius: 10px;
+    background-color: var(--slate-50);
+    border: 1px solid var(--slate-300);
+    max-width: 650px;
+    color: var(--slate-700);
+
+    .title{
+        font-size: 25px;
+        font-weight: bold;
+        margin: 10px 0;
+    }
+    .messages{
+        color: var(--slate-700);
+    }
+    .actions{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 15px 0;
+        margin-bottom: 0;
+    }
+
+    html.dark &{
+        background-color: var(--slate-800);
+        color: var(--slate-100);
+        border-color: var(--slate-700);
+
+        .messages{
+            color: var(--slate-200);
+        }
+        .action-button{
+            color: var(--slate-50) !important;
+        }
+    }
+}
+
+@each $color in $_colors{
+    .od-dialog.#{$color}{
+        background-color: var(--#{$color}-50);
+        border: 1px solid var(--#{$color}-300);
+        color: var(--#{$color}-700);
+        .action-button{
+            background-color: var(--#{$color}-600) !important;
+            border-color: var(--#{$color}-200) ;
+        }
+        .cancle-button{
+            background-color: transparent;
+            border-color: var(--#{$color}-200);
+            color: var(--#{$color}-800);
+            &:hover{
+                background-color: var(--#{$color}-100);
+            }
+
+        }
+        html.dark &{
+            background-color: var(--#{$color}-800);
+            color: var(--#{$color}-50);
+            border-color: var(--#{$color}-700);
+    
+            .messages{
+                color: var(--#{$color}-200);
+            }
+
+            .cancle-button{
+                color: var(--#{$color}-100);
+                &:hover{
+                    background-color: var(--#{$color}-900);
+                }
+            }
+            .action-button{
+                border-color: var(--#{$color}-800);
+                color: var(--#{$color}-50);
+            }
+        }
+    }
+}
