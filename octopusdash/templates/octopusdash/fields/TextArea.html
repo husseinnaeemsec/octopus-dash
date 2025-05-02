@@ -1,76 +1,10 @@
 
 {% include 'octopusdash/fields/Label.html' with widget=widget %}
-
-
-{% if settings.ENABLE_RICH_TEXT_EDITOR %}
-<input id="{{ widget.name }}" type="hidden" name="{{ widget.name }}" value="{{ widget.value|default_if_none:'' }}">
-<trix-editor input="{{ widget.name }}"></trix-editor>
-<div id="trix-image-inputs__{{widget.name}}"></div>
-
-<script>
-    document.addEventListener("trix-attachment-add", function(event) {
-      const attachment = event.attachment;
-      const widgetName = event.target.getAttribute("input"); // matches the <input id=...>
-    
-    if (attachment.file) {
-        // Create a new file input field
-        const input = document.createElement("input");
-        input.type = "file";
-        input.name = `${widgetName}_image`;
-        input.files = createFileList([attachment.file]);
-        input.style.display = "none"; // hide it
-        
-        // Append to form
-        document.getElementById("trix-image-inputs__{{widget.name}}").appendChild(input);
-    }
-    });
-    
-    // Helper: wrap File in a FileList
-    function createFileList(files) {
-      const dataTransfer = new DataTransfer();
-      for (let file of files) {
-        dataTransfer.items.add(file);
-      }
-      return dataTransfer.files;
-    }
-    document.getElementById("create-object-form").addEventListener("submit", function () {
-    document.querySelectorAll("trix-editor").forEach(function(editor) {
-        const inputId = editor.getAttribute("input");
-        const hiddenInput = document.getElementById(inputId);
-        if (hiddenInput) {
-            hiddenInput.value = editor.innerHTML; // manually sync content
-        }
-    });
-});
-</script>
-
-{% else %}
 <textarea
-    type="{{ widget.type }}" 
-    name="{{ widget.name }}" 
     {% include "django/forms/widgets/attrs.html" %}
+    {% include 'octopusdash/fields/attrs.html' %}
     class="od w-full"
     rows="3"
-    placeholder="{{widget.help_text}}"
-    
-    {% if widget.is_hidden %}
-        hidden
-    {% endif %}
-
-    
-    {% if widget.required %}
-        required
-    {% endif %}
-        
-
-    
-    {% if widget.value %}
-        value="{{widget.value}}"
-    {% endif %}
-        
-
-></textarea>
-
-{% endif %}
+>{% if widget.value %}value="{{widget.value}}"{% endif %}</textarea>
     
 
