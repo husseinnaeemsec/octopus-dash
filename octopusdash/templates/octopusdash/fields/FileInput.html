@@ -1,0 +1,21 @@
+{% include 'octopusdash/fields/Label.html' with widget=widget %}
+<div class="file-dropzone">
+        <input 
+        type="{{ widget.type }}" 
+        name="{{ widget.name }}" 
+        {% include 'django/forms/widgets/attrs.html' %}
+        class="od w-full file-input"
+        placeholder="{{widget.help_text}}"
+        accept=".jpg,.jpeg,.png,.pdf"
+        data-max-size="2097152"
+        data-max-total-size="10485760" data-max-files="5"    
+        hidden
+    >
+    <p class="file-message font-bold">Drag files here or click to upload</p>
+    <span class="text-amber-400"> {{widget.help_text}} </span>
+    <div class="file-preview"></div>
+    <div class="file-info mt-4 text-xs text-slate-500">
+        <p class="file-info-message">Total files uploaded: 0 / Max files: 5</p>
+        <p class="file-size-info">Total size uploaded: 0 KB / Max total size: 10 MB</p>
+    </div>
+</div>

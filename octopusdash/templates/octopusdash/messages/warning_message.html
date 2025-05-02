@@ -1,0 +1,30 @@
+<!-- Warning Message -->
+<div id="{{container__id}}" class="{% if message__title %} grid gap-2 {% else %} flex flex-col gap-3 justify-between items-center {% endif %} bg-amber-800/50 text-amber-200 p-5 rounded-lg">
+
+    {% if message__title %}
+        <h1 class="text-2xl text-white font-bold">{{ message__title }}</h1>
+    {% endif %}
+
+    <div class="flex items-center gap-3">
+        
+        {% if not message__title %}
+        <svg xmlns="http://www.w3.org/2000/svg" class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M12 9v2.25m0 4.5h.008v.008H12v-.008zM10.5 3.75h3a.75.75 0 01.67.41l7.5 13.5a.75.75 0 01-.67 1.09H3a.75.75 0 01-.67-1.09l7.5-13.5a.75.75 0 01.67-.41z" />
+        </svg>
+        {% endif %}
+        
+        <p>{{ message__content }}</p>
+    </div>
+
+    {% if show__close_btn %}
+    <button class="text-amber-200 hover:text-white alert-button {{class__name}}">
+        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="2"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+    </button>
+    {% endif %}
+    
+</div>

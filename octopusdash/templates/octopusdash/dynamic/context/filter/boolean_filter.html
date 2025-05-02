@@ -1,0 +1,28 @@
+<li class="flex items-center justify-between py-2">
+    {{ filter.name }}
+    <div class="flex items-center gap-3">
+                <!-- Yes option -->
+                
+                {% if field__value == 'on' %}
+                    {% with field__value='on' field__lable='Yes' field__name=filter.field is__checked=True  %}
+                    {% include 'octopusdash/fields/RadioInput.html' %}
+                    {% endwith %}
+                    {% else %}
+                    {% with field__value='on' field__lable='Yes' field__name=filter.field  %}
+                    {% include 'octopusdash/fields/RadioInput.html' %}
+                    {% endwith %}
+                {% endif %}
+                    
+
+                <!-- No option -->
+                {% if field__value == 'off' %}
+                {% with field__value='off' field__lable='No' field__name=filter.field is__checked=True  %}
+                {% include 'octopusdash/fields/RadioInput.html' %}
+                {% endwith %}
+                {% else %}
+                {% with field__value='off' field__lable='No' field__name=filter.field  %}
+                {% include 'octopusdash/fields/RadioInput.html' %}
+                {% endwith %}
+            {% endif %}
+    </div>
+</li>

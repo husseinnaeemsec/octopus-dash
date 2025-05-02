@@ -1,0 +1,16 @@
+{% include 'octopusdash/fields/Label.html' with widget=widget %}
+
+
+{% if widget.optgroups|length < 5 and settings.ENABLE_RADIO_GROUP    %}
+    {% include 'octopusdash/fields/RadioGroup.html' with widget=widget %} 
+    {% else %} 
+    <select name="{{widget.name}}" id="" class="od w-full">
+        {% for choice_obj in widget.optgroups %}
+            {% for option in choice_obj.1 %}
+                {% if option.value %}
+                    <option value="{{option.value}}"> {{option.label}}  </option>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </select>
+{% endif %}

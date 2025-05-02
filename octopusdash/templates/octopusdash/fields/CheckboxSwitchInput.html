@@ -1,0 +1,18 @@
+
+
+{% include 'octopusdash/fields/Label.html' with widget=widget %}
+<input 
+    type="checkbox" 
+    name="{{ widget.name }}" 
+    {% include 'django/forms/widgets/attrs.html' %}
+    class="od-switch"
+    placeholder="This is a test"
+    
+    {% if widget.value == 'true' %}
+        checked
+    {% endif %}
+        
+    {% if widget.is_hidden %}
+        hidden
+    {% endif %}
+>

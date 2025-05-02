@@ -1,0 +1,80 @@
+{% load octopus_tags %}
+<form id="search_filter_form" class="flex items-center justify-between gap-3 max-w-full my-3 relative z-1" >
+    <div class="flex items-center gap-3">
+        <input value="{{request.GET|get:'query'|default:''}}" name="query" placeholder="Search for {{model_name}}" class=" placeholder:text-gray-600 dark:text-gray-100 rounded-md p-2 w-fit lg:w-72  px-4 dark:bg-gray-900 bg-gray-200"/>
+        <button class="w-10 h-10 dark:bg-gray-900 bg-gray-200 rounded flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+            </svg>
+        </button>
+    </div>
+    <!-- Filters -->
+    <button type="button" class="w-10 h-10 dark:bg-gray-900 bg-gray-200 flex items-center justify-center rounded relative z-1">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
+        </svg>
+        <span id="filter_menu_btn" class="absolute w-full h-full opacity-0 inset-0"></span>
+    </button>
+    <div id="filters-menu" class="absolute  right-0 top-[120%] w-96 bg-gray-50 dark:bg-gray-800 hidden border border-gray-600 shadow-lg z-2 rounded-md overflow-y-auto">
+        <div class="p-3 flex bg-gray-100 dark:bg-gray-950 text-gray-600 sticky top-0"> Filters. </div>
+        {% include 'octopusdash/dynamic/context/filters.html' %}
+    </div>
+</form>
+
+{% include 'octopusdash/dynamic/context/active_filters.html' %}
+
+
+<script>
+    const filterMenuBtn = document.getElementById("filter_menu_btn")
+    const filterMenu = document.getElementById("filters-menu")
+    const filterButtonWrapper = filterMenuBtn.parentElement
+
+    let isOpen = false
+
+    gsap.set(filterMenu, { scale: 0.95, opacity: 0, display: "none" })
+
+    const activeFilterButtonClass = localStorage.getItem("theme") === 'dark' ? '#1f2937' : '#e5e7eb'
+    const originalClass = localStorage.getItem("theme") === 'dark' ? '#111827' : 'e5e7eb'
+
+    filterMenuBtn.addEventListener("click", () => {
+        if (!isOpen) {
+            // Animate in
+            gsap.to(filterMenu, {
+                display: "block",
+                scale: 1,
+                opacity: 1,
+                duration: 0.3,
+                ease: "power2.out"
+            })
+
+            // Button feedback (optional)
+            gsap.to(filterButtonWrapper, {
+                backgroundColor: activeFilterButtonClass, // darker gray
+                scale: 1.05,
+                duration: 0.2
+            })
+
+            isOpen = true
+        } else {
+            // Animate out
+            gsap.to(filterMenu, {
+                scale: 0.95,
+                opacity: 0,
+                duration: 0.2,
+                ease: "power2.in",
+                onComplete: () => {
+                    gsap.set(filterMenu, { display: "none" })
+                }
+            })
+
+            // Revert button
+            gsap.to(filterButtonWrapper, {
+                backgroundColor: originalClass, // original gray-900
+                scale: 1,
+                duration: 0.2
+            })
+
+            isOpen = false
+        }
+    })
+</script>
