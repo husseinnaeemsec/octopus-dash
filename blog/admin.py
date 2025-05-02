@@ -1,7 +1,28 @@
 from django.contrib import admin
-from .models import Post,Category,Tag
+from .models import Post,Category,Tag,SimpleBook,ContentImage
 from octopusdash.admin import dashboard,ODModelAdmin,AppConfiguration
 
+
+# Register SimpleBook model 
+
+class SimpleBookAdmin(ODModelAdmin):
+    
+    list_display = ['title','content']
+    fields_config = {
+        'content':{
+            'allow_image_upload':True,
+            'model':'blog.models.ContentImage',
+            'file_field_name':'image',
+            'model_field_name':'book'
+        }
+    }
+
+
+class ImageAdmin(ODModelAdmin):
+    list_display = ['book','image']
+
+dashboard.register(SimpleBook,SimpleBookAdmin)
+dashboard.register(ContentImage,ImageAdmin)
 
 # Register tag model
 
@@ -19,6 +40,7 @@ class TagAdmin(ODModelAdmin):
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" />
     </svg>
     '''
+
 
 
 
