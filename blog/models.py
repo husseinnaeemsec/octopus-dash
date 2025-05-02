@@ -50,3 +50,13 @@ class Post(models.Model):
         return super().save(*args, **kwargs)
 
 
+
+class SimpleBook(models.Model):
+    
+    title = models.CharField(max_length=255,help_text='Name of the book')
+    content = models.TextField(max_length=5000)
+
+
+class ContentImage(models.Model):
+    book = models.ForeignKey(SimpleBook,on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='books/images',blank=True)
