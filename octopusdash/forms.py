@@ -2,36 +2,97 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from .conf import settings,default_settings
+import importlib
+from . import fields
+import pathlib
+
 
 User = get_user_model()
-class FieldMetaData:
-    
-    def __init__(self,field:forms.Field):
-        self.input_type = field.widget.input_type if hasattr(field.widget,'input_type') else ''
-        self.type = type(field).__name__
-        self.choices = field.choices if hasattr(field,'choices') else []
+
+
+
 
 
 class DynamiModelForm(forms.ModelForm):
     
     fields_metadata = {}
-    
+    utils = importlib.import_module
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)  # Corrected super call
-        
+        widget = None
         # Optionally, you can loop through fields and print them or customize further
-        for field_name,field in self.fields.items():
-            field.widget.attrs['class'] = 'w-full p-2 px-5 bg-gray-200 dark:bg-gray-800 my-2 rounded-md '
-            if not self.fields_metadata.get(field_name):
-                self.fields_metadata[field_name] = {
-                    'metadata':FieldMetaData(field),
-                    'field':field,
-                }
+        for field_name, field in self.fields.items():
+            # Handle SlugField
+            if isinstance(field.widget, forms.TextInput) and field.__class__.__name__ == 'SlugField':
+                widget = fields.ODSlugInput(field=field)
 
-    
+            # Handle TimeInput
+            elif isinstance(field.widget, forms.TimeInput) and field.__class__.__name__ == 'TimeField':
+                widget = fields.ODTimeInput(field=field)
+
+            # Handle DateInput
+            elif isinstance(field.widget, forms.DateInput) and field.__class__.__name__ == 'DateField' :
+                widget = fields.ODDateInput(field=field)
+
+            # Handle DateTimeInput
+            elif isinstance(field.widget, forms.DateTimeInput) and field.__class__.__name__ == 'DateTimeField':
+                print(field_name, 'Is Datetime input')
+                widget = fields.ODDateTimeInput(field=field)
+
+            elif isinstance(field.widget,forms.FileInput):
+                widget = fields.ODFileInput(field=field)
+
+            # Handle other TextInput fields (default)
+            elif isinstance(field.widget, forms.TextInput):
+                widget = fields.ODTextInput(field=field)
+
+            # Handle NumberInput
+            elif isinstance(field.widget, forms.NumberInput):
+                widget = fields.ODNumberInput(field=field)
+
+            # Handle NullBooleanSelect (CheckboxSwitchInput)
+            elif isinstance(field.widget, forms.NullBooleanSelect):
+                widget = fields.ODCheckboxSwitchInput(field=field)
+
+            # Handle EmailInput
+            elif isinstance(field.widget, forms.EmailInput):
+                widget = fields.ODEmailInput(field=field)
+
+            # Handle Textarea
+            elif isinstance(field.widget, forms.Textarea):
+                widget = fields.ODTextArea()
+
+            # Handle SelectMultiple
+            elif isinstance(field.widget, forms.SelectMultiple):
+                choices = getattr(field, 'choices', [])
+                widget = fields.ODSelectMultiple(choices=choices)
+
+            # Handle Select
+            elif isinstance(field.widget, forms.Select):
+                choices = getattr(field, 'choices', [])
+                widget = fields.ODSelect(choices=choices)
+
+            # Handle CheckboxInput
+            elif isinstance(field.widget, forms.CheckboxInput):
+                widget = fields.ODCheckboxInput(field=field)
+
+            # Handle URLInput
+            elif isinstance(field.widget, forms.URLInput):
+                widget = fields.ODURLField()
+
+            # If no match, continue
+            else:
+                continue
+
+            if widget is not None:
+                field.widget = widget
     class Meta:
         model = None
         fields = "__all__"
+
+    
+    def get_media(self):
+        return self.media
 
 
 form_class_fields = settings.get("USER_FORM_FIELDS",default_settings.get("USER_FORM_FIELDS"))
