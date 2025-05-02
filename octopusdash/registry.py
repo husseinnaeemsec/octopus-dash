@@ -12,24 +12,22 @@ class ModelAdminMetaClass(type):
     
     __action_arguments = ('self', 'request', 'queryset')
     actions_dict = {}
-    
     def __new__(cls, name, bases, clsdict):
         
         if name not in {'BaseModelAdmin'}:
+            'Check if the user has set the  actions variable but not implement any.'
             actions = clsdict.get("actions", [])
             if actions:
                 for action in actions:
                     if action not in clsdict:
                         raise ValueError(f"ModelAdmin {name} has defined {action} action but it's not implemented.")
-                    
                     method = clsdict[action]
                     sig = inspect.signature(method)
                     param_names = tuple(sig.parameters)
+                    # Check action arguments
                     if param_names != cls.__action_arguments:
                         raise ValueError(f"Action {action} must have the following arguments {cls.__action_arguments}. Found: {param_names}")
                     
-                    
-
                     
                     if not hasattr(method, 'short_desc'):
                         method.short_desc = inspect.getdoc(method).capitalize()  # Default to the action name
@@ -47,7 +45,6 @@ class ModelAdminMetaClass(type):
                         
                         clsdict['actions_dict'] = actions_dict
                         
-                        
                     
         return super().__new__(cls, name, bases, clsdict)
     
@@ -61,10 +58,10 @@ class BaseModelAdmin(metaclass=ModelAdminMetaClass):
 
 
 class ODModelAdmin(BaseModelAdmin):
-    actions = ['delete_objects']
     list_display = []
     search_fields = []
     filter_fields = []
+    fields_config = {}
     fields = '__all__'
     icon = None
     
@@ -90,6 +87,8 @@ class ODModelAdmin(BaseModelAdmin):
                     self.model_search_fields.append(field.name)
         else:
             self.model_search_fields = self.search_fields
+        
+        # Default filter fields (BooleanField,Date,DateTime,Time * Fields , CharField with choices)
         if not self.filter_fields:
             for field in self.model._meta.get_fields():
                 if field.get_internal_type() in default_filter_fields and field.name in self.list_display:
@@ -106,10 +105,6 @@ class ODModelAdmin(BaseModelAdmin):
         else:
             self.model_filter_fields = self.filter_fields
     
-    def delete_objects(self,request,queryset):
-        """ Deleting all selected users  """
-        
-        return JsonResponse("Deleted",safe=False)
 
 
 class AppConfiguration:
@@ -136,7 +131,7 @@ class AppRegistry:
         
         app_config = model._meta.app_config
         
-        if app_config not in self.get_registry():
+        if app_config not in self.get_registry().keys():
             self.__registry[app_config] = {
                 "models":{
                     model:{
@@ -148,7 +143,7 @@ class AppRegistry:
                 'app_name':app_config.label,
             }
         else:
-            if not self.get_registry().get(app_config)['models'].get(model):
+            if not model in self.get_registry().get(app_config)['models']:
                 self.__registry[app_config]['models'][model] = {
                     'admin':admin(model) if admin is not None else ODModelAdmin(model),
                     "name":model._meta.model_name,
@@ -173,7 +168,6 @@ class AppRegistry:
                     'models':{},
                 }
                 
-            
             else:
                 raise LookupError(f'App with the label {app_label} is not registered remove the app or set register_app to True ')
     
