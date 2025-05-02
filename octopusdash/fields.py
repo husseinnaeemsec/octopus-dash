@@ -8,8 +8,10 @@ class ODInput:
     
     ''' Base <input /> field takes styles from INPUTS_STYLE_FILE for common fields '''
 
-    def __init__(self, *args,field=None, help_text=None, **kwargs):
+    def __init__(self, *args,field=None,data=None, help_text=None, **kwargs):
         self.help_text = ''
+        self.field = field
+        self.data = data
         if field is not None and not help_text:
             self.help_text = field.help_text or help_text
         elif help_text:
@@ -23,9 +25,19 @@ class ODInput:
     def get_context(self, name, value, attrs):
         context = super().get_context(name, value, attrs)
         # Ensure value is a list
+        if self.field is not None:
+            context['widget']['maxlength'] = getattr(self.field,'max_length',None)
+            context['widget']['field_type'] = self.field.__class__.__name__
+
+        if self.data is not None:
+            context['widget']['data'] = self.data
+        
         context['settings'] = settings
         context['choices'] = list(self.choices) if hasattr(self,'choices') else None
         context['widget']['help_text'] = self.help_text 
+        context['widget']['value'] = value
+        context['widget']['type'] = getattr(self,'input_type','')
+        context['widget']['label'] = context['widget']['name'].replace("_"," ").title()
         return context
 
     
@@ -94,11 +106,11 @@ class ODTextArea(ODInput,forms.Textarea):
 
     class Media:
         css = {
-            'all': [INPUTS_STYLE_FILE,'https://unpkg.com/trix@2.0.0/dist/trix.css']
+            'all': [INPUTS_STYLE_FILE,'https://unpkg.com/trix@2.0.0/dist/trix.css','octopusdash/css/components/inputs/textarea/textarea.min.css']
         }
         js = ["https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"]
 
-class ODCheckboxInput(forms.CheckboxInput):
+class ODCheckboxInput(ODInput,forms.CheckboxInput):
     input_type = 'checkbox'  # Checkbox input type
     template_name = 'octopusdash/fields/CheckBoxSwitch.html'
 
@@ -116,7 +128,7 @@ class ODSelect(ODInput,forms.Select):
             'all': [INPUTS_STYLE_FILE, 'octopusdash/css/components/inputs/radio/radio_input.min.css']
         }
 
-class ODSelectMultiple(forms.SelectMultiple):
+class ODSelectMultiple(ODInput,forms.SelectMultiple):
     input_type = 'select-multiple'  # Multiple select input type
     template_name = 'octopusdash/fields/SelectMultiple.html'
 
