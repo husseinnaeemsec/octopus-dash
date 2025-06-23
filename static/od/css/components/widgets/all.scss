@@ -1,0 +1,249 @@
+$_colors: "amber", "rose", "indigo", "violet", "emerald", "zync", 'cyan';
+
+%rounded {
+    border-radius: 10px; // made it a bit more rounded
+}
+%padding{
+    padding: 15px;
+}
+
+.widget-card {
+    @extend %rounded;
+    padding: 15px;
+    background-color: var(--slate-100);
+    border: 1px solid var(--slate-300);
+    color: var(--slate-700); // stronger contrast
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: background-color 0.3s, transform 0.3s; // smooth hover
+
+    &:hover {
+        background-color: var(--slate-200);
+        transform: translateY(-4px); // slight lift on hover
+    }
+
+    html.dark & {
+        background-color: var(--slate-800);
+        border-color: var(--slate-700);
+        color: var(--slate-100);
+
+        &:hover {
+            background-color: var(--slate-900);
+        }
+
+        .icon {
+            background-color: var(--slate-700);
+            color: var(--slate-400);
+        }
+
+        .text {
+            .title {
+                color: var(--slate-400);
+            }
+
+            .value {
+                color: var(--slate-100);
+            }
+        }
+    }
+
+    .icon {
+        width: 48px;
+        height: 48px;
+        background-color: var(--slate-300);
+        color: var(--slate-600);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: background-color 0.3s;
+
+        svg {
+            width: 24px;
+            height: 24px;
+        }
+    }
+
+    .text {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        .title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--slate-500);
+            margin: 0;
+        }
+
+        .value {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--slate-800);
+        }
+
+        .percentage-up {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--green-500); // success color
+
+            .chart-icon {
+                width: 16px;
+                height: 16px;
+                stroke: var(--green-500);
+            }
+
+            .percent {
+                margin-left: 2px;
+            }
+        }
+
+        .btn {
+            margin-top: 8px;
+            background-color: var(--cyan-500);
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+            &:hover {
+                background-color: var(--cyan-600);
+            }
+
+            html.dark & {
+                background-color: var(--cyan-700);
+
+                &:hover {
+                    background-color: var(--cyan-600);
+                }
+            }
+        }
+    }
+}
+
+@each $color in $_colors {
+    .widget-card.#{$color} {
+        background-color: var(--#{$color}-100);
+        color: var(--#{$color}-700); // stronger contrast
+
+        // Dark mode 
+        html.dark & {
+            background-color: var(--#{$color}-950);
+            border-color: var(--#{$color}-700);
+            color: var(--#{$color}-100);
+
+            &:hover {
+                background-color: var(--#{$color}-900);
+            }
+
+            .icon {
+                background-color: var(--#{$color}-700);
+                color: var(--#{$color}-400);
+            }
+
+            .text {
+                .title {
+                    color: var(--#{$color}-400);
+                }
+                .btn {
+                    background-color: var(--#{$color}-500);
+              
+                    &:hover {
+                      background-color: var(--#{$color}-600);
+                    }
+              
+                    html.dark & {
+                      background-color: var(--#{$color}-700);
+              
+                      &:hover {
+                        background-color: var(--#{$color}-600);
+                      }
+                    }
+                  }
+
+                .value {
+                    color: var(--#{$color}-100);
+                }
+            }
+        }
+
+        &:hover {
+            background-color: var(--#{$color}-200);
+        }
+
+        .icon {
+            background-color: var(--#{$color}-300);
+            color: var(--#{$color}-600);
+        }
+
+        .text {
+
+            .title {
+                color: var(--#{$color}-500);
+            }
+
+            .value {
+                color: var(--#{$color}-800);
+            }
+
+            .percentage-up {
+                color: var(--#{$color}-500); // success color
+
+                .chart-icon {
+                    stroke: var(--#{$color}-500);
+                }
+            }
+        }
+    }
+}
+
+.chart-container{
+
+    @extend %padding;
+    @extend %rounded;
+    border: 1px solid var(--slate-300);
+    background-color: var(--slate-100);
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    canvas{
+        max-height: 250px;
+        height: 250px !important;
+    }
+    .header{
+        padding: 0px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .title{
+            font-size: 30px;
+            margin: 10px 0;
+            margin-top: 0;
+            color: var(--slate-100);
+            font-weight: bold;
+        }
+    }
+    .legends{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        column-gap: 4px;
+        margin: 10px 0;
+        color: var(--slate-300);
+        font-size: 12px;
+    }
+    html.dark &{
+        background-color: var(--slate-800);
+        border-color: var(--slate-700);
+    }
+}

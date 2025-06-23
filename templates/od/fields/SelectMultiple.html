@@ -1,0 +1,12 @@
+{% include 'od/fields/Label.html' with widget=widget %}
+<select value="{% if widget.value is not None %}{{widget.value}}{% endif %}"  {% if widget.required %} required {% endif %}  multiple name="{{widget.name}}" id="{{widget.attrs.id}}" class="od w-full">
+    
+    {% for choice_obj in widget.optgroups  %}
+        
+        {% for option in choice_obj.1  %}
+            <option value="{{option.value}}" {% if option.selected %} selected {% endif %} > {{option.label}} </option>
+        {% endfor %}
+            
+    {% endfor %}
+        
+</select>

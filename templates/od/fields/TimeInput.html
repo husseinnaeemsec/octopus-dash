@@ -1,0 +1,12 @@
+{% include 'od/fields/Label.html' with widget=widget %}
+<input 
+    type="{{ widget.type }}" 
+    name="{{ widget.name }}" 
+    {% include 'django/forms/widgets/attrs.html' %}
+    class="od w-full"
+    placeholder="This is a test"
+    value="{% if widget.value is not None %}{{widget.value|time:'H:i'}}{% endif %}"
+    {% if widget.is_hidden %}
+        hidden
+    {% endif %}
+>

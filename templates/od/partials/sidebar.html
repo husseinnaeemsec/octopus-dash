@@ -1,0 +1,37 @@
+{% load static %}
+<aside id="octopus_sidebar"
+    class=" bg-white dark:bg-gray-900/30 lg:sticky flex flex-col justify-between top-0 fixed w-full h-screen overflow-y-auto ">
+    <div>
+        <!-- Logo -->
+        <div class="flex p-3 items-center justify-between gap-3 my-3 mt-0 sticky top-0 bg-white dark:bg-gray-900">
+            <div class="flex gap-3 items-center">
+                <img src="{% static 'od/logo/64.svg' %}" class="lg:w-12 lg:h-12 h-14 w-14" alt="">
+                <h1
+                    class="lg:text-xl text-2xl font-bold bg-gradient-to-r from-purple-600 to-indigo-500 text-transparent bg-clip-text">
+                    Octopusdash
+                </h1>
+            </div>
+            <button id="close-sidebar" class="lg:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-8 text-gray-400">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Menu items -->
+        <ul class="text-gray-400 p-3 mt-5 space-y-4 flex flex-col justify-between">
+            <!-- Dashboard -->
+            {% url 'od-dashboard' as dashboard_url %}
+            <a href="{{dashboard_url}}"
+                class="flex items-center gap-3 p-3  bg-gradient-to-r  {% if request.path == dashboard_url %} text-indigo-50 from-indigo-500 to-indigo-700 {% endif %}  rounded-lg">
+                <i class="fi fi-rr-dashboard-monitor"></i>
+                <span> Dashboard </span>
+            </a>
+            {% include 'od/partials/app_links.html' %}
+        </ul>
+        
+    </div>
+
+</aside>

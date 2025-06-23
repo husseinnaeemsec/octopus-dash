@@ -1,0 +1,259 @@
+{% load static %}
+<nav class="flex items-center  border-b border-slate-100  dark:border-slate-900 justify-between w-full sticky top-0 z-30 bg-white dark:bg-slate-950 px-5 p-2 ">
+    <div  class="_overlay fixed w-full h-full hidden dark:bg-slate-900/20 backdrop-blur-xs inset-0 z-[1]"></div>
+    <!-- Search -->
+    <div class="flex items-center  relative z-10">
+        <input id="dashboard_search" type="text" placeholder="Search"
+            class="text-sm px-4 pl-10 placeholder:text-slate-500 p-1 text-slate-300 rounded-lg bg-slate-50 dark:bg-slate-950 outline focus:outline-indigo-800   focus:outline outline:slate-200 dark:outline-slate-800  lg:w-xl " />
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="size-5 absolute z-0 left-3 text-slate-500">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+        </svg>
+        <!-- Seach result -->
+        <div id="search_results" class="absolute z-10 hidden bg-white max-w-2xl w-96 overflow-hidden overflow-y-auto h-96   dark:bg-slate-900 top-[130%] border border-slate-300 dark:border-slate-700 rounded-lg">
+
+            <div class="relative z-10">
+                <p class="dark:text-slate-400 sticky top-0 z-10 p-4 bg-slate-200 dark:bg-slate-950 text-xs flex items-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+                </svg>                              
+                Apps
+            </p>
+            <div class="flex items-center gap-3 flex-wrap mt-3 p-4">
+                    <!-- Users -->
+                <span class="p-2 rounded-full bg-slate-200 dark:bg-slate-800 dark:text-slate-400 text-xs px-4 flex items-center gap-2">
+                    Users
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                    </svg>
+                </span>
+
+                <!-- Dashboard -->
+                <span class="p-2 rounded-full bg-slate-200 dark:bg-slate-800 dark:text-slate-400 text-xs px-4 flex items-center gap-2">
+                    Dashboard
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h6v6H3V3zm0 12h6v6H3v-6zm12-12h6v6h-6V3zm0 12h6v6h-6v-6z" />
+                    </svg>
+                </span>
+
+                <!-- Reports -->
+                <span class="p-2 rounded-full bg-slate-200 dark:bg-slate-800 dark:text-slate-400 text-xs px-4 flex items-center gap-2">
+                    Reports
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-6m6 6V9m-9 9V9a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v9" />
+                    </svg>
+                </span>
+
+                <!-- Settings -->
+                <span class="p-2 rounded-full bg-slate-200 dark:bg-slate-800 dark:text-slate-400 text-xs px-4 flex items-center gap-2">
+                    Settings
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v1.125M6.364 6.364l.796.796m-2.12 4.95h1.125m0 4.95l-.796.796m4.95 2.121V19.5M17.636 17.636l-.796-.796m2.121-4.95h-1.125M19.5 12a7.5 7.5 0 1 0-15 0 7.5 7.5 0 0 0 15 0Z" />
+                    </svg>
+                </span>
+
+                <!-- Notifications -->
+                <span class="p-2 rounded-full bg-slate-200 dark:bg-slate-800 dark:text-slate-400 text-xs px-4 flex items-center gap-2">
+                    Notifications
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 17h5.25M4.5 17h5.25M6.75 10.5a3.75 3.75 0 0 1 7.5 0V12m-7.5 0h7.5m-7.5 0A3.75 3.75 0 0 0 6.75 15m7.5-3a3.75 3.75 0 0 0 3.75 3.75m0-7.5a3.75 3.75 0 0 1-3.75-3.75m0 0A3.75 3.75 0 0 0 6.75 6.75" />
+                    </svg>
+                </span>
+
+                <!-- Projects -->
+                <span class="p-2 rounded-full bg-slate-200 dark:bg-slate-800 dark:text-slate-400 text-xs px-4 flex items-center gap-2">
+                    Projects
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.5l.5 13.25c.03.8.676 1.5 1.5 1.5h13c.824 0 1.47-.7 1.5-1.5l.5-13.25M3.75 4.5H20.25M3.75 4.5l1.5-1.5h13.5l1.5 1.5" />
+                    </svg>
+                </span>
+
+                <!-- Analytics -->
+                <span class="p-2 rounded-full bg-slate-200 dark:bg-slate-800 dark:text-slate-400 text-xs px-4 flex items-center gap-2">
+                    Analytics
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6-6 4.5 4.5L20.25 6M3.75 21h16.5" />
+                    </svg>
+                </span>
+
+            </div>
+            <p class="dark:text-slate-400 sticky top-0 z-10 p-4 bg-slate-200 dark:bg-slate-950 text-xs flex items-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                </svg>                          
+                Links
+            </p>
+            <div class="flex items-center gap-3 flex-wrap mt-3 p-4">
+                    <!-- Users -->
+                <span class="p-2 rounded-full bg-slate-200 dark:bg-slate-800 dark:text-slate-400 text-xs px-4 flex items-center gap-2">
+                    Settings
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                    </svg>
+                </span>
+                <span class="p-2 rounded-full bg-slate-200 dark:bg-slate-800 dark:text-slate-400 text-xs px-4 flex items-center gap-2">
+                    Profile
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                    </svg>
+                </span>
+                <span class="p-2 rounded-full bg-slate-200 dark:bg-slate-800 dark:text-slate-400 text-xs px-4 flex items-center gap-2">
+                    Permssions
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                    </svg>
+                </span>
+            </div>
+            </div>
+            
+        </div>
+        <!-- End Search results  -->
+    </div>
+    <!-- End search  -->
+    <!-- Profile and Notifications  -->
+    <div class="flex items-center gap-3">
+        <div class="flex items-center gap-3 text-slate-400">
+            <!-- Add Model Button -->
+            
+            {% if model_admin %}
+                <a href="{% url 'od-create-instance' app.app_label model_name %}" class="p-2 rounded-md text-sm flex items-center justify-center bg-indigo-600 text-white"> Add {{model_admin.model_name_display}} </a>
+            {% endif %}
+                
+            <!-- Messages -->
+            <div class="w-8 h-8 rounded-md dark:bg-slate-900 bg-slate-200  flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                </svg>
+            </div>
+            <!-- Notifcations -->
+            <div class="w-8 h-8 rounded-md dark:bg-slate-900 bg-slate-200  flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+                </svg>
+            </div>
+        </div>
+        <!-- Profile -->
+        <div class=" p-2 relative z-10 rounded-md text-slate-400">
+            {% if request.user.is_authenticated %}
+            <button data-open="false" id="toggle_profile_menu" class=" flex items-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                </svg>
+                <img src="{% if  request.user.profile.profile_picture %} {{request.user.profile.get_profile_picture}} {% else %} {% static 'od/images/profile_picture.svg' %} {% endif %}" class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800" alt="">
+            </button>
+            
+            <!-- Profile Menu -->
+            <div id="profile_menu" class="absolute w-[250px] hidden right-5  top-[110%]">
+                <div class="space-y-3 items-center p-4 text-sm  bg-slate-100 dark:bg-slate-800 rounded-md h-fit text-slate-600 dark:text-slate-200 ">
+                    <a href="" class="p-3 flex items-center gap-3 hover:bg-slate-200 dark:hover:bg-slate-900  rounded-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                        </svg>
+                        Edit Profile
+                    </a>
+                    <a href="" class="p-3 flex items-center gap-3 hover:bg-slate-200 dark:hover:bg-slate-900">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                        </svg>
+        
+                        Dashboard Settings
+                    </a>
+                    <a href="" class="p-3 flex items-center gap-3 hover:bg-slate-200 dark:hover:bg-slate-900">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                        </svg>
+                        Lock Screen
+                    </a>
+                    <span class="border-b w-full inline-block border-slate-300 dark:border-slate-700  p-2"></span>
+                    <a href="" class="p-3 flex items-center gap-3 hover:bg-slate-200 dark:hover:bg-slate-900 text-rose-500 dark:text-rose-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                        </svg>
+                        Logout
+                    </a>
+                </div>
+            </div>
+            <!-- End  -->
+                
+            {% endif %}
+                
+        </div>
+    </div>
+    
+</nav>
+
+<script>
+    const profileMenu = document.getElementById("profile_menu")
+    const toggleBtn = document.getElementById("toggle_profile_menu");
+    const searchInput = document.getElementById("dashboard_search");
+    const searchResults = document.getElementById("search_results");
+    const overlay = document.querySelector("._overlay")
+    function toggleProfileMenu(){
+        const isHidden = profileMenu.classList.contains("hidden");
+
+        if (isHidden) {
+            profileMenu.classList.remove("hidden"); // show it first so GSAP can animate it
+            
+            gsap.fromTo(
+                profileMenu,
+                { opacity: 0, y: -10 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.3,
+                    ease: "power2.out",
+                    zIndex:10,
+                }
+            );
+            overlay.classList.remove("hidden")
+        } else {
+            gsap.to(profileMenu, {
+                opacity: 0,
+                y: -10,
+                duration: 0.2,
+                ease: "power2.in",
+                onComplete: () => profileMenu.classList.add("hidden")
+            });
+            overlay.classList.add("hidden")
+        }
+    }
+    toggleBtn.addEventListener("click",toggleProfileMenu);
+    overlay.addEventListener("click",toggleProfileMenu);
+
+
+    searchInput.addEventListener("focus",()=>{
+        searchResults.classList.remove("hidden"); // show it first so GSAP can animate it
+        overlay.classList.remove("hidden");
+        gsap.fromTo(
+                searchResults,
+                { opacity: 0, y: -10 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.3,
+                    ease: "power2.out"
+                }
+        );
+    })
+
+    searchInput.addEventListener("blur",()=>{
+        overlay.classList.add("hidden")
+        gsap.to(searchResults, {
+                opacity: 0,
+                y: -10,
+                duration: 0.2,
+                ease: "power2.in",
+                onComplete: () => searchResults.classList.add("hidden")
+            });
+    })
+</script>

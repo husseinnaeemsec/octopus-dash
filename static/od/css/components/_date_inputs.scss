@@ -1,0 +1,18 @@
+input[type=datetime-local] {
+    padding: 0.5rem;
+    border: 1px solid var(--slate-400);
+    background-color: var(--slate-100);
+    color: var(--slate-900);
+    border-radius: 0.5rem;
+  
+    &::-webkit-calendar-picker-indicator {
+      filter: invert(1); // for dark mode icon adjustment
+      cursor: pointer;
+    }
+  
+    html.dark & {
+      background-color: var(--slate-800);
+      color: var(--slate-100);
+    }
+  }
+  

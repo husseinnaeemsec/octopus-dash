@@ -1,0 +1,53 @@
+{% extends 'od/base.html' %}
+
+
+{% block content %}
+
+
+{% if form.errors %}
+<div class="my-4">
+    {% include 'od/messages/error.html'  with  message__content='Your form contains invalid values please fix them and try again.' message__title='Invalid values' %}
+</div>
+{% endif %}
+    
+
+{{form.media}}
+
+<div class="mx-auto">
+
+{% if messages %}
+<div id="messages" class="space-y-4 my-5">
+    {% for message in messages  %}
+    {% include 'od/messages/success.html' with  message__content=message  %}
+    {% endfor %}
+</div>
+
+{% endif %}
+
+<h1 class="text-2xl">Update <strong> {{object}} </strong> </h1>
+<form method="post" id="update-object-form" enctype="multipart/form-data" class="space-y-5 my-5">
+{% csrf_token %}
+{% for field in form  %}
+    <div class="space-y-2">
+        {% if field.errors %}
+        <ul class="space-y-3 my-2">
+                
+            {% for error in field.errors  %}
+            {% include 'od/messages/error.html' with message__content=error %}
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {{field}}
+
+    </div>
+{% endfor %}
+    <input type="hidden" name="__success__">
+    <div class="flex items-center gap-3">
+        <button id="save" class="bg-blue-500 text-white p-2 px-4 rounded"> Save </button>
+        <a href="{% url 'od-delete-instance' app.app_label model_name object.pk %}" id="delete" class="bg-rose-600 text-white p-2 px-4 rounded"> Delete </a>
+
+    </div>
+</form>
+</div>
+
+{% endblock content %}

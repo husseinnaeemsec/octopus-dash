@@ -1,0 +1,14 @@
+{{label}}
+<div class="od-radio-group bg-transparent">
+    {% for choice_obj in widget.optgroups  %}
+    {% for option in choice_obj.1  %}
+        
+        {% if option.value %}
+        <input style="--text:'{{option.label}}'" value="{{option.value}}" {% if option.selected %} checked {% endif %}   type="radio" name="{{widget.name}}"   class="od">
+        {% endif %}
+            
+    {% endfor %}
+        
+{% endfor %}
+</div>
+

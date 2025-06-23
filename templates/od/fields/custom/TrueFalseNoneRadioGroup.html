@@ -1,0 +1,7 @@
+{{widget.label}}
+
+<div class="od-radio-group bg-transparent">
+        <input style="--text:'True'" value="on" {% if widget.value.0 == 'on' %} checked {% endif %}   type="radio" name="{{widget.name}}"   class="od sm">
+        <input style="--text:'False'" value="off" {% if widget.value.0 == 'off' %} checked {% endif %}  type="radio" name="{{widget.name}}"   class="od sm">
+        <input style="--text:'None'" value="none" {% if widget.value.0 == 'none'   %} checked {% endif %}  type="radio" name="{{widget.name}}"   class="od sm">
+</div>

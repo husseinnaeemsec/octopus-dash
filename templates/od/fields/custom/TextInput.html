@@ -1,0 +1,11 @@
+{% include 'od/fields/Label.html' with widget=widget %}
+<div class="flex flex-col gap-y-2 w-full">
+    <label for="{{widget.name}}" class="text-sm"> {{widget.label}} {% if not widget.label %} {{widget.attrs.label}}  {% endif %} </label>
+<input 
+    {% include 'django/forms/widgets/attrs.html' %}
+    class="od w-full"
+    name="{{widget.name}}"
+    value="{% if widget.value is not None %}{{widget.value}}{% endif %}"
+    
+    >
+</div>

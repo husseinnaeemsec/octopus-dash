@@ -1,0 +1,40 @@
+{% include 'od/fields/Label.html' with widget=widget %}
+<div  {% if not widget.field_type  == 'JSONField' and widget.maxlength  %} class="textarea-wrapper"  chars-left="{{widget.maxlength}}"  {% endif %} >
+    <textarea 
+        {% include "django/forms/widgets/attrs.html" %}
+        class="od w-full"  placeholder="{{widget.help_text}}"
+        maxlength="{{widget.maxlength}}"
+        name="{{widget.name}}"
+    >{% if widget.value %}{{widget.value}}{% endif %}</textarea>
+</div>
+{% if not widget.field_type == 'JSONField' %}
+<script>
+    document.querySelectorAll('.textarea-wrapper').forEach((wrapper) => {
+        const textarea = wrapper.querySelector("textarea");
+        const maxLength = parseInt(textarea.getAttribute("maxlength"), 10) || 0;
+
+        const updateCharsLeft = () => {
+            const currentLength = textarea.value.length;
+
+            // Trim extra chars if user pastes
+            if (currentLength > maxLength) {
+                textarea.value = textarea.value.slice(0, maxLength);
+            }
+
+            const charsLeft = maxLength - textarea.value.length;
+            wrapper.setAttribute("chars-left", charsLeft);
+        };
+
+        // Initialize
+        updateCharsLeft();
+
+        textarea.addEventListener("input", updateCharsLeft);
+        textarea.addEventListener("keypress", (e) => {
+            if (textarea.value.length >= maxLength && !e.ctrlKey && !e.metaKey && !e.altKey) {
+                e.preventDefault();
+            }
+        });
+    });
+</script>
+
+{% endif %}

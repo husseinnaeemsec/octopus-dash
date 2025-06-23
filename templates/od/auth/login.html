@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - OctopusDash</title>
+    <link href="{% static 'od/css/styles.min.css' %}" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static 'od/logo/64.svg' %}" type="image/x-icon">
+</head>
+
+<body class="dark:bg-gray-950 dark:text-white text-slate-500 min-h-screen flex items-center justify-center">
+
+    <div class="dark:bg-gray-900/40 bg-white  backdrop-blur-sm p-8 rounded-xl shadow-lg w-full max-w-sm border border-gray-300 dark:border-gray-800">
+        <!-- Logo -->
+        <div class="flex items-center justify-center gap-3 mb-8">
+            <img src="{% static 'od/logo/64.svg' %}" alt="Octopusdash Logo" class="w-12 h-12">
+            <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-indigo-500 text-transparent bg-clip-text">
+                Octopusdash
+            </h1>
+        </div>
+        <!-- Login Form -->
+        <form method="POST" class="space-y-6">
+            {% csrf_token %}
+            {% if messages %}
+                <div>
+                    {% for message in messages %}
+                        <div class="text-red-400 text-sm">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div>
+                <label for="{{username}}" class="block text-sm font-medium text-gray-600 dark:text-gray-300">{{username}}</label>
+                <input type="text" name="{{username}}" id="{{username}}" required
+                    class="w-full mt-1 p-2 px-4 dark:bg-gray-900 bg-gray-50  border dark:border-gray-700 border-gray-300 dark:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Password</label>
+                <input type="password" name="password" id="password" required
+                    class="w-full mt-1 p-2 px-4 dark:bg-gray-900 bg-gray-50  border dark:border-gray-700 border-gray-300 dark:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            </div>
+
+            <div>
+                <button type="submit"
+                        class="w-full py-2 px-4 bg-gradient-to-r from-purple-600 via-indigo-500 to-purple-600 hover:from-purple-600 hover:to-indigo-500 text-white font-semibold rounded-lg transition duration-300">
+                    Login
+                </button>
+            </div>
+        </form>
+
+        <div class="mt-6 text-center text-sm text-gray-400">
+            <a href="#" class="hover:underline hover:text-indigo-400">Forgot your password?</a>
+        </div>
+    </div>
+
+</body>
+
+</html>

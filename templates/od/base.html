@@ -1,0 +1,61 @@
+<!-- octopusdash/templates/octopusdash/dashboard.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html id="htmlRoot" lang="en" class="">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {% block title %} {% endblock %} octopusdash </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'od/logo/32.svg' %}">
+    <link href="{% static 'od/css/styles.min.css' %}" rel="stylesheet">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <script src="https://cdn.jsdelivr.net/npm/redux@4.2.1/dist/redux.min.js"></script>
+    <script src="{% static 'od/js/lib/jquery.3.7.1.js' %}"></script>
+    <!-- Tippy -->
+        <script src="https://unpkg.com/@popperjs/core@2"></script>
+        <script src="https://unpkg.com/tippy.js@6"></script>
+        <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css"/>
+        <link rel="stylesheet" href="{% static 'od/css/utils/colors.min.css' %}">
+        <link rel="stylesheet" href="{% static 'od/css/components/inputs/inputs.min.css' %}">
+        <link rel="stylesheet" href="{% static 'od/css/components/inputs/checkbox/checkbox.min.css' %}">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/all.min.js" integrity="sha512-fxASHhXi6WjjUR9Hr8qt2IxNW2AzyZOpoPi4+UgVU0lTFNKMQ8INkZaQ5ZED2aAldHuHNaLlaHuwQ1oGT+LHhw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+        {% block css_files %}{% endblock css_files %}
+            
+</head>
+
+<body class="">
+<main class="bg-gray-50 dark:bg-gray-950 dark:text-gray-100  grid lg:grid-cols-[270px_1fr] text-gray-700 justify-center h-screen overflow-x-hidden">
+        <!-- Sidebar -->
+        {% include 'od/partials/sidebar.html' %}
+        <!-- Page content -->
+        <div class="w-full h-full overflow-x-hidden">
+            {% include 'od/partials/navbar.html' %}
+            <!-- Navbar -->
+                <div class="lg:p-10 p-5 overflow-x-hidden max-w-full">
+                    {% block content %} {% endblock %}
+                </div>
+        </div>
+    </main>
+</body>
+<script type="module" src="{% static 'od/js/store/store.js' %}"></script>
+
+{% block script %}{% endblock script %}
+
+<script>
+    document.addEventListener("DOMContentLoaded",()=>{
+        document.querySelectorAll("[data-tippy]")
+        .forEach((ele)=>{
+            tippy(ele,{
+                content:ele.dataset.tippy,
+                theme:'dark'
+            })
+        })
+    })
+</script>
+
+</html>

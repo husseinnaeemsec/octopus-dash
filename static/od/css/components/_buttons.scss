@@ -1,0 +1,79 @@
+$button_types: (
+    "success": "emerald",
+    "danger": "rose",
+    "warning": "amber"
+);
+
+%btn {
+    @extend %p-3, %pl-4, %pr-4, %rounded-md;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    &:focus {
+        outline: 2px solid var(--indigo-400);
+        outline-offset: 2px;
+    }
+    &:disabled {
+        background-color: var(--gray-400) !important;
+        cursor: not-allowed;
+        color: var(--gray-700);
+    }
+}
+
+// Base Button
+.od.btn {
+    @extend %btn;
+    background-color: var(--indigo-600);
+    color: var(--indigo-50);
+
+    html.dark & {
+        background-color: var(--indigo-800);
+        color: var(--indigo-50);
+        &:focus {
+            outline: 2px solid var(--indigo-400);
+        }
+    }
+}
+
+// Base Outline Button
+.od.btn.od-outline {
+    @extend %btn;
+    background-color: transparent !important;
+    color: var(--gray-700);
+    border: 1px solid var(--gray-700);
+
+    html.dark & {
+        color: var(--gray-400);
+        border-color: var(--gray-700);
+    }
+}
+
+// Dynamic Buttons (filled and outlined)
+@each $name, $color in $button_types {
+    // Filled
+    .od.btn-#{$name} {
+        @extend %btn;
+        background-color: color-var(#{$color},600);
+        color: color-var(#{$color},50);
+
+        html.dark & {
+            background-color: color-var(#{$color},800);
+            color: color-var(#{$color},50);
+            &:focus {
+                outline: 2px solid color-var(#{$color},400);
+            }
+        }
+    }
+
+    // Outlined
+    .od.btn.od-outline-#{$name} {
+        @extend %btn;
+        background-color: transparent !important;
+        color: color-var(#{$color},700);
+        border: 1px solid color-var(#{$color},700);
+
+        html.dark & {
+            color: color-var(#{$color},400);
+            border-color: color-var(#{$color},700);
+        }
+    }
+}

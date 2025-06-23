@@ -1,0 +1,12 @@
+asgiref==3.8.1
+bleach==6.2.0
+colorlog==6.9.0
+Django==5.2.3
+django-cors-headers==4.7.0
+django-environ==0.12.0
+django-grappelli==4.0.2
+django-querystring-tag==1.0.3
+djangorestframework==3.16.0
+pillow==11.2.1
+sqlparse==0.5.3
+webencodings==0.5.1

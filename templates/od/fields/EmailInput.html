@@ -1,0 +1,49 @@
+{% include 'od/fields/Label.html' with widget=widget %}
+<input 
+    type="{{ widget.type }}" 
+    name="{{ widget.name }}" 
+    value="{% if widget.value is not None %}{{widget.value}}{% endif %}"
+    class="od w-full"    
+    {% if widget.is_hidden %}
+        hidden
+    {% endif %}
+    value="{{widget.value}}"
+>
+
+<script>
+    // Select all email input fields by class or ID
+    const emailFields = document.querySelectorAll('input[type="email"]');
+
+    // Function to validate email using a regex pattern
+    function validateEmail(email) {
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailPattern.test(email);
+    }
+
+    // Loop through all email fields and add an event listener
+    emailFields.forEach((emailField) => {
+        emailField.addEventListener('blur', ()=> {
+            const emailValue = emailField.value;
+            if (emailValue && !validateEmail(emailValue)) {
+                // If the email is invalid, add aria-invalid=true and show an error message
+                emailField.setAttribute('aria-invalid', 'true');
+                emailField.setCustomValidity("Please enter a valid email address.");
+                emailField.reportValidity();  // This triggers the browser's built-in validation message
+            } else {
+                // If the email is valid, remove aria-invalid and reset custom validity
+                emailField.removeAttribute('aria-invalid');
+                emailField.setCustomValidity("");  // Clear any previous custom validity message
+            }
+        });
+
+        // Optionally: Add validation on form submission or input change
+        emailField.addEventListener('input',  ()=>{
+            const emailValue = emailField.value;
+            if (emailValue && !validateEmail(emailValue)) {
+                emailField.setCustomValidity("Please enter a valid email address.");
+            } else {
+                emailField.setCustomValidity("");  // Clear custom message when valid
+            }
+        });
+    });
+</script>

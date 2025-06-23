@@ -1,0 +1,71 @@
+{% extends 'od/base.html' %}
+
+
+{% block content %}
+<!-- Media -->
+{{form.media}}
+<div class="mx-auto">
+
+{% if messages %}
+<div id="" class="space-y-4 my-5">
+    
+    {% for message in messages  %}
+    <div class="flex justify-between items-center bg-emerald-800/50 text-emerald-200 p-5 rounded-lg">
+        <div class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+            </svg>
+            <p> {{message}} </p>
+        </div>
+    </div>
+    {% endfor %}
+        
+</div>
+{% endif %}
+
+<h1 class="text-2xl">Create new  {{model_admin.model_name_display}} </h1>
+<form method="post" id="create-object-form" enctype="multipart/form-data" class="space-y-5 my-5">
+{% csrf_token %}
+
+
+
+{% for field in form %}
+
+    <div class="space-y-2">
+        {% if field.errors %}
+            <ul class="space-y-3 my-2">
+                
+                {% for error in field.errors  %}
+                <div class="flex justify-between items-center bg-rose-800/50 text-rose-200 p-5 rounded-lg">
+                    <div class="flex items-center gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                        </svg>
+                        <p> {{error}} </p>
+                    </div>
+                </div>
+                {% endfor %}
+                    
+            </ul>
+        {% endif %}
+        {{field}}
+    </div>
+{% endfor %}
+    <input type="hidden" name="__success__">
+    <div class="flex items-center gap-3">
+        <button id="save" class="bg-blue-500 text-white p-2 px-4 rounded"> Save </button>
+        <button id="save-add" class="bg-blue-700 text-white p-2 px-4 rounded"> Save and add another </button>
+
+    </div>
+</form>
+</div>
+<script>
+    document.getElementById("save-add").addEventListener("click",function(){
+        document.querySelector("[name=__success__]").value = "save-add"
+    })
+</script>
+
+{% endblock content %}

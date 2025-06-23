@@ -1,0 +1,25 @@
+
+{% include 'od/fields/Label.html' with widget=widget %}
+<input  
+
+{% include 'django/forms/widgets/attrs.html' %}
+
+{% if widget.value == 'True' or widget.value == True or widget.value == 'true' %}
+    checked
+{% endif %}
+
+type="checkbox"
+class="od-switch inline"
+name="{{widget.name}}"
+value="{{widget.value}}"
+>
+
+<script>
+    document.getElementById("{{widget.attrs.id}}").addEventListener("click",(e)=>{
+        if(e.target.checked){
+            e.target.value = 'on'
+        }else{
+            e.target.value = 'off'
+        }
+    })
+</script>

@@ -1,0 +1,46 @@
+$_colors:'slate','emerald','rose','amber','indigo','violet';
+%tag{
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 5px;
+    background-color: var(--slate-100);
+    border: 1px solid var(--slate-200);
+    &:hover{
+        background-color: var(--slate-200);
+    }
+
+    html.dark &{
+        background-color: var(--slate-800);
+        color: var(--slate-100);
+        border-color: var(--slate-700);
+        &:hover{
+            background-color: var(--slate-700);
+        }
+    }
+}
+
+.od-tag{
+    @extend %tag;
+}
+
+@each $color in $_colors{
+    .od-tag.#{$color}{
+        color: var(--#{$color}-800);
+        background-color: var(--#{$color}-100);
+        border-color: var(--#{$color}-200);
+        &:hover{
+            background-color: var(--#{$color}-200);
+        }
+
+        html.dark &{
+            background-color: var(--#{$color}-800);
+            color: var(--#{$color}-100);
+            border-color: var(--#{$color}-700);
+
+            &:hover{
+                background-color: var(--#{$color}-700) ;
+            }
+        }
+    }
+    
+}

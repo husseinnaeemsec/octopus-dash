@@ -1,0 +1,8 @@
+{% load octopusdash_tags %}
+
+<tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800">
+    <input type="hidden" name="form-INITIAL_FORMS" value="{{current_page_count}}" >
+    <input type="hidden" name="form-TOTAL_FORMS" value="{{current_page_count}}" >
+    <input type="hidden" name="request_type" value="inline_bulk_update">
+    {% include 'od/app/data/table_data_row.html' %}
+</tbody>

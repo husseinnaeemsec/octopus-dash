@@ -1,0 +1,7 @@
+{% load octopusdash_querystring_tag %}
+<form action="{% od_querystring %}" class="flex-1 flex items-center gap-3 w-full mb-10  ">
+    <input name="query" value="{% if query is not None %}{{query}}{% endif %}"  placeholder="Search for {{model_name}}" type="text"
+        class="w-full focus:outline focus:outline-slate-500 text-slate-400 bg-slate-200 dark:bg-slate-900 p-3 py-1 rounded-md">
+    <button class="p-3 py-1 rounded-md dark:bg-slate-800 bg-slate-200  text-slate-700 dark:text-slate-400 dark:hover:text-slate-100"> Search </button>
+</form>
+

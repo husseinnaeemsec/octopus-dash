@@ -1,0 +1,178 @@
+.od-timeline {
+    .info {
+        color: white;
+        text-align: center;
+        margin-bottom: 2rem;
+
+        .title {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            color: color-var(slate, 400);
+            font-size: 0.875rem;
+        }
+    }
+
+    .date {
+        position: relative;
+        margin: 2rem 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+
+        // Vertical line
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            height: calc(100% + 2rem);
+            background-color: color-var(slate, 200);
+            transform: translateX(-50%);
+            z-index: 0;
+            animation-name: vline;
+            animation-duration: 1s;
+            animation-iteration-count: 1;
+
+            html.dark &{
+                background-color: color-var(slate,800);
+            }
+        }
+        // End circle
+        &:last-child:after {
+            content: '';
+            @extend %rounded-full;
+            position: absolute;
+            top: calc(100% + 2rem);
+            bottom: 0;
+            left: 50%;
+            width: 10px;
+            height: 10px;
+            background-color: color-var(slate, 200);
+            outline: 2px solid color-var(slate,300);
+            transform: translateX(-50%);
+            z-index: 0;
+            animation-name: endball;
+            animation-duration: 1s;
+            animation-iteration-count: 1;
+
+            html.dark &{
+                background-color: color-var(slate,800);
+                outline-color: color-var(slate,900);
+            }
+        }
+
+        .title {
+            @extend %bg-slate-100;
+            @extend %p-3;
+            @extend %rounded-lg;
+            color: color-var(slate,500);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+
+            html.dark &{
+                @extend %bg-slate-800;
+                color: color-var(slate,200);
+            }
+        }
+
+        .event {
+            max-width: 400px;
+            @extend %bg-slate-100;
+            @extend %p-4;
+            @extend %rounded-lg;
+            color: color-var(slate,700);
+            position: relative;
+            z-index: 1;
+            // Default: align right
+            align-self: flex-start;
+            margin-left: calc(50% + 3rem);
+            // Dark mode 
+            html.dark &{
+                @extend %bg-slate-800;
+                color: color-var(slate,200);
+            }
+            // Alternate: align left
+            &:nth-of-type(odd) {
+                align-self: flex-end;
+                margin-left: auto;
+                margin-right: calc(50% + 3rem);
+                &::after{
+                    left: calc(100%  + 1.5rem  + 10px);
+    
+                }
+            }
+
+
+            &::after{
+                content: '';
+                @extend %rounded-full;
+                @extend %bg-slate-100;
+                border: 1px solid color-var(slate,600);
+                width: 30px;
+                height: 30px;
+                position: absolute;
+                right: calc(100% + 1.5rem + 10px);
+                top: 50%;
+                transform: translate(0%,-50%);
+                background-size: 18px;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+
+            &.success::after{
+                @extend %bg-emerald-600;
+                border: none !important;
+                outline: 3px solid color-var(emerald,700);
+                background-image: url('/css/icons/check.svg');
+                
+            }
+            &.failed::after{
+                @extend %bg-rose-600;
+                border: none !important;
+                outline: 3px solid color-var(rose,700);
+                background-image: url('/css/icons/xmark.svg');
+            }
+            html.dark &{
+                &::after{
+                    @extend %bg-slate-800;
+                    outline-color: color-var(slate,900);
+                }
+                &.failed::after{
+                    outline-color: color-var(rose,900);
+                }
+                &.success::after{
+                    outline-color: color-var(emerald,900);
+                }
+                
+            }
+            .time{
+                font-size: 10px;
+                font-weight: bold;
+                color: color-var(slate,400);
+            }
+        }
+    }
+}
+
+@keyframes vline {
+    from{
+        height: 0;
+    }to{
+        height: calc(100% + 2rem);
+    }
+}
+
+@keyframes endball {
+    from{
+        top: 0;
+    }to{
+        top: calc(100% + 2rem);
+    }
+}

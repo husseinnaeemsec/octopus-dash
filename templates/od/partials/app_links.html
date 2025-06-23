@@ -1,0 +1,121 @@
+<div class="space-y-2">
+    {% for app_label,app_admin in od_apps.items %}
+{% url 'od-app-view' app_label as app_url %}
+    <button data-menu="menu-{{app_label}}" class="flex open-models-menu items-center justify-between w-full
+    p-3 rounded-md
+    {% if app_label in request.path and not request.path == app_url  %} bg-gradient-to-r text-gray-900 dark:text-indigo-50 from-gray-100 to-gray-300 dark:from-gray-700 dark:to-gray-900 {% else %} {% if request.path == app_url %}  bg-gradient-to-r text-indigo-50 from-indigo-500 to-indigo-700  {% else %} dark:text-gray-300  text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-900 {% endif %}  {% endif %} 
+    ">
+    <a href="{{app_url}}" class="flex items-center gap-3 
+    
+    
+    bg-gradient-to-r  rounded-lg">
+        {{app_admin.app_icon|safe}}
+        <span> {{app_label}} </span>
+    </a>
+    <i class="fi fi-rr-angle-small-down text-xl"></i>
+</button>
+<ul id="menu-{{app_label}}"
+    class=" rounded model-links-menu models-links-menu   {% if app_label in request.path %} flex flex-col gap-y-2  {% else %} hidden {% endif %} ">
+
+    {% for model_name,model in app_admin.get_models.items %}
+    {% url 'od-model-view' app_label model_name as model_view_url  %}
+    <li 
+        
+        class="p-2 text-sm my-1 app-link pl-5 capitalize  w-full model-link  flex items-center justify-between gap-2 rounded-md {% if request.path == model_view_url %} bg-gradient-to-r text-indigo-50 from-indigo-500 to-indigo-600 dark:from-indigo-700 dark:to-indigo-900 {% else %} text-gray-700 dark:text-gray-300  hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-900 dark:hover:text-gray-100 {% endif %}  ">
+        
+        <div class="flex gap-2 items-center">
+            
+            {% if model_admin.model_icon %}
+                {{model_admin.model_icon|safe}}
+            {% endif %}
+                
+            <a href="{{model_view_url}}">{{model_name}} </a>
+        </div>
+        <a href="{% url 'od-create-instance' app_label model_name %}">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
+        </a>
+    </li>
+    {% endfor %}
+
+</ul>
+{% endfor %}
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    // const sidebar = document.getElementById("octopus_sidebar");
+
+    // document.getElementById("close-sidebar")?.addEventListener("click", () => {
+    //     gsap.to(sidebar, {
+    //         right: '-100%'
+    //     });
+    // });
+
+    const sidebarAppsBtns = document.querySelectorAll(".open-models-menu");
+    const menus = document.querySelectorAll(".models-links-menu");
+
+    sidebarAppsBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            const targetMenuId = btn.dataset.menu;
+            const targetMenu = document.getElementById(targetMenuId);
+            const modelLinks = targetMenu.querySelectorAll(".model-link");
+
+            const isHidden = targetMenu.classList.contains("hidden");
+
+            const showMenu = () => {
+                // Hide all other menus
+                menus.forEach(m => {
+                    if (m !== targetMenu) {
+                        m.classList.add("hidden");
+                        gsap.set(m, { height: 0, opacity: 0 });
+                    }
+                });
+
+                targetMenu.classList.remove("hidden");
+                const targetHeight = targetMenu.scrollHeight;
+
+                gsap.fromTo(targetMenu,
+                    { height: 0, opacity: 0 },
+                    {
+                        height: targetHeight,
+                        opacity: 1,
+                        duration: 0.2,
+                        onComplete: () => targetMenu.style.height = "auto"
+                    }
+                );
+
+                gsap.fromTo(modelLinks,
+                    { x: '-100%', opacity: 0 },
+                    { x: 0, opacity: 1, stagger: 0.05 }
+                );
+            };
+
+            const hideMenu = () => {
+                const currentHeight = targetMenu.scrollHeight;
+
+                gsap.to(targetMenu, {
+                    height: 0,
+                    opacity: 0,
+                    duration: 0.2,
+                    onComplete: () => {
+                        targetMenu.classList.add("hidden");
+                        targetMenu.style.height = "";
+                    }
+                });
+
+                gsap.to(modelLinks, {
+                    x: '-100%',
+                    opacity: 0,
+                    stagger: 0.05
+                });
+            };
+
+            isHidden ? showMenu() : hideMenu();
+        });
+    });
+});
+
+
+</script>

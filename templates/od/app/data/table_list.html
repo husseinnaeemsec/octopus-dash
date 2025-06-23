@@ -1,0 +1,74 @@
+{% load static %}
+
+
+{% load octopusdash_tags %}
+    {% if model_admin and model_admin.get_inline_edit_fields %}
+        <form enctype="multipart/form-data" class="w-full overflow-x-auto overflow-y-visible" action="{{request.path}}" method="post" id="inline_edit_form">
+            {{ formset.management_form }}
+            <div class="min-w-full  border border-gray-300 dark:border-gray-700 overflow-x-auto overflow-y-visible rounded-tl-none rounded-lg mt-10 ">
+                <table class="min-w-full  divide-y divide-gray-200 dark:divide-gray-700 overflow-y-visible rounded-lg   shadow-md">
+                    {% include 'od/app/data/table_header.html' %}
+                    {% include 'od/app/data/table_body.html' %}
+                </table>
+                {% if not page_obj %}
+                    <div class="p-3 text-slate-400 text-center"> No <strong> {{model_admin.model_plural_name_display}} </strong> found </div>
+                {% endif %}
+            </div>
+            {% csrf_token %}
+            <button id="save-instances" class="p-2 px-5  rounded-md  bg-indigo-600 text-indigo-50 my-2" > save </button>
+        </form>
+        {% else %}
+        <div class="w-full border border-gray-300 dark:border-gray-700 overflow-x-auto rounded-tl-none rounded-lg mt-10 ">
+
+                <table class="min-w-full w-full overflow-x-auto  divide-y divide-gray-200 dark:divide-gray-700 rounded-lg   shadow-md">
+                    {% include 'od/app/data/table_header.html' %}
+                    {% include 'od/app/data/table_body.html' %}
+                </table>
+                {% if not page_obj %}
+                    <div class="p-3 text-slate-400 text-center"> No <strong> {{model_admin.model_plural_name_display}} </strong> found </div>
+                {% endif %}
+        </div>
+    {% endif %}
+
+
+
+{% block script %}
+
+<script src="{% static 'od/js/scripts/selectInstances.js' %}"></script>
+
+<script>
+
+
+    document.addEventListener("DOMContentLoaded", () => {
+        window.store.subscribe(() => {
+
+            $('#selected-instances').text(window.store.getState().selected.length);
+            $('[name=ids]').val(JSON.stringify(window.store.getState().selected));
+            $('[name=select_all]').val(window.store.getState().select_all)
+            if (window.store.getState().select_all === true) {
+                $('#deselect_all').fadeIn();
+                $('#select_all').fadeOut();
+            } else {
+                $('#deselect_all').fadeOut();
+                $('#select_all').fadeIn();
+            }
+        });
+        $('#select_all').click(function (e) {
+            e.preventDefault();
+            window.store.dispatch({ type: "SELECT_ALL" })
+            document.getElementById("checkbox-toggle-all").checked = true
+            Array.from(document.querySelectorAll(".instance-checkbox")).map((ele) => ele.checked = true)
+            $('#selected-instances').text('{{queryset.count}}');
+        });
+
+        $('#deselect_all').click(function (e) {
+            e.preventDefault();
+            window.store.dispatch({ type: "DESELECT_ALL" })
+            document.getElementById("checkbox-toggle-all").checked = false
+            Array.from(document.querySelectorAll(".instance-checkbox")).map((ele) => ele.checked = false)
+            $('#selected-instances').text('0');
+        });
+    })
+
+</script>
+{% endblock script %}

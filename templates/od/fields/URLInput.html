@@ -1,0 +1,37 @@
+{% include 'od/fields/Label.html' with widget=widget %}
+<input 
+    type="{{ widget.type }}" 
+    name="{{ widget.name }}"
+    value="{% if widget.value is not None %}{{widget.value}}{% endif %}"
+    {% include 'django/forms/widgets/attrs.html' %}
+    class="od w-full"    
+    {% if widget.is_hidden %}
+        hidden
+    {% endif %}
+>
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        // Select the URL input field by its ID
+        const urlField = document.getElementById('{{widget.attrs.id}}');
+
+        // Function to validate URL
+        function validateURL(value) {
+            const pattern = /^(https?:\/\/)?([\w\d\-]+\.)+[a-z]{2,6}(\/[\w\d\-\.]+)*\/?$/i;
+            return pattern.test(value);
+        }
+
+        // Listen for the 'blur' event (when the field loses focus)
+        urlField.addEventListener('blur', function () {
+            const value = urlField.value.trim();
+
+            if (!validateURL(value)) {
+                // If it's not a valid URL, add aria-invalid="true"
+                urlField.setAttribute('aria-invalid', 'true');
+            } else {
+                // If it's valid, remove the aria-invalid attribute (if present)
+                urlField.removeAttribute('aria-invalid');
+            }
+        });
+    });
+</script>

@@ -1,0 +1,50 @@
+{% include 'od/fields/Label.html' with widget=widget %}
+<input 
+    type="{{ widget.type }}" 
+    id="{{widget.attrs.id}}"
+    name="{{ widget.name }}" 
+    value="{% if widget.value is not None %}{{widget.value}}{% endif %}"
+    {% include 'django/forms/widgets/attrs.html' %}
+    class="od w-full"
+    
+    {% if widget.is_hidden %}
+        hidden
+    {% endif %}
+>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Select the slug field by its ID
+        const slugField = document.getElementById("{{widget.attrs.id}}");
+
+        // Function to validate slug format (only lowercase, numbers, hyphens, and underscores)
+        function validateSlug(value) {
+            const pattern = /^[a-z0-9-]+$/i;  // Only letters, numbers, and hyphens (no spaces, no other characters)
+            return pattern.test(value);
+        }
+
+        // Replace spaces with hyphens on initial load
+        slugField.value = slugField.value.replaceAll(" ", "-");
+
+        // Add event listener for 'blur' event (when the field loses focus)
+        slugField.addEventListener("blur", function (e) {
+            const value = e.target.value.trim();
+
+            // Replace spaces with hyphens on blur
+            e.target.value = e.target.value.replaceAll(" ", "-");
+
+            // Validate the slug
+            if (!validateSlug(value)) {
+                // If it's not a valid slug, set aria-invalid to true
+                e.target.setAttribute('aria-invalid', 'true');
+            } else {
+                // If valid, remove the aria-invalid attribute
+                e.target.removeAttribute('aria-invalid');
+            }
+        });
+
+        slugField.addEventListener("focus",(e)=>{
+            e.target.removeAttribute('aria-invalid');
+        })
+    });
+</script>

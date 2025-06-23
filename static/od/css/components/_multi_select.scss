@@ -1,0 +1,106 @@
+.od-menu-container {
+    border: 1px solid color-var(gray, 300);
+    @extend %rounded-md;
+    @extend %bg-gray-50;
+    padding-top: 10px;
+
+    .header,
+    .help-text,
+    .search {
+        padding: 5px 20px;
+    }
+
+    .help-text {
+        color: color-var(gray, 500);
+
+        html.dark & {
+            color: color-var(gray, 400);
+        }
+    }
+
+    .search {
+        padding-bottom: 10px;
+        border-bottom: 1px solid color-var(gray, 300);
+
+        html.dark & {
+            border-bottom-color: color-var(gray, 600);
+        }
+
+        input[type='search'] {
+            width: 100%;
+            @extend %bg-gray-100;
+            @extend %p-2;
+            @extend %rounded-md;
+
+            html.dark & {
+                @extend %bg-gray-800;
+                color: white;
+            }
+        }
+    }
+
+    .menu {
+        max-height: 50vh;
+        overflow-y: auto;
+
+        p {
+            color: color-var(gray, 500);
+            padding: 8px 10px;
+            padding-left: 20px;
+            html.dark & {
+                color: color-var(gray, 400);
+                @extend %bg-gray-800;
+            }
+        }
+
+        ul {
+            max-height: 20vh;
+            overflow-y: auto;
+            border-bottom: 1px solid;
+            border-color: color-var(gray,300);
+            li {
+                @extend %p-3;
+                display: flex;
+                align-items: center;
+                position: relative;
+                padding-left: 15px !important;
+                z-index: 0;
+                transition: background-color 0.3s ease;
+
+                &:hover {
+                    background: white;
+                    outline: 1px solid color-var(gray,300);
+                    html.dark & {
+                        @extend %bg-gray-700;
+                    }
+                }
+
+                &::before,
+                &::after {
+                    content: '';
+                    width: 20px;
+                    height: 20px;
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                }
+
+                &::before {
+                    margin-right: 0.5rem;
+                    opacity: 0.5;
+                    background-image: url('/css/icons/bars.svg');
+                }
+
+                &::after {
+                    position: absolute;
+                    right: 10px;
+                    cursor: pointer;
+                    background-image: url('/css/icons/plus-circle-black.svg');
+
+                    html.dark & {
+                        background-image: url('/css/icons/plus-circle-white.svg');
+                    }
+                }
+            }
+        }
+    }
+}

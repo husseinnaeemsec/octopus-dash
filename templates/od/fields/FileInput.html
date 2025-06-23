@@ -1,0 +1,21 @@
+<div class="flex flex-col gap-2">
+    {% include 'od/fields/Label.html' with widget=widget %}
+    <input {% include 'django/forms/widgets/attrs.html' %} {% include 'od/fields/attrs.html' %} class="od">
+    {% if widget.value %}
+    <div>
+        <input id="{{widget.name}}_removefile" type="text" hidden name="{{widget.name}}_removefile" value="0">
+        <div class="flex items-center gap-2 mt-2" id="{{widget.name}}_file_container">
+            <small class="underline dark:text-slate-300"> {{widget.value}} </small>
+            <button id="{{widget.name}}_removefile_btn" class="p-1 rounded-md  text-rose-500 text-xs"> remove </button>
+        </div>
+        <script>
+            document.getElementById("{{widget.name}}_removefile").setAttribute("value", 0)
+            document.getElementById("{{widget.name}}_removefile_btn").addEventListener("click", (e) => {
+                e.preventDefault();
+                document.getElementById("{{widget.name}}_removefile").setAttribute("value", 1)
+                document.getElementById("{{widget.name}}_file_container").innerHTML = "<div class='dark:text-slate-300'> This file will be removed when you submit the form. </div>"
+            })
+        </script>
+    </div>
+    {% endif %}
+</div>

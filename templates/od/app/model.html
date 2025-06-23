@@ -1,0 +1,58 @@
+{% extends 'od/base.html' %}
+
+{% block content %}
+
+<h1 class="text-2xl my-3 dark:text-slate-300 text-slate-700"> <strong> {{model_admin.model_name_display}} </strong> List View  </h1>
+
+<div class="my-3">
+    {% include 'od/messages/info.html' with message__title='Information' message__content='<strong>Note:</strong> The bulk inline update feature currently has some <strong>backend logic</strong> issues. Changes may not reflect in the queryset until the page is refreshed. This functionality is not fully operational at the moment.' %}
+</div>
+
+{% if messages %}
+
+
+<ul class="messages my-3 space-y-3">
+    {% for message in messages %}
+    {% if 'success' in message.tags %}
+        {% include 'od/messages/success.html'  with message__title="Success" container__id='model_success_message' message__content=message  %}
+        {% elif 'error' in message.tags %}
+        {% include 'od/messages/error.html'  with message__title="Error" container__id='model_success_message' message__content=message  %}
+        {% elif 'info' in message.tags %}
+        {% include 'od/messages/info.html'  with message__title="Information" container__id='model_success_message' message__content=message  %}
+    {% endif %}
+        
+    {% endfor %}
+</ul>
+
+
+{% endif %}
+
+{% if model_admin.list_display %}
+
+{% block css_files %}{{filters_form.media}}{% endblock css_files %}
+
+<!-- Search -->
+{% include 'od/app/model/search.html' %}
+
+<!-- Actions -->
+
+
+{% include 'od/app/model/actions_and_filters.html' %}
+
+<div class="max-w-full overflow-x-auto overflow-y-visible">
+    {% include 'od/app/data/table_list.html' %}
+</div>
+{% else %}
+<div class="space-y-3 p-3 mt-5 grid">
+    
+    {% for obj in page_obj  %}
+        <a  href="{% url 'od-update-instance' app.app_label model_name obj.pk %}" class="list-none text-slate-400 hover:text-slate-100 bg-slate-900 px-4 font-semibold w-full p-2 rounded-md"> {{obj}}   </a>
+    {% endfor %}
+
+</div>
+{% endif %}
+
+{% include 'od/paginator.html' %}
+
+{% endblock content %}
+

@@ -1,0 +1,209 @@
+input[type=checkbox].od {
+    width: 20px;
+    height: 20px;
+    appearance: none;
+    background-color: var(--slate-200);
+    border: 1px solid var(--slate-400);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 4px;
+
+    &:checked {
+        background-image: url('/css/icons/check.svg');
+        background-color: var(--indigo-600);
+        border-color: var(--indigo-600);
+    }
+
+    html.dark & {
+        background-color: var(--slate-700);
+        border-color: var(--slate-600);
+
+        &:checked {
+            background-color: var(--indigo-400);
+        }
+    }
+}
+
+input[type=checkbox].od-chip {
+    appearance: none;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: fit-content;
+    width: auto;
+    z-index: 0;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    border: none;
+    &::after {
+      content: attr(data-text);
+      font-size: 15px;
+      white-space: nowrap;
+      background: var(--slate-100);
+      border: 1px solid var(--slate-300);
+      color: var(--slate-600);
+      border-radius: 20px;
+      padding: 4px 12px;
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+  
+    &:checked::after {
+      background-color: var(--indigo-50);
+      border-color: var(--indigo-500);
+      background-image: url('./icons/check-dark.svg'); // empty for now
+      background-repeat: no-repeat;
+      background-position: center left 8px; // example position
+      background-size: 16px 16px;
+
+      padding-left: 28px; // extra space if background image will be added
+    }
+  
+    &:focus-visible {
+      outline: 2px solid var(--indigo-400);
+      outline-offset: 2px;
+    }
+  
+    // Dark Mode
+    html.dark &::after {
+      background: var(--slate-800);
+      border-color: var(--slate-600);
+      color: var(--slate-300);
+    }
+  
+    html.dark &:checked::after {
+      background-color: var(--indigo-950);
+      border-color: var(--indigo-400);
+      background-image: url('./icons/check.svg'); // dark mode background if you want
+      background-repeat: no-repeat;
+      background-position: center left 8px;
+      background-size: 16px 16px;
+    }
+  }
+  
+input[type=checkbox].od-switch {
+    width: 50px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    appearance: none;
+    background-color: var(--slate-200);
+    border: 1px solid var(--slate-400);
+    border-radius: 9999px;
+    position: relative;
+    z-index: 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+
+    &::after {
+        content: '';
+        position: absolute;
+        width: 21px;
+        height: 21px;
+        background-color: var(--gray-600);
+        border-radius: 100%;
+        z-index: inherit;
+        left: 2px;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    &:checked {
+        background-color: var(--indigo-500);
+        background-image: none !important;
+        border-color: var(--indigo-500);
+
+        &::after {
+            transform: translateX(25px);
+            background-color: white;
+        }
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px var(--indigo-300);
+    }
+
+    // 🌙 Dark Mode
+    html.dark & {
+        background-color: var(--slate-700);
+        border-color: var(--slate-600);
+
+        &::after {
+            background-color: var(--slate-300);
+        }
+
+        &:checked {
+            background-color: var(--indigo-400);
+            border-color: var(--indigo-400);
+
+            &::after {
+                background-color: var(--slate-900);
+            }
+        }
+
+        &:focus {
+            box-shadow: 0 0 0 3px var(--indigo-600);
+        }
+    }
+
+    // ❌ Disabled styling
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        background-color: var(--slate-100);
+        border-color: var(--slate-300);
+
+        &::after {
+            background-color: var(--gray-400);
+        }
+
+        &:checked {
+            background-color: var(--indigo-300);
+            border-color: var(--indigo-300);
+
+            &::after {
+                background-color: var(--slate-100);
+            }
+        }
+    }
+
+    html.dark &:disabled {
+        background-color: var(--slate-800);
+        border-color: var(--slate-700);
+
+        &::after {
+            background-color: var(--slate-500);
+        }
+
+        &:checked {
+            background-color: var(--indigo-300);
+            border-color: var(--indigo-300);
+
+            &::after {
+                background-color: var(--slate-800);
+            }
+        }
+    }
+}
+
+
+input[type=checkbox].od-dropdown {
+appearance: none;
+width: 20px;
+height: 20px;
+background-image: url('./icons/arrow-down.svg');
+background-repeat: no-repeat;
+background-size: contain;
+background-position: center;
+cursor: pointer;
+transform: all .5s;
+
+&:checked {
+    rotate: 180deg;
+}
+}

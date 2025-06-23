@@ -1,0 +1,34 @@
+{% load octopusdash_querystring_tag %}
+{% if filters or search_query %}
+<details class="my-5 dark:bg-gray-900 bg-gray-200 border border-gray-300 dark:border-gray-700 rounded-md p-4 w-fit text-gray-300" open>
+    <summary class="cursor-pointer font-semibold  text-gray-900 dark:text-gray-100 mb-2">
+        Active Filters ({{ filters|length}}) & Search {% if query %} (1) {% endif %}
+            
+    </summary>
+    <div class="mt-3 flex flex-wrap gap-2">
+        {% for field_name,filter in filters.items %}
+        {% if 'date' in filter.type or filter.type == 'time' %}
+            {% if filter.start %}
+                <a href="{% od_querystring field_name_var=None  %}" class="p-2 rounded-full bg-slate-950 px-3 text-xs" > From : {{filter.value}} </a>
+            {% endif %}
+        {% endif %}
+
+        
+        {% if filter.type == 'bool' and filter.value != None  %}
+                <a href="{% od_querystring field_name_var=None  %}" data-tippy="Remove {{field_name}}  filter" class="p-2 flex gap-1 items-center rounded-full bg-slate-950 px-3 text-xs" >
+                    {{field_name}} :
+                    {% if filter.value == True %}
+                        
+                        <i class="fi fi-rr-check-circle text-green-500 "></i>
+                        {% else %}
+                        <i class="fi fi-rr-circle-xmark"></i>
+                    {% endif %}
+                        
+                </a>
+        {% endif %}
+
+        {% endfor %}
+    </div>
+</details>
+{% endif %}
+

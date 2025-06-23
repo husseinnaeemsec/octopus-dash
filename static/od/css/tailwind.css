@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+table,thead,th{
+    overflow-y: visible !important;
+    overflow-x: auto !important;
+}
+
+/* #b9716a */
+
+html.dark .tippy-box[data-theme~='tippy_error_theme'] {
+    background-color: #a10543;
+    color: white !important;
+}
+
+.tippy-box[data-theme~='tippy_error_theme'] {
+    background-color: #ff1472;
+    color: white !important;
+}
+
+.tippy-box{
+    border: 1ps solid orange !important;
+}
+
+html.dark .tippy-box[data-theme~='tippy_error_theme'][data-placement^='top'] > .tippy-arrow::before {
+  border-top-color: #a10543;
+}
+html.dark .tippy-box[data-theme~='tippy_error_theme'][data-placement^='bottom'] > .tippy-arrow::before {
+  border-bottom-color: #a10543;
+}
+html.dark .tippy-box[data-theme~='tippy_error_theme'][data-placement^='left'] > .tippy-arrow::before {
+  border-left-color: #a10543;
+}
+html.dark .tippy-box[data-theme~='tippy_error_theme'][data-placement^='right'] > .tippy-arrow::before {
+  border-right-color: #a10543;
+}
+
+.tippy-box[data-theme~='tippy_error_theme'][data-placement^='top'] > .tippy-arrow::before {
+  border-top-color: #ff1472;
+}
+.tippy-box[data-theme~='tippy_error_theme'][data-placement^='bottom'] > .tippy-arrow::before {
+  border-bottom-color: #ff1472;
+}
+.tippy-box[data-theme~='tippy_error_theme'][data-placement^='left'] > .tippy-arrow::before {
+  border-left-color: #ff1472;
+}
+.tippy-box[data-theme~='tippy_error_theme'][data-placement^='right'] > .tippy-arrow::before {
+  border-right-color: #ff1472;
+}

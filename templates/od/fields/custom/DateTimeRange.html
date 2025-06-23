@@ -1,0 +1,9 @@
+{% load octopusdash_querystring_tag %}
+{% load octopusdash_tags %}
+<div class="space-y-2 p-3 bg-slate-100 dark:bg-slate-950 rounded-md my-3">
+<p> {{widget.label}} </p>
+{% for subwidget in widget.subwidgets  %}
+    <label for="{{subwidget.name}}" class="text-sm text-slate-400"> {{subwidget.label}} </label>
+    <input type="datetime-local" name="{{subwidget.name}}" value="{{subwidget.value}}"  class="od w-full" id="">
+{% endfor %}
+</div>

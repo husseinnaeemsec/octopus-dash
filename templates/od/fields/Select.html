@@ -1,0 +1,16 @@
+{% include 'od/fields/Label.html' with widget=widget %}
+
+
+{% if widget.optgroups|length < 5  %}
+    {% include 'od/fields/RadioGroup.html' with widget=widget %} 
+    {% else %} 
+    <select name="{{widget.name}}" value="{% if widget.value is not None %}{{widget.value}}{% endif %}" id="" class="od w-full">
+        {% for choice_obj in widget.optgroups %}
+            {% for option in choice_obj.1 %}
+                {% if option.value %}
+                    <option value="{{option.value}}"> {{option.label}}  </option>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </select>
+{% endif %}

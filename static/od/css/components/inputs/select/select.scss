@@ -1,0 +1,9 @@
+select.od {
+    appearance: none; // Remove browser native arrow
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg viewBox="0 0 4 5" fill="none" stroke="%23666" stroke-width="1" xmlns="http://www.w3.org/2000/svg"><path d="M0 0l2 2 2-2"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    background-size: 0.65em auto;
+    padding-right: 2.5rem; // Extra space for the dropdown arrow
+    cursor: pointer;
+}

@@ -1,0 +1,33 @@
+<div class="flex items-center justify-between my-5">
+
+    <div class="flex justify-center mt-4">
+        <nav class="inline-flex shadow-sm rounded-md overflow-hidden bg-gray-200 text-gray-900 text-sm dark:text-gray-300 dark:bg-gray-800">
+            {% if page_obj.has_previous %}
+                <a href="{% querystring page=page_obj.previous_page_number %}"
+                    class="px-3 py-2 bg-white hover:bg-gray-200 dark:bg-gray-900 dark:hover:bg-gray-700 transition">Previous</a>
+            {% else %}
+                <span class="px-3 py-2 text-gray-900 dark:text-gray-500  bg-white dark:bg-gray-900 cursor-not-allowed">Previous</span>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <span class="px-3 py-2 bg-indigo-600  dark:text-white font-semibold">{{ num }}</span>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a href="{% querystring page=num %}" class="px-3 py-2 hover:bg-gray-300 dark:hover:bg-gray-700 transition">{{ num }}</a>
+                {% elif num == 1 or num == page_obj.paginator.num_pages %}
+                    <a href="{% querystring page=num %}" class="px-3 py-2 hover:bg-gray-300 dark:hover:bg-gray-700 transition">{{ num }}</a>
+                {% elif forloop.first or forloop.last %}
+                    <span class="px-3 py-2">...</span>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a href="{% querystring page=page_obj.next_page_number %}"
+                    class="px-3 py-2 hover:bg-gray-200 bg-white dark:bg-gray-900  dark:hover:bg-gray-700 transition">Next</a>
+            {% else %}
+                <span class="px-3 py-2 dark:text-gray-500 bg-white dark:bg-gray-900 cursor-not-allowed">Next</span>
+            {% endif %}
+        </nav>
+    </div>
+    
+</div>

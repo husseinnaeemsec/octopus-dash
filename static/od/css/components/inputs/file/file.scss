@@ -1,0 +1,113 @@
+/* Default light theme styles */
+.file-dropzone {
+    border: 2px dashed var(--slate-300);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background: var(--slate-50);
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.file-dropzone:hover {
+    background: var(--slate-100);
+}
+
+.file-dropzone.dragover {
+    background: var(--indigo-100);
+    border-color: var(--indigo-500);
+}
+
+.file-input {
+    display: none;
+}
+
+.file-preview {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+    gap: 0.5rem;
+}
+
+.file-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem;
+    border: 1px solid var(--slate-300);
+    border-radius: 0.3rem;
+    width: 100px;
+    position: relative;
+    background: white;
+}
+
+.file-item img {
+    max-width: 80px;
+    max-height: 80px;
+    margin-bottom: 0.3rem;
+}
+
+.file-icon {
+    font-size: 2rem;
+    color: var(--slate-400);
+    margin-bottom: 0.3rem;
+}
+
+.file-name {
+    font-size: 0.75rem;
+    word-break: break-all;
+    text-align: center;
+}
+
+.file-size {
+    font-size: 0.7rem;
+    color: var(--slate-500);
+}
+
+.remove-btn {
+    position: absolute;
+    top: 2px;
+    right: 4px;
+    background: none;
+    border: none;
+    color: var(--rose-500);
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Dark theme styles when html has 'dark' class */
+html.dark .file-dropzone {
+    border: 2px dashed var(--slate-700);
+    background: var(--slate-800);
+    color: var(--slate-200);
+}
+
+html.dark .file-dropzone:hover {
+    background: var(--slate-700);
+}
+
+html.dark .file-dropzone.dragover {
+    background: var(--indigo-600);
+    border-color: var(--indigo-400);
+}
+
+html.dark .file-item {
+    background: var(--slate-700);
+    border: 1px solid var(--slate-600);
+}
+
+html.dark .file-icon {
+    color: var(--slate-300);
+}
+
+html.dark .file-name {
+    color: var(--slate-200);
+}
+
+html.dark .file-size {
+    color: var(--slate-400);
+}
+
+html.dark .remove-btn {
+    color: var(--rose-400);
+}

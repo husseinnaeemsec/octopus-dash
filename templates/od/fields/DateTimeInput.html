@@ -1,0 +1,13 @@
+{% include 'od/fields/Label.html' with widget=widget %}
+
+<input 
+    type="{{ widget.type }}" 
+    name="{{ widget.name }}" 
+    class="od w-full"
+    value="{% if widget.value is not None %}{{widget.value|date:'Y-m-d\\TH:i'}}{% endif %}"
+    
+    {% if widget.is_hidden %}
+        hidden
+    {% endif %}
+>
+

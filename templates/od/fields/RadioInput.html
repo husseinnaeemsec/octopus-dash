@@ -1,0 +1,5 @@
+<label class="flex items-center gap-2 cursor-pointer">
+        {{field__lable}}
+    <input type="radio" {% if is__checked %}  checked {% endif %} name="{{ field__name }}" value="{{field__value}}"
+        class="appearance-none w-4 h-4 rounded-full border border-gray-400 checked:bg-indigo-500 checked:outline-4 checked:outline-indigo-600 transition-colors duration-300" />    
+</label>

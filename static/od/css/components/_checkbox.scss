@@ -1,0 +1,145 @@
+input[type=checkbox].od {
+    width: 20px;
+    height: 20px;
+    appearance: none;
+    background-color: var(--slate-200);
+    border: 1px solid var(--slate-400);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 4px;
+
+    &:checked {
+        background-image: url('/css/icons/check.svg');
+        background-color: var(--indigo-600);
+        border-color: var(--indigo-600);
+    }
+
+    html.dark & {
+        background-color: var(--slate-700);
+        border-color: var(--slate-600);
+
+        &:checked {
+            background-color: var(--indigo-400);
+        }
+    }
+}
+
+
+input[type=checkbox].od-switch {
+    width: 50px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    appearance: none;
+    background-color: var(--slate-200);
+    border: 1px solid var(--slate-400);
+    border-radius: 9999px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+
+    &::after {
+        content: '';
+        position: absolute;
+        width: 21px;
+        height: 21px;
+        background-color: var(--gray-600);
+        border-radius: 9999px;
+        left: 2px;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    &:checked {
+        background-color: color-var(indigo, 500);
+        border-color: color-var(indigo, 500);
+
+        &::after {
+            transform: translateX(25px);
+            background-color: white;
+        }
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px color-var(indigo, 300);
+    }
+
+    // 🌙 Dark Mode
+    html.dark & {
+        background-color: var(--slate-700);
+        border-color: var(--slate-600);
+
+        &::after {
+            background-color: var(--slate-300);
+        }
+
+        &:checked {
+            background-color: color-var(indigo, 400);
+            border-color: color-var(indigo, 400);
+
+            &::after {
+                background-color: var(--slate-900);
+            }
+        }
+
+        &:focus {
+            box-shadow: 0 0 0 3px color-var(indigo, 600);
+        }
+    }
+
+    // ❌ Disabled styling
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        background-color: var(--slate-100);
+        border-color: var(--slate-300);
+
+        &::after {
+            background-color: var(--gray-400);
+        }
+
+        &:checked {
+            background-color: color-var(indigo, 300);
+            border-color: color-var(indigo, 300);
+
+            &::after {
+                background-color: var(--slate-100);
+            }
+        }
+    }
+
+    html.dark &:disabled {
+        background-color: var(--slate-800);
+        border-color: var(--slate-700);
+
+        &::after {
+            background-color: var(--slate-500);
+        }
+
+        &:checked {
+            background-color: color-var(indigo, 300);
+            border-color: color-var(indigo, 300);
+
+            &::after {
+                background-color: var(--slate-800);
+            }
+        }
+    }
+}
+
+
+input[type=checkbox].od-dropdown {
+appearance: none;
+width: 20px;
+height: 20px;
+background-image: url('/css/icons/arrow-down.svg');
+background-repeat: no-repeat;
+background-size: contain;
+background-position: center;
+cursor: pointer;
+transform: all .5s;
+
+&:checked {
+    rotate: 180deg;
+}
+}

@@ -1,0 +1,16 @@
+{% include 'od/fields/Label.html' with widget=widget %}
+<input 
+    {% include 'django/forms/widgets/attrs.html' %}
+    type="{{ widget.type }}" 
+    name="{{ widget.name }}" 
+    placeholder="{{widget.help_text}}"
+    value="{% if widget.value is not None %}{{widget.value}}{% endif %}"
+    id="{{ widget.name }}_id"
+    {% if widget.is_hidden %}
+        hidden
+    {% endif %}
+    {% if widget.required or widget.attrs.required %}
+    required
+    {% endif %}
+    class="od w-full"    
+>

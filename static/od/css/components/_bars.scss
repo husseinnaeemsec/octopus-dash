@@ -1,0 +1,62 @@
+.od.bars {
+    height: 200px;
+    padding: 1rem;
+    background-color: var(--slate-100);
+    border-radius: 1rem;
+    position: relative;
+
+    html.dark & {
+        background-color: var(--slate-800);
+    }
+
+    .od.bar {
+        --percent: calc(var(--value) / var(--max-value) * 100%);
+        width: 100%;
+        height: var(--percent);
+        background-color: color-var(indigo, 500);
+        outline: 2px solid color-var(indigo,800);
+        border-radius: 0.25rem 0.25rem 0 0;
+        transition: transform 0.3s ease;
+        position: relative;
+        &:hover {
+            background-color: color-var(indigo, 600);
+        }
+
+        &::after {
+            content: attr(style); // fallback
+            content: attr(style var(--value)); // actual content
+            content: attr(data-label)  attr(data-value)  ;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--gray-800);
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+
+        &:hover::after {
+            opacity: 1;
+        }
+
+        html.dark & {
+            background-color: color-var(indigo, 400);
+
+            &:hover {
+                background-color: color-var(indigo, 500);
+            }
+
+            &::after {
+                background-color: var(--gray-100);
+                color: var(--gray-900);
+            }
+        }
+    }
+}
+

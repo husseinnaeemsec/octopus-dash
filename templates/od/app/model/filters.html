@@ -1,0 +1,113 @@
+{% load octopusdash_tags %}
+
+    
+<div class="flex items-center">
+    <button id="filters-button" data-tippy="Filters"
+        class="w-10 h-10 rounded-md bg-slate-200 dark:bg-slate-900 flex items-center justify-center">
+        <i class=" fi fi-rr-filter w-6 h-6 text-slate-700 dark:text-slate-100 "></i>
+    </button>
+</div>
+
+    <form
+        class="fixed h-full z-[100000] w-[500px] right-0 top-0 {% if not filters_form.errors %} hidden {% endif %}   overflow-x-hidden  overflow-y-auto  bg-slate-200 border-slate-300 dark:bg-slate-900   dark:border-slate-600 "
+        id="filters_container">
+        <div class="min-h-full z-[100000] w-full p-3 ">
+            {% if not model_admin.get_filter_fields %}
+            <div class="flex h-full items-center flex-col justify-center">
+                <h1 class="text-center text-slate-300">
+                    In order to be able to filter the {{model_admin.plural_name}}
+                    you must first set <strong class="underline"> filter_fields </strong> in your <strong
+                        class="underline">
+                        ModelAdmin </strong>
+                </h1>
+                <a href="" class="mx-auto mt-3 underline text-indigo-500"> Learn more about <strong> ModelAdmin
+                    </strong>
+                </a>
+            </div>
+            {% else %}
+            <h1 class="dark:text-slate-400  bg-slate-200 dark:bg-slate-900 p-3 sticky top-0 z-10"> Filters </h1>
+            {% endif %}
+            
+            <div class="w-full space-y-2 h-full mt-10">
+                {% for field in filters_form  %}
+
+                {% join field.name '_start' as dt_start_field %}
+                {% join field.name '_end' as dt_end_field %}
+
+                <details {% if request.GET|get:field.name or request.GET|get:dt_start_field or request.GET|get:dt_end_field %} open {% endif %} >
+                    <summary class="{% if field.errors %} text-white rounded-t-md bg-rose-900  {% else %} dark:text-slate-400 bg-slate-100 dark:bg-slate-950 {% endif %} p-3" > {{field.name}} </summary>
+                    <div class="pt-5 rounded-b-md p-3 bg-slate-100 dark:bg-slate-950">
+                    {% if field.errors %}
+                        <ul class="my-2 pl-5 bg-rose-900 p-3 text-sm rounded-md border border-rose-700 text-rose-100">
+                            
+                            {% for error in field.errors  %}
+                                <li class="list-disc"> {{error}} </li>
+                            {% endfor %}
+                                
+                        </ul>
+                        {% endif %}
+                        {{field}}
+                    </div>
+                </details>
+                {% endfor %}
+            </div>
+            <div class="dark:bg-slate-900 bg-slate-200 w-full p-3  sticky z-10 bottom-0 flex items-center justify-between">
+                <button class=" bg-indigo-600 text-white rounded-md p-2 text-sm px-5"> Filter </button>
+                <button id="close-filters-menu"
+                    class="border border-slate-500 rounded-md p-2 text-sm px-5 dark:text-slate-400"> Close </button>
+            </div>
+
+        </div>
+    </form>
+<div id="filters_overlay" class="fixed w-full h-full z-[10000]  {% if not filters_form.errors %} hidden {% endif %} bg-slate-900/20 backdrop-blur-xs inset-0 z-10"></div>
+
+
+
+
+{% block script %}
+
+<script>
+
+    function resetField(field_name){
+        $(`[name=${field_name}]`).val('');
+    }
+
+    $('.reset-field').click(function (e) { 
+        e.preventDefault();
+        let field = e.target.dataset.field;
+
+        resetField(field)
+
+        e.target.remove();
+
+    });
+
+    function openFiltersMenu() {
+        $("#filters_container").fadeIn();
+        $('#filters_overlay').fadeIn();
+    }
+    function closeFiltersMenu() {
+        $('#filters_container').fadeOut();
+        $('#filters_overlay').fadeOut();
+    }
+
+
+    $('#filters_overlay').click(function (e) {
+        e.preventDefault();
+        closeFiltersMenu();
+    });
+
+    $('#filters-button').click(function (e) {
+        e.preventDefault();
+        openFiltersMenu();
+    });
+
+    $('#close-filters-menu').click(function (e) {
+        e.preventDefault();
+        closeFiltersMenu()
+
+    });
+
+</script>
+
+{% endblock script %}
