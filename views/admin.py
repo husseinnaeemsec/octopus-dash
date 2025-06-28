@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from urllib.parse import urlparse
 import json
 
-from .mixins.context import AppModelContextMixin
+from .mixins.context import ModelContextMixin
 from .mixins.permissions import StaffPermissionMixin
 from .mixins.formset import InlineFormsetMixin
 from .mixins.filters import FilterMixin
@@ -13,7 +13,7 @@ from .mixins.pagination import CustomPaginationMixin
 
 class ModelView(
     StaffPermissionMixin,
-    AppModelContextMixin,
+    ModelContextMixin,
     FilterMixin,
     InlineFormsetMixin,
     CustomPaginationMixin,

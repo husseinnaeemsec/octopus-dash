@@ -15,7 +15,11 @@
                 {% endif %}
             </div>
             {% csrf_token %}
-            <button id="save-instances" class="p-2 px-5  rounded-md  bg-indigo-600 text-indigo-50 my-2" > save </button>
+            
+            {% if page_obj %}
+                <button id="save-instances" class="p-2 px-5  rounded-md  bg-indigo-600 text-indigo-50 my-2" > save </button>
+            {% endif %}
+                
         </form>
         {% else %}
         <div class="w-full border border-gray-300 dark:border-gray-700 overflow-x-auto rounded-tl-none rounded-lg mt-10 ">

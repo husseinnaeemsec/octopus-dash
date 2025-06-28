@@ -13,7 +13,7 @@
         class="px-4 py-2  sticky right-0 top-0 z-[5] w-10 dark:bg-slate-900 bg-white border-l text-sm text-gray-800 dark:text-gray-200   shadow">
         <div class="flex items-center justify-center gap-2">
             <!-- Update instance -->
-            <a href="{% url 'od-update-instance' app.app_label model_name form.id.value %}">
+            <a href="{% url 'od-update-instance' app.app_label model_admin.model_name form.id.value %}">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-4">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -21,7 +21,7 @@
                 </svg>
             </a>
             <!-- Delete instance -->
-            <a href="{% url 'od-delete-instance' app.app_label model_name form.id.value %}" class="text-rose-700">
+            <a href="{% url 'od-delete-instance' app.app_label model_admin.model_name form.id.value %}" class="text-rose-700">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-4">
                     <path stroke-linecap="round" stroke-linejoin="round"

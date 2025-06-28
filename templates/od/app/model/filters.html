@@ -1,21 +1,20 @@
 {% load octopusdash_tags %}
 
-    
+
 <div class="flex items-center">
     <button id="filters-button" data-tippy="Filters"
         class="w-10 h-10 rounded-md bg-slate-200 dark:bg-slate-900 flex items-center justify-center">
         <i class=" fi fi-rr-filter w-6 h-6 text-slate-700 dark:text-slate-100 "></i>
     </button>
 </div>
-
     <form
         class="fixed h-full z-[100000] w-[500px] right-0 top-0 {% if not filters_form.errors %} hidden {% endif %}   overflow-x-hidden  overflow-y-auto  bg-slate-200 border-slate-300 dark:bg-slate-900   dark:border-slate-600 "
         id="filters_container">
         <div class="min-h-full z-[100000] w-full p-3 ">
             {% if not model_admin.get_filter_fields %}
             <div class="flex h-full items-center flex-col justify-center">
-                <h1 class="text-center text-slate-300">
-                    In order to be able to filter the {{model_admin.plural_name}}
+                <h1 class="text-center dark:text-slate-300">
+                    In order to be able to filter  <strong> {{model_admin.model_opts.verbose_name_plural.title}} </strong>
                     you must first set <strong class="underline"> filter_fields </strong> in your <strong
                         class="underline">
                         ModelAdmin </strong>
@@ -63,8 +62,11 @@
 
 
 
+    
+    
 
 {% block script %}
+
 
 <script>
 
@@ -106,6 +108,19 @@
         e.preventDefault();
         closeFiltersMenu()
 
+    });
+
+
+    $('#filters_container').submit(function (e) { 
+        e.preventDefault();
+        const currentUrl = new URL(window.location);
+        const formData = new FormData(e.currentTarget);
+
+        for(const [key,value] of formData.entries()){
+            currentUrl.searchParams.set(key,value);
+        }
+
+        window.location.href = currentUrl.toString()
     });
 
 </script>

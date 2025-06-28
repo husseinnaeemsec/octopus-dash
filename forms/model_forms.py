@@ -138,7 +138,7 @@ class InlineEditModelForm(forms.ModelForm):
                         value = value.strftime("%Y-%m-%d %H:%M") if isinstance(value, datetime) \
                                 else value.strftime("%H:%M") if isinstance(value, time) \
                                 else value.strftime("%Y-%m-%d")
-                    output += f'<td class="{base_td_class} text-center">{value}</td>'
+                    output += f'<td class="{base_td_class} px-3">{value}</td>'
 
         return {
             'html': mark_safe(output),
@@ -168,7 +168,7 @@ def inline_modelform_factory(model_admin):
 
 
 
-def get_model_create_form(model_admin,fields='__all__'):
+def model_form_factory(model_admin,fields='__all__'):
     # Dynamically create a Meta class
     cls_model = model_admin.model
     cls_fields = fields

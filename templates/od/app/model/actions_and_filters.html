@@ -12,16 +12,5 @@
         <input type="hidden" name="ids">
         <input type="hidden" name="select_all">
     </form>
-
     {% include 'od/app/model/filters.html' %}
-
-</div>
-<div class="mb-3 flex items-center justify-between">
-    <span class="text-slate-400  block"> selected: <span id="selected-instances"> 0 </span> </span>
-
-    <div class="space-x-4">
-        <button id="select_all" class="text-indigo-400 underline"> select all {{queryset.count}} {{model_name.title}}
-        </button>
-        <button id="deselect_all" class="text-rose-400 underline hidden "> Deselect all </button>
-    </div>
 </div>

@@ -16,7 +16,7 @@
             {% join field_name '_start' as dt_start_field %}
             {% join field_name '_end' as dt_end_field %}
             {% if request.GET|get:field_name and request.GET|get:field_name != 'none' or request.GET|get:dt_start_field or request.GET|get:dt_end_field   %}
-                <th data-tippy="remove filter" class="relative z-10 px-4 overflow-visible py-2 text-left text-sm border-r bg-blue-200 border-gray-300 dark:border-gray-700 font-semibold text-gray-700 dark:text-gray-300">
+                <th data-tippy="remove filter" class="relative z-10 px-4 overflow-visible py-2 text-left text-sm border-r dark:bg-blue-200 border-gray-300  dark:border-gray-700 font-semibold text-gray-700 dark:text-gray-300">
                     <div class="flex items-center justify-between">
                         {{ field.title }}
                         <a href="{% if request.GET|get:dt_end_field or request.GET|get:dt_start_field %}{% od_querystring dt_end_field_var=None dt_start_field_var=None %}{% else %}{% od_querystring field_name_var=None %}{% endif %}">
@@ -33,8 +33,10 @@
             {% endif %}
 
         {% endif %}
-            
         {% endwith %}
         {% endfor %}
+                <th  class="relative z-10 px-4 overflow-visible py-2 text-left text-sm border-r  border-gray-300 dark:border-gray-700 font-semibold text-gray-700 dark:text-gray-300">
+                    Actions
+                </th>
     </tr>
 </thead>

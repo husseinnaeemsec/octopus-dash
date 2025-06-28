@@ -83,4 +83,4 @@ class DashboardModelManager(Manager):
             lookup = f"{field}__icontains"
             q_objects |= Q(**{lookup: query})
 
-        return self.get_queryset().filter(q_objects)
+        return queryset.filter(q_objects)

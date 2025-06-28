@@ -2,7 +2,6 @@ from django import template
 from django.urls import reverse_lazy
 from django.db.models import Model
 import ast
-import bleach
 import re
 from django.utils.safestring import mark_safe
 
@@ -101,12 +100,7 @@ def highlight(value, search_term):
     )
     return mark_safe(highlighted)
 
-@register.filter
-def render_html(html):
-    allowed_tags = ['b', 'i','svg', 'em', 'strong', 'a', 'ul', 'ol', 'li', 'p', 'br']
-    allowed_attributes = bleach.sanitizer.ALLOWED_ATTRIBUTES
-    sanitized_value = bleach.clean(html, tags=allowed_tags, attributes=allowed_attributes)
-    return mark_safe(sanitized_value)
+
 
 @register.simple_tag
 def startswith_list(path1:str,search_list:list):

@@ -1,7 +1,6 @@
 from django.views.generic import TemplateView,ListView
 from ..contrib.admin import registry
 from ..exceptions import AppNotFound,ModelNotFound
-from django.core.paginator import EmptyPage, PageNotAnInteger
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
@@ -53,6 +52,17 @@ class ODAppModelViewMixin(UserPassesTestMixin):
     def get_queryset(self):
         return self.model.objects.all()
 
+    def get_context_data(self):
+        
+        context = super().get_context_data() or {} 
+        
+        context.update({
+            'model_admin':self.model_admin,
+            'app':self.app,
+        })
+        
+        return context
+
     def get_paginate_by(self, queryset):
         page_size = self.request.GET.get('page_size')
         if page_size and page_size.isdigit():
@@ -74,6 +84,12 @@ class ODAppModelListView(ODAppModelViewMixin, ListView):
         queryset = self._apply_filters(queryset)
         if not queryset.query.order_by:
             queryset = queryset.order_by(self.model._meta.pk.name)
+        
+        query = self.request.GET.get("query",None)
+        
+        if query is not None and self.model_admin.search_fields:
+            queryset = self.model_admin.manager.search(query,self.model_admin.search_fields,queryset)
+        
         return queryset
 
     def _apply_filters(self, queryset):
@@ -85,8 +101,8 @@ class ODAppModelListView(ODAppModelViewMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        queryset_page = context['page_obj'].object_list
+        page_obj = context.get("page_obj",None)
+        queryset_page = page_obj.object_list if page_obj is not None else []
         context.update({
             'app': self.app,
             'model': self.model,
@@ -101,10 +117,11 @@ class ODAppModelListView(ODAppModelViewMixin, ListView):
         # Inline formset
         
         context['formset'] = self.get_formset(queryset_page)
+        
 
         return context
 
-    def get_formset(self,queryset_page,data=None,files=None,queryset=None):
+    def get_formset(self,queryset_page,data=None,files=None):
         form = inline_modelform_factory(self.model_admin)
         FormSet = modelformset_factory(self.model, extra=0, form=form)
         formset_queryset = self.get_formset_queryset(queryset_page)
@@ -112,18 +129,3 @@ class ODAppModelListView(ODAppModelViewMixin, ListView):
         return FormSet(data,files,queryset=formset_queryset)
         
 
-    def paginate_queryset(self, queryset, page_size):
-        paginator = self.get_paginator(queryset, page_size, orphans=self.get_paginate_orphans(), allow_empty_first_page=self.get_allow_empty())
-        page = self.request.GET.get(self.page_kwarg) or 1
-
-        try:
-            page_number = paginator.validate_number(page)
-            page_obj = paginator.page(page_number)
-        except (PageNotAnInteger, ValueError):
-            page_number = 1
-            page_obj = paginator.page(1)
-        except EmptyPage:
-            page_number = paginator.num_pages
-            page_obj = paginator.page(page_number)
-
-        return paginator, page_obj, page_obj.object_list, page_number

@@ -44,7 +44,7 @@
     <input type="hidden" name="__success__">
     <div class="flex items-center gap-3">
         <button id="save" class="bg-blue-500 text-white p-2 px-4 rounded"> Save </button>
-        <a href="{% url 'od-delete-instance' app.app_label model_name object.pk %}" id="delete" class="bg-rose-600 text-white p-2 px-4 rounded"> Delete </a>
+        <a href="{% url 'od-delete-instance' app.app_label model_admin.model_name object.pk %}" id="delete" class="bg-rose-600 text-white p-2 px-4 rounded"> Delete </a>
 
     </div>
 </form>

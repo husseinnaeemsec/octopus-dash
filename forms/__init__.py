@@ -3,7 +3,7 @@ from ..fields.fields import ODDateFilterField,ODTextInput
 from ..fields.custom.filters.fields import RadioGroupField,DateOnlyRangeField,TimeRangeField,DateTimeRangeField
 from django.db import models
 from datetime import datetime, date, time
-from .model_forms import get_model_create_form,inline_modelform_factory,InlineEditModelForm
+from .model_forms import model_form_factory,inline_modelform_factory,InlineEditModelForm
 
 
 class DynamicFilterForm(forms.Form):

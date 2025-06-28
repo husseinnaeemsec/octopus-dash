@@ -3,6 +3,16 @@
 {% block content %}
 
 
+{% for field in form  %}
+{% if field.errors %}
+    {% for error in field.errors  %}
+        {% include 'od/messages/error.html'  with message__title=field.name.title container__id='model_success_message' message__content=error|safe  %}            
+    {% endfor %}
+{% endif %}
+{% endfor %}
+    
+
+
 <form method="post" class="max-w-2xl mx-auto space-y-6">
     {% csrf_token %}
     <div class=" bg-rose-50 dark:bg-rose-900/80 text-rose-600  dark:text-rose-100 p-6 rounded-2xl  ring-1 ring-rose-700/40">
@@ -14,7 +24,7 @@
                 <p class="text-sm mt-2 text-rose-700 dark:text-rose-300">
                     Are you sure you want to delete this {{ model_admin.model_name }}?
                     <br>
-                    <span class="text-rose-700 dark:text-rose-400 font-medium">This action cannot be undone.</span>
+                    <strong class="text-rose-700 dark:text-rose-300 ">This action cannot be undone.</strong>
                 </p>
             </div>
         </div>

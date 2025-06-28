@@ -1,4 +1,5 @@
-from ..views.app_views import AppView,ModelView
+from ..views.app_views import AppView
+from ..views.model_views import ModelView
 from ..views.model_views import CreateInstanceView,UpdateInstanceView,DeleteInstanceView
 from django.urls import path,include
 

@@ -62,6 +62,7 @@ class ModelAdmin(metaclass=ModelAdminMetaClass):
         self.model_plural_name = self.model._meta.verbose_name_plural
         self.model_plural_name_display = self.model_plural_name.title()
         self.model_icon = kwargs.get("icon")
+        self.model_opts = self.model._meta
 
         # Prepare filter fields metadata for UI rendering
         if self.filter_fields:

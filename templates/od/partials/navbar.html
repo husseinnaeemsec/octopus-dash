@@ -117,7 +117,7 @@
             <!-- Add Model Button -->
             
             {% if model_admin %}
-                <a href="{% url 'od-create-instance' app.app_label model_name %}" class="p-2 rounded-md text-sm flex items-center justify-center bg-indigo-600 text-white"> Add {{model_admin.model_name_display}} </a>
+                <a href="{% url 'od-create-instance' app.app_label model_admin.model_name %}" class="p-2 rounded-md text-sm flex items-center justify-center bg-indigo-600 text-white"> Add {{model_admin.model_name_display}} </a>
             {% endif %}
                 
             <!-- Messages -->
