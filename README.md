@@ -1,3 +1,4 @@
+![Logo](static/od/logo/128.svg)
 # OctopusDash
 
 OctopusDash is a modern, open-source Django admin dashboard designed with **a beautiful UI**, **powerful filtering**, and **granular permission control** — crafted for developers and teams seeking more flexibility, clarity, and extensibility beyond the default Django admin.
@@ -6,7 +7,15 @@ OctopusDash is a modern, open-source Django admin dashboard designed with **a be
 
 ---
 
-## Key Features
+## 📸 Screenshots
+
+![Screenshot](screenshots/Screenshot%20from%202025-06-28%2020-48-24.png)
+![Screenshot](screenshots/Screenshot%20from%202025-06-28%2020-48-45.png)
+![Screenshot](screenshots/Screenshot%20from%202025-06-28%2020-51-42.png)
+
+---
+
+## ✨ Key Features
 
 **Modern UI & UX**  
 - Clean, minimal design powered by TailwindCSS  
@@ -26,13 +35,13 @@ OctopusDash is a modern, open-source Django admin dashboard designed with **a be
 - Easily add or override views, templates, and behaviors  
 - Designed as a standalone Django app for maximum flexibility  
 
-**Coming Soon**  
+🧩 **Coming Soon**  
 - Plugin system to extend dashboards with new features  
 - Widget support for custom charts, stats, and data cards  
 
 ---
 
-## Why OctopusDash?
+## ❓ Why OctopusDash?
 
 While Django’s default admin is powerful, it often feels limited and outdated when your projects demand:  
 - More granular control over user permissions and data visibility  
@@ -43,7 +52,7 @@ OctopusDash addresses these with a fresh design, rich filtering options, and ext
 
 ---
 
-## How OctopusDash Was Built
+## 🏗️ How OctopusDash Was Built
 
 Unlike many alternatives, OctopusDash is **not** just a skin or extension on top of Django’s default admin panel. Instead, it’s built **from scratch** to support ambitious features like plugins, custom widgets, auto API generation, and more.
 
@@ -51,7 +60,7 @@ This approach allows us to deeply understand Django’s internals while avoiding
 
 ---
 
-##  Installation
+## 🛠 Installation
 
 > ⚠ Requires Python 3.8+ and Django 4.x+
 
@@ -63,8 +72,8 @@ pip install octopusdash
 Add `octopusdash` to your `INSTALLED_APPS`:
 ```python
 INSTALLED_APPS = [
-    # ...
     'octopusdash',
+    # ...
 ]
 ```
 
@@ -73,21 +82,21 @@ Include OctopusDash URLs in your project:
 from django.urls import path, include
 
 urlpatterns = [
-    # ...
     path('octopusdash/', include('octopusdash.urls')),
+    # ...
 ]
 ```
 
-Add required middlewares to your `MIDDLEWARE` list:
+Add required middlewares:
 ```python
 MIDDLEWARE = [
-    # ...
     'octopusdash.middlewares.app.ViewErrorHandlerMiddleware',
     'octopusdash.middlewares.authentication.CheckAuthenticationMiddleware',
+    # ...
 ]
 ```
 
-Configure template context processors to include OctopusDash’s context:
+Configure template context processors:
 ```python
 TEMPLATES = [
     {
@@ -96,20 +105,19 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.request',      # Required for request in templates
-                'django.contrib.auth.context_processors.auth',     # Required for auth context
-                'django.contrib.messages.context_processors.messages',  # Required for messages
-                'octopusdash.context.global_context',               # OctopusDash global context
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'octopusdash.context.global_context',
             ],
         },
     },
 ]
 ```
 
-Add OctopusDash settings to your `settings.py`:
+Add OctopusDash settings:
 ```python
 OCTOPUSDASH = {
-    # This to limit the middlewares logic to this path only 
     'dashboard_path': '/dashboard',
 }
 ```
@@ -118,52 +126,86 @@ OCTOPUSDASH = {
 
 ## 🚀 Quick Start
 
-Here’s a minimal example of registering your app and model admin:
+Example of registering your app and model admin:
 
 ```python
-# Import OctopusDash admin utilities
 from octopusdash.contrib import admin as od_admin
-
-# Import your models
 from .models import Post
 
-# Create an app admin (app_label should match your app config)
 app = od_admin.AppAdmin('home')
 
-# Define model admin class for your model
 class PostAdmin(od_admin.ModelAdmin):
     model = Post
-    list_display = [
-        'title',
-        'content',
-        'is_active',
-        'author',
-    ]
+    list_display = ['title', 'content', 'is_active', 'author']
 
-# Register the model admin with your app
 app.register_to_admin_panel(model_admin=PostAdmin)
 ```
 
-Run your server and visit:
+Visit `/dashboard/` after running the server.
+
+---
+
+## ⚡ Custom Actions
+
+Define custom actions on your model admin:
+
+```python
+class PostAdmin(od_admin.ModelAdmin):
+    model = Post
+    actions = ['set_to_active']
+
+    @od_admin.action(desc="Change post state to active.")
+    def set_to_active(self, queryset):
+        for post in queryset:
+            post.is_active = True
 ```
-/dashboard/
+
+---
+
+## ✏️ Inline Edit Support
+
+Edit objects directly in the table using **Django formsets**:
+
+```python
+class PostAdmin(od_admin.ModelAdmin):
+    model = Post
+    list_display = ('title', 'content', 'author', 'is_active')
+    list_editable = ('title', 'author', 'is_active')
 ```
+
+**Note:** Fields in `list_editable` must be included in `list_display`.
+
+---
+
+## ⚙️ ModelAdmin Attributes
+
+- `manager`: DashboardModelManager instance
+- `model`: Django model
+- `list_display`: fields to display
+- `list_editable`: fields editable inline
+- `search_fields`: fields to search
+- `filter_fields`: fields to filter
+- `readonly_fields`: non-editable fields
+- `form_fields`: fields in create/update view (`'__all__'` by default)
+
+> **Note:** Do not override methods in `ModelAdmin` as it follows a specific internal pattern.
 
 ---
 
 ## 📖 Documentation & Support
 
-Documentation is in progress! Meanwhile, feel free to explore the code, open issues, and contribute.
+Documentation is in progress! Explore the code, open issues, and join the discussion.
 
 ---
 
 ## 🤝 Contributing
 
 OctopusDash is open-source under the MIT license.  
-Contributions, feature requests, and bug reports are warmly welcome.  
-Please consider starring the repo ⭐ and joining the discussion.
+Contributions, feature requests, and bug reports are welcome.  
+Please ⭐ star the repo if you find it useful!
 
 ---
 
 Made by [husseinnaeemsec](https://github.com/husseinnaeemsec)
+
 ---

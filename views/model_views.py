@@ -26,7 +26,7 @@ class ModelView(ModelContextMixin,ListView,FilterMixin,HandleFormsetPostRequest)
         if request_type == 'inline_bulk_update':
             return self._handle_formset_submit()
         
-        elif request_type == 'cutom_action':
+        elif request_type == 'custom_action':
             return self._handle_custom_action_submit()
         
         

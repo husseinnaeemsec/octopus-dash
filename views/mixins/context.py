@@ -9,9 +9,9 @@ class AppContextMixin:
             raise AppNotFound(f'App with label "{kwargs.get("app")}" not found')
         return super().dispatch(request, *args, **kwargs)
 
-    def get_context_data(self):
+    def get_context_data(self,*args,**kwargs):
         
-        context = super().get_context_data() or {}
+        context = super().get_context_data(*args,**kwargs) or {}
         
         context.update({
             'app':self.app,

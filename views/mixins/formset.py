@@ -3,6 +3,7 @@ from ...forms import inline_modelform_factory
 from django.shortcuts import render
 from django.db.models import Case, When
 from django.contrib import messages
+import json
 class InlineFormsetMixin:
     def get_formset_queryset(self, queryset):
         ids = [obj.id for obj in queryset]
@@ -41,6 +42,27 @@ class HandleFormsetPostRequest(InlineFormsetMixin):
     def _handle_custom_action_submit(self):
         
         action = self.request.POST.get("action",None)
+        ids = self.request.POST.get("ids",None)
+
+        
+        
+        try:
+            
+            if not ids:
+                raise ValueError("Please select valid objects")
+            
+            ids = json.loads(ids)
+            if not isinstance(ids,(list,tuple)):
+                raise TypeError("There is no valid objects was selected")
+            
+            objects = self.model_admin.manager.filter(id__in=ids)
+            getattr(self.model_admin,action)(objects)
+            messages.success(self.request,f"{objects.count()} {self.model_admin.model_name} was updated.")
+        except Exception as e:
+            messages.error(self.request,f"Details:{str(e)}.")
+        
+        if not action or not callable(getattr(self.model_admin,action,None)):
+            messages.error(self.request,"Please select an action.")
         
         
         
