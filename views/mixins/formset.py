@@ -39,5 +39,11 @@ class HandleFormsetPostRequest(InlineFormsetMixin):
         context['formset'] = formset
         return render(self.request,self.template_name,context)
     def _handle_custom_action_submit(self):
-            return render(self.request,self.template_name,self.get_context_data())
+        
+        action = self.request.POST.get("action",None)
+        
+        
+        
+        
+        return render(self.request,self.template_name,self.get_context_data())
         

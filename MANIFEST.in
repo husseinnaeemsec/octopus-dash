@@ -1,5 +1,0 @@
-recursive-include octopusdash/templates *
-recursive-include octopusdash/static *
-recursive-include octopusdash/migrations *
-include README.md
-include LICENSE
